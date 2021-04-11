@@ -14,9 +14,9 @@
              matInput
              [formControl]="myControl"
              [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name">
-               {{planet.name}}
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet)">
+                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -31,7 +31,7 @@
              matInput
              [formControl]="myControl"
              [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option *ngFor="let planet of Planets" [value]="planet.name">
                {{planet.name}}
               </mat-option>
@@ -48,14 +48,14 @@
              matInput
              [formControl]="myControl"
              [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option *ngFor="let planet of Planets" [value]="planet.name">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        
+
         <div class="col">
          <mat-form-field class="full-width">
             <mat-label>Destination 4</mat-label>
@@ -65,7 +65,7 @@
              matInput
              [formControl]="myControl"
              [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option *ngFor="let planet of Planets" [value]="planet.name">
                {{planet.name}}
               </mat-option>
@@ -78,7 +78,8 @@
      
       
       <div class="row">
-        <div class="col">
+
+        <div class="col" *ngIf="showVehicle1">
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -88,8 +89,8 @@
            </mat-radio-button>
           </mat-radio-group>
         </div>
-        <div class="col">
-          
+
+        <div class="col" *ngIf="showVehicle2">
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -99,7 +100,8 @@
            </mat-radio-button>
           </mat-radio-group>
         </div>
-        <div class="col">
+
+        <div class="col" *ngIf="showVehicle3">
           
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
@@ -110,7 +112,7 @@
            </mat-radio-button>
           </mat-radio-group>
         </div>
-        <div class="col">
+        <div class="col" *ngIf="showVehicle4">
           
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
@@ -124,7 +126,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit">Search</button>
     </mat-card-actions>
   </mat-card>
 </form>

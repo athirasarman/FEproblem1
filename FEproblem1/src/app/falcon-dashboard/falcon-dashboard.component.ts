@@ -58,7 +58,7 @@ export class FalconDashboardComponent {
   ngOnInit() {+
     this.getPlanets();
     this.getVehicles();
-    this.getToken();
+  //  this.getToken();
   }  
   
   //Function to get planets server
