@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute,Router} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -68,6 +69,8 @@ export class SearchComponent implements OnInit{
   Destination4=new FormControl();
 
   constructor(private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
               private planetsService: PlanetsService,
               private vehicleService: VehiclesService,
               private FindingfalconeService: FindingfalconeService
@@ -192,7 +195,9 @@ findFalcon(token:Token ):void{
  };
 
  this.FindingfalconeService.findFalcon(FindFalconRequest)
-    .subscribe(data=>{console.log(data);});
+    .subscribe(data=>{console.log(data);
+      this.router.navigateByUrl('/result', { state: data });
+    });
 
 
 }

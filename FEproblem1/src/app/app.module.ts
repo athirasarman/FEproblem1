@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { ResultComponent } from './result/result.component';
 //import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
@@ -39,7 +40,8 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
     DashboardComponent,
     FalconDashboardComponent,
     NavigationComponent,
-    SearchComponent
+    SearchComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
