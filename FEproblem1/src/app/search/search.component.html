@@ -1,21 +1,23 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title >Time Taken: {{timeTaken}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
+        
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Destination 1</mat-label>
-            <input type="text"
+            <input #destination1 type="text"
              placeholder="Pick one"
              aria-label="Destination 1"
              matInput
-             [formControl]="myControl"
+             [formControl]="Destination1"
+            
              [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet)">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest1')">
                 {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -25,14 +27,15 @@
         <div class="col">
          <mat-form-field class="full-width">
             <mat-label>Destination 2</mat-label>
-            <input type="text"
+            <input #destination2 type="text"
              placeholder="Pick one"
              aria-label="Destination 2"
              matInput
-             [formControl]="myControl"
+             [formControl]="Destination2"
+            
              [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest2')">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -42,14 +45,15 @@
           <div class="col">
            <mat-form-field class="full-width">
             <mat-label>Destination 3</mat-label>
-            <input type="text"
+            <input #destination3 type="text"
              placeholder="Pick one"
              aria-label="Destination 3"
              matInput
-             [formControl]="myControl"
+             
+             [formControl]="Destination3"
              [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest3')">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -59,14 +63,14 @@
         <div class="col">
          <mat-form-field class="full-width">
             <mat-label>Destination 4</mat-label>
-            <input type="text"
+            <input #destination4 type="text"
              placeholder="Pick one"
              aria-label="Destination 4"
              matInput
-             [formControl]="myControl"
+             [formControl]="Destination4"
              [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest4')">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -83,7 +87,8 @@
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
-           [(ngModel)]="vehicle1">
+           [(ngModel)]="vehicle1"
+           [ngModelOptions]="{standalone: true}">
            <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
              {{vehicle.name}}
            </mat-radio-button>
@@ -94,7 +99,8 @@
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
-           [(ngModel)]="vehicle2">
+           [(ngModel)]="vehicle2"
+           [ngModelOptions]="{standalone: true}">
            <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
              {{vehicle.name}}
            </mat-radio-button>
@@ -106,7 +112,8 @@
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
-           [(ngModel)]="vehicle3">
+           [(ngModel)]="vehicle3"
+           [ngModelOptions]="{standalone: true}">
            <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
              {{vehicle.name}}
            </mat-radio-button>
@@ -117,7 +124,8 @@
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
-           [(ngModel)]="vehicle4">
+           [(ngModel)]="vehicle4"
+           [ngModelOptions]="{standalone: true}">
            <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
              {{vehicle.name}}
            </mat-radio-button>
