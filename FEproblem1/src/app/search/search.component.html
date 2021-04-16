@@ -15,9 +15,9 @@
              matInput
              [formControl]="Destination1"
             
-             [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest1')">
+             [matAutocomplete]="autoDestination1">
+            <mat-autocomplete  #autoDestination1="matAutocomplete" >
+              <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of Planets" [value]="planet.name" >
                 {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -33,9 +33,9 @@
              matInput
              [formControl]="Destination2"
             
-             [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest2')">
+             [matAutocomplete]="autoDestination2">
+            <mat-autocomplete  #autoDestination2="matAutocomplete">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -51,9 +51,9 @@
              matInput
              
              [formControl]="Destination3"
-             [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest3')">
+             [matAutocomplete]="autoDestination3">
+            <mat-autocomplete  #autoDestination3="matAutocomplete">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet('dest3',planet)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -68,9 +68,9 @@
              aria-label="Destination 4"
              matInput
              [formControl]="Destination4"
-             [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet(planet,'dest4')">
+             [matAutocomplete]="autoDestination4">
+            <mat-autocomplete  #autoDestination4="matAutocomplete">
+              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet('dest4',planet)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -83,7 +83,8 @@
       
       <div class="row">
 
-        <div class="col" *ngIf="showVehicle1">
+        <div class="col" [hidden]="showVehicle1">
+           <mat-label>Vehicle 1</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -95,7 +96,8 @@
           </mat-radio-group>
         </div>
 
-        <div class="col" *ngIf="showVehicle2">
+        <div class="col" [hidden]="showVehicle2">
+           <mat-label>Vehicle 2</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -107,8 +109,8 @@
           </mat-radio-group>
         </div>
 
-        <div class="col" *ngIf="showVehicle3">
-          
+        <div class="col" [hidden]="showVehicle3">
+          <mat-label>Vehicle 3</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -119,8 +121,8 @@
            </mat-radio-button>
           </mat-radio-group>
         </div>
-        <div class="col" *ngIf="showVehicle4">
-          
+        <div class="col" [hidden]="showVehicle4">
+          <mat-label>Vehicle 4</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"

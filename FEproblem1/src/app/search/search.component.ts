@@ -4,9 +4,11 @@ import { ActivatedRoute,Router} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatAutocompleteSelectedEvent}from '@angular/material/autocomplete';
 import {MatAutocompleteActivatedEvent}from '@angular/material/autocomplete';
 import {FindingfalconeService} from '../findingfalcone.service';
+//import {MdOptionSelectionChange} from '@angular/material/autocomplete';
+
 
 
 import {PlanetsService} from '../planets.service';
@@ -25,13 +27,9 @@ import {FindFalconRequest} from '../find-falcon-request';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit{
-    //myControl = new FormControl();
+   
     filteredPlanets1: Observable<Planets[]>;
-    /*@ViewChild('destination1') destination1:ElementRef<HTMLInputElement>;
-    @ViewChild('destination2') destination2:ElementRef<HTMLInputElement>;
-    @ViewChild('destination3') destination3:ElementRef<HTMLInputElement>;
-    @ViewChild('destination4') destination4:ElementRef<HTMLInputElement>;
-    */
+    
     
 
     searchForm = this.fb.group({
@@ -96,35 +94,34 @@ ngOnInit() {
        
    }
 
-  onSelectingPlanet(value:object,destination:string):  void{
-   // this.showVehicle1=  !this.showVehicle1;
-    
+  onSelectingPlanet(destination:string,  planet:Planets):void{
+      
     switch (destination) {
       case "dest1":
         // code...
-        {this.showVehicle1=  true;
+        {this.showVehicle1=  false;
 
         break;}
       case "dest2":
-        {this.showVehicle2=  true;
+        {this.showVehicle2=  false;
         break;}
       case "dest3":
-        {this.showVehicle3=  true;
+        {this.showVehicle3=  false;
         break;}
       case "dest4":
-        {this.showVehicle4=  true;
+        {this.showVehicle4=  false;
         break;}
       default:
         // code...
        {
-        this.showVehicle1=  false;
-        this.showVehicle2=  false;
-        this.showVehicle3=  false;
-        this.showVehicle4=  false;
+        this.showVehicle1=  true;
+        this.showVehicle2=  true;
+        this.showVehicle3=  true;
+        this.showVehicle4=  true;
         break;
       }
     }
-         console.log(value);
+        //onsole.log(value);
    }
 
  //Function to get vehicles from server
