@@ -16,8 +16,8 @@
              [formControl]="Destination1"
             
              [matAutocomplete]="autoDestination1">
-            <mat-autocomplete  #autoDestination1="matAutocomplete" >
-              <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of Planets" [value]="planet.name" >
+            <mat-autocomplete  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of filteredPlanets1 | async" [value]="planet" >
                 {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -34,8 +34,8 @@
              [formControl]="Destination2"
             
              [matAutocomplete]="autoDestination2">
-            <mat-autocomplete  #autoDestination2="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
+            <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -52,8 +52,8 @@
              
              [formControl]="Destination3"
              [matAutocomplete]="autoDestination3">
-            <mat-autocomplete  #autoDestination3="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet('dest3',planet)">
+            <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option *ngFor="let planet of filteredPlanets3 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest3',planet)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -69,8 +69,8 @@
              matInput
              [formControl]="Destination4"
              [matAutocomplete]="autoDestination4">
-            <mat-autocomplete  #autoDestination4="matAutocomplete">
-              <mat-option *ngFor="let planet of Planets" [value]="planet.name" (onSelectionChange)="onSelectingPlanet('dest4',planet)">
+            <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option *ngFor="let planet of filteredPlanets4 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest4',planet)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -90,7 +90,7 @@
            class="example-radio-group"
            [(ngModel)]="vehicle1"
            [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(1)">
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -103,7 +103,7 @@
            class="example-radio-group"
            [(ngModel)]="vehicle2"
            [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(2)">
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -116,11 +116,12 @@
            class="example-radio-group"
            [(ngModel)]="vehicle3"
            [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(3)">
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
         </div>
+
         <div class="col" [hidden]="showVehicle4">
           <mat-label>Vehicle 4</mat-label>
           <mat-radio-group
@@ -128,12 +129,14 @@
            class="example-radio-group"
            [(ngModel)]="vehicle4"
            [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle.name">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(4)">
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
         </div>
+
       </div>
+
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Search</button>

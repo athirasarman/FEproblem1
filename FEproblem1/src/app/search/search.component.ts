@@ -7,10 +7,9 @@ import {map, startWith} from 'rxjs/operators';
 import {MatAutocompleteSelectedEvent}from '@angular/material/autocomplete';
 import {MatAutocompleteActivatedEvent}from '@angular/material/autocomplete';
 import {FindingfalconeService} from '../findingfalcone.service';
-//import {MdOptionSelectionChange} from '@angular/material/autocomplete';
 
 
-
+//Importing Services
 import {PlanetsService} from '../planets.service';
 import {VehiclesService} from '../vehicles.service';
 
@@ -26,23 +25,18 @@ import {FindFalconRequest} from '../find-falcon-request';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
+
+
 export class SearchComponent implements OnInit{
-   
-    filteredPlanets1: Observable<Planets[]>;
-    
-    
+  
+  filteredPlanets1: Observable<Planets[]>; 
+  filteredPlanets2: Observable<Planets[]>; 
+  filteredPlanets3: Observable<Planets[]>; 
+  filteredPlanets4: Observable<Planets[]>; 
 
     searchForm = this.fb.group({
   //  company: null,
  //   firstName: [null, Validators.required],
-   // lastName: [null, Validators.required],
-    //address: [null, Validators.required],
-    //address2: null,
-    //city: [null, Validators.required],
-   // state: [null, Validators.required],
-    //postalCode: [null, Validators.compose([
-   //   Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    //],
     //shipping: ['free', Validators.required]
      
   });
@@ -75,14 +69,37 @@ export class SearchComponent implements OnInit{
               ) {}
 
 ngOnInit() {
-  /*this.filteredPlanets1 = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );*/
+
+    this.filteredPlanets1 = this.Destination1.valueChanges
+      .pipe(
+        startWith(null),
+        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+      );
+       this.filteredPlanets2 = this.Destination2.valueChanges
+      .pipe(
+        startWith(null),
+        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+      );
+       this.filteredPlanets3 = this.Destination3.valueChanges
+      .pipe(
+        startWith(null),
+        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+      );
+       this.filteredPlanets4 = this.Destination4.valueChanges
+      .pipe(
+        startWith(null),
+        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+      );
     this.getPlanets();
     this.getVehicles();
     } 
 
+ filterPlanets(pName: any) {
+    let planetName = pName.name || pName; // pName can be a planet or a string
+    return this.Planets.filter(planet =>
+      planet.name.toLowerCase().indexOf(planetName.toLowerCase()) === 0);
+
+  }
 
   //Function to get planets from server
   getPlanets(): void
@@ -100,6 +117,7 @@ ngOnInit() {
       case "dest1":
         // code...
         {this.showVehicle1=  false;
+          console.log(this.Planets);
 
         break;}
       case "dest2":
@@ -121,7 +139,7 @@ ngOnInit() {
         break;
       }
     }
-        //onsole.log(value);
+        
    }
 
  //Function to get vehicles from server
@@ -135,18 +153,13 @@ ngOnInit() {
    }
 
 
-  private _filter(value: Planets[]): Planets[] {
-    const filterValue = value;
-    return this.Planets ;
-  }
-
   //Function to add a planet to a selected array
   addSelectedPlanet():void
   {
-        this.selectedPlanets.push(this.Destination1.value.toString());
-        this.selectedPlanets.push(this.Destination2.value.toString());
-        this.selectedPlanets.push(this.Destination3.value.toString());
-        this.selectedPlanets.push(this.Destination4.value.toString());
+        this.selectedPlanets.push(this.Destination1.value.name.toString());
+        this.selectedPlanets.push(this.Destination2.value.name.toString());
+        this.selectedPlanets.push(this.Destination3.value.name.toString());
+        this.selectedPlanets.push(this.Destination4.value.name.toString());
         console.log("planet added");
   }
 
@@ -154,10 +167,10 @@ ngOnInit() {
   addSelectedVehicles():void
   {
         //this.selectedVehicles.push(vehicle.name);
-        this.selectedVehicles.push(this.vehicle1.toString());
-        this.selectedVehicles.push(this.vehicle2.toString());
-        this.selectedVehicles.push(this.vehicle3.toString());
-        this.selectedVehicles.push(this.vehicle4.toString());
+        this.selectedVehicles.push(this.vehicle1.name.toString());
+        this.selectedVehicles.push(this.vehicle2.name.toString());
+        this.selectedVehicles.push(this.vehicle3.name.toString());
+        this.selectedVehicles.push(this.vehicle4.name.toString());
          console.log("Vehicle added");
   }
 
@@ -166,10 +179,47 @@ ngOnInit() {
   Function to calculate time taken
   time=distance/speed
   */
-  calculateTimeTaken(planet:Planets,vehicle:Vehicles){
-     let time:number= planet.distance/vehicle.speed;
-     this.timeTaken=this.timeTaken+time;
+  calculateTimeTaken(option: number){
+
+     let time:number= 0;
+     switch (option) {
+       case 1:
+         // code...
+           time=this.Destination1.value.distance/this.vehicle1.speed;
+           this.timeTaken=this.timeTaken+time;
+         break;
+       case 2:
+         // code...
+           time=this.Destination2.value.distance/this.vehicle2.speed;
+           this.timeTaken=this.timeTaken+time;
+         break;
+       case 3:
+         // code...
+           time=this.Destination3.value.distance/this.vehicle3.speed;
+           this.timeTaken=this.timeTaken+time;
+         break;
+       case 4:
+         // code...
+           time=this.Destination4.value.distance/this.vehicle4.speed;
+           this.timeTaken=this.timeTaken+time;
+         break;
+       
+       default:
+         // code...
+         this.timeTaken=0;
+         break;
+     }
   }
+
+//Function to display planet name in autocomplete
+ getSelectedPlanetText(planet:Planets) {
+     return planet ? planet.name :'';
+   }
+
+//Function to remove already selected planet
+removeSelectedPlanet(planet:Planets){
+
+}
 
 
 //Function to get token from server
@@ -191,6 +241,7 @@ findFalcon(token:Token ):void{
    vehicle_names:this.selectedVehicles
  };
 
+ //Routing to result page
  this.FindingfalconeService.findFalcon(FindFalconRequest)
     .subscribe(data=>{console.log(data);
       this.router.navigateByUrl('/result', { state: data });
@@ -199,10 +250,11 @@ findFalcon(token:Token ):void{
 
 }
 
+//Function to enable search functionality
   onSubmit(): void {
-    alert('Thanks!');
     this.addSelectedPlanet();
     this.addSelectedVehicles();
     this.SearchFalcon();
   }
+
 }
