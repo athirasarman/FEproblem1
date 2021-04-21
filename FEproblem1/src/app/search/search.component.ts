@@ -2,8 +2,8 @@ import { Component, OnInit, ElementRef, QueryList, ViewChild, ViewChildren} from
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute,Router} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Observable,of} from 'rxjs';
+import {map,filter,startWith,tap} from 'rxjs/operators';
 import {MatAutocompleteSelectedEvent}from '@angular/material/autocomplete';
 import {MatAutocompleteActivatedEvent}from '@angular/material/autocomplete';
 import {FindingfalconeService} from '../findingfalcone.service';
@@ -53,6 +53,10 @@ export class SearchComponent implements OnInit{
   showVehicle2:  boolean=true;
   showVehicle3:  boolean=true;
   showVehicle4:  boolean=true;
+  showPlanet1:  boolean=false;
+  showPlanet2:  boolean=false;
+  showPlanet3:  boolean=false;
+  showPlanet4:  boolean=false;
   selectedPlanets: string[]=[];
   selectedVehicles:  string[]=[];
   Destination1=new FormControl();
@@ -69,37 +73,44 @@ export class SearchComponent implements OnInit{
               ) {}
 
 ngOnInit() {
-
-    this.filteredPlanets1 = this.Destination1.valueChanges
+          this.getPlanets();
+        
+      
+      this.filteredPlanets1 = this.Destination1.valueChanges
       .pipe(
         startWith(null),
-        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
       );
        this.filteredPlanets2 = this.Destination2.valueChanges
       .pipe(
         startWith(null),
-        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
       );
        this.filteredPlanets3 = this.Destination3.valueChanges
       .pipe(
         startWith(null),
-        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
       );
        this.filteredPlanets4 = this.Destination4.valueChanges
       .pipe(
         startWith(null),
-        map(planet => planet ? this.filterPlanets(planet) : this.Planets.slice())
+        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
       );
-    this.getPlanets();
+   
     this.getVehicles();
     } 
 
- filterPlanets(pName: any) {
+ filterPlanets(pName: any,initial:true) {
+
+
     let planetName = pName.name || pName; // pName can be a planet or a string
     return this.Planets.filter(planet =>
       planet.name.toLowerCase().indexOf(planetName.toLowerCase()) === 0);
 
   }
+  
+  
+  
 
   //Function to get planets from server
   getPlanets(): void
@@ -107,28 +118,41 @@ ngOnInit() {
 
     this.planetsService.getPlanets()
       .subscribe(Planets=>{this.Planets=Planets;
-        console.log(this.Planets);});
-       
+        console.log(this.Planets);
+      this.filteredPlanets1.subscribe(
+                     data=>{data=this.Planets;
+          });
+       });
    }
 
-  onSelectingPlanet(destination:string,  planet:Planets):void{
+  onSelectingPlanet(destination:string,  selectedPlanet:Planets):void{
       
     switch (destination) {
       case "dest1":
         // code...
-        {this.showVehicle1=  false;
-          console.log(this.Planets);
-
-        break;}
+        {
+          this.showVehicle1=  false;
+          this.removeSelectedPlanet(selectedPlanet,1);
+          //this.showPlanet2=true;
+          break;
+      }
       case "dest2":
-        {this.showVehicle2=  false;
-        break;}
+        {
+          this.showVehicle2=  false;
+          this.removeSelectedPlanet(selectedPlanet,2);
+          //this.showPlanet3=true;
+          break;}
       case "dest3":
-        {this.showVehicle3=  false;
-        break;}
+        {
+          this.showVehicle3=  false;
+          this.removeSelectedPlanet(selectedPlanet,3);
+          //this.showPlanet4=true;
+          break;}
       case "dest4":
-        {this.showVehicle4=  false;
-        break;}
+        {
+          this.showVehicle4=  false;
+          this.removeSelectedPlanet(selectedPlanet,4);
+          break;}
       default:
         // code...
        {
@@ -136,6 +160,9 @@ ngOnInit() {
         this.showVehicle2=  true;
         this.showVehicle3=  true;
         this.showVehicle4=  true;
+        //this.showPlanet2=false;
+       // this.showPlanet3=false;
+       // this.showPlanet4=false;
         break;
       }
     }
@@ -187,16 +214,19 @@ ngOnInit() {
          // code...
            time=this.Destination1.value.distance/this.vehicle1.speed;
            this.timeTaken=this.timeTaken+time;
+           this.showPlanet2=true;
          break;
        case 2:
          // code...
            time=this.Destination2.value.distance/this.vehicle2.speed;
            this.timeTaken=this.timeTaken+time;
+           this.showPlanet3=true;
          break;
        case 3:
          // code...
            time=this.Destination3.value.distance/this.vehicle3.speed;
            this.timeTaken=this.timeTaken+time;
+           this.showPlanet4=true;
          break;
        case 4:
          // code...
@@ -216,9 +246,67 @@ ngOnInit() {
      return planet ? planet.name :'';
    }
 
-//Function to remove already selected planet
-removeSelectedPlanet(planet:Planets){
+//Function to remove already selected planets from other autocomplete lists
+removeSelectedPlanet(selectedPlanet:Planets, destinationNumber:Number){
+  this.Planets.splice(this.Planets.indexOf(selectedPlanet),1)
 
+switch (destinationNumber) {
+  case 1:
+    // code...
+    this.filteredPlanets2.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets3.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets4.subscribe(
+                     data=>{data=this.Planets;
+          });
+    break;
+
+   case 2:
+    // code...
+    this.filteredPlanets1.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets3.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets4.subscribe(
+                     data=>{data=this.Planets;
+          });
+    break;
+
+  case 3:
+    // code...
+   this.filteredPlanets1.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets2.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets4.subscribe(
+                     data=>{data=this.Planets;
+          });
+    break;
+
+  case 4:
+    // code...
+   this.filteredPlanets1.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets2.subscribe(
+                     data=>{data=this.Planets;
+          });
+    this.filteredPlanets3.subscribe(
+                     data=>{data=this.Planets;
+          });
+    break;
+  
+  default:
+    // code...
+    break;
+}
 }
 
 

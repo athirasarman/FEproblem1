@@ -14,9 +14,9 @@
              aria-label="Destination 1"
              matInput
              [formControl]="Destination1"
-            
+             
              [matAutocomplete]="autoDestination1">
-            <mat-autocomplete  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText">
+             <mat-autocomplete autoActiveFirstOption  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText">
               <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of filteredPlanets1 | async" [value]="planet" >
                 {{planet.name}}
               </mat-option>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="col">
-         <mat-form-field class="full-width">
+         <mat-form-field class="full-width" *ngIf="showPlanet2">
             <mat-label>Destination 2</mat-label>
             <input #destination2 type="text"
              placeholder="Pick one"
@@ -43,7 +43,7 @@
         </div>
 
           <div class="col">
-           <mat-form-field class="full-width">
+           <mat-form-field class="full-width" *ngIf="showPlanet3">
             <mat-label>Destination 3</mat-label>
             <input #destination3 type="text"
              placeholder="Pick one"
@@ -61,7 +61,7 @@
         </div>
 
         <div class="col">
-         <mat-form-field class="full-width">
+         <mat-form-field class="full-width" *ngIf="showPlanet4">
             <mat-label>Destination 4</mat-label>
             <input #destination4 type="text"
              placeholder="Pick one"
@@ -84,7 +84,7 @@
       <div class="row">
 
         <div class="col" [hidden]="showVehicle1">
-           <mat-label>Vehicle 1</mat-label>
+           <mat-label>Select Vehicle 1</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -97,7 +97,7 @@
         </div>
 
         <div class="col" [hidden]="showVehicle2">
-           <mat-label>Vehicle 2</mat-label>
+           <mat-label>Select Vehicle 2</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -110,7 +110,7 @@
         </div>
 
         <div class="col" [hidden]="showVehicle3">
-          <mat-label>Vehicle 3</mat-label>
+          <mat-label>Select Vehicle 3</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
@@ -123,7 +123,7 @@
         </div>
 
         <div class="col" [hidden]="showVehicle4">
-          <mat-label>Vehicle 4</mat-label>
+          <mat-label>Select Vehicle 4</mat-label>
           <mat-radio-group
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
