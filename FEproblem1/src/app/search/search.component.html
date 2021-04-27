@@ -12,9 +12,9 @@
             <input #destination1 type="text"
              placeholder="Pick one"
              aria-label="Destination 1"
-             matInput
+             matInput 
              [formControl]="Destination1"
-             
+             [(ngModel)]="planet1"
              [matAutocomplete]="autoDestination1">
              <mat-autocomplete autoActiveFirstOption  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText">
               <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of filteredPlanets1 | async" [value]="planet" >
@@ -32,7 +32,7 @@
              aria-label="Destination 2"
              matInput
              [formControl]="Destination2"
-            
+             [(ngModel)]="planet2"
              [matAutocomplete]="autoDestination2">
             <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText">
               <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
@@ -49,7 +49,7 @@
              placeholder="Pick one"
              aria-label="Destination 3"
              matInput
-             
+             [(ngModel)]="planet3"
              [formControl]="Destination3"
              [matAutocomplete]="autoDestination3">
             <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText">
@@ -67,6 +67,7 @@
              placeholder="Pick one"
              aria-label="Destination 4"
              matInput
+             [(ngModel)]="planet4"
              [formControl]="Destination4"
              [matAutocomplete]="autoDestination4">
             <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText">
@@ -86,11 +87,14 @@
         <div class="col" [hidden]="showVehicle1">
            <mat-label>Select Vehicle 1</mat-label>
           <mat-radio-group
+           #selectedVehicle1="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle1"
-           [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(1)">
+           [ngModelOptions]="{standalone: true}"
+           (change)="calculateTimeTaken(1)"
+           >
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -99,24 +103,30 @@
         <div class="col" [hidden]="showVehicle2">
            <mat-label>Select Vehicle 2</mat-label>
           <mat-radio-group
+          #selectedVehicle2="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle2"
-           [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(2)">
+           [ngModelOptions]="{standalone: true}"
+           (change)="calculateTimeTaken(2)">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
+
+         
         </div>
 
         <div class="col" [hidden]="showVehicle3">
           <mat-label>Select Vehicle 3</mat-label>
           <mat-radio-group
+          #selectedVehicle3="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle3"
-           [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(3)">
+           [ngModelOptions]="{standalone: true}"
+           (change)="calculateTimeTaken(3)">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles3 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -125,11 +135,13 @@
         <div class="col" [hidden]="showVehicle4">
           <mat-label>Select Vehicle 4</mat-label>
           <mat-radio-group
+          #selectedVehicle4="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle4"
-           [ngModelOptions]="{standalone: true}">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of Vehicles" [value]="vehicle" (change)="calculateTimeTaken(4)">
+           [ngModelOptions]="{standalone: true}"
+           (change)="calculateTimeTaken(4)">
+           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -140,6 +152,8 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Search</button>
+       <button mat-raised-button color="primary" type="reset">Reset</button>
+      
     </mat-card-actions>
   </mat-card>
 </form>

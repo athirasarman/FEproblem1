@@ -65,6 +65,7 @@ import { ResultComponent } from './result/result.component';
     MatRadioModule,
     ReactiveFormsModule,
     FormsModule
+
   ],
   exports:[
     AppHeaderComponent,
