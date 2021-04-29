@@ -87,14 +87,14 @@
         <div class="col" [hidden]="showVehicle1">
            <mat-label>Select Vehicle 1</mat-label>
           <mat-radio-group
-           #selectedVehicle1="matRadioGroup"
+           #Vehicle1="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle1"
-           [ngModelOptions]="{standalone: true}"
+           formControlName="selectedVehicle1"
            (change)="calculateTimeTaken(1)"
            >
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle1" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -103,13 +103,13 @@
         <div class="col" [hidden]="showVehicle2">
            <mat-label>Select Vehicle 2</mat-label>
           <mat-radio-group
-          #selectedVehicle2="matRadioGroup"
+          #Vehicle2="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle2"
-           [ngModelOptions]="{standalone: true}"
+           formControlName="selectedVehicle2"
            (change)="calculateTimeTaken(2)">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle" >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle2" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -120,13 +120,13 @@
         <div class="col" [hidden]="showVehicle3">
           <mat-label>Select Vehicle 3</mat-label>
           <mat-radio-group
-          #selectedVehicle3="matRadioGroup"
+          #Vehicle3="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle3"
-           [ngModelOptions]="{standalone: true}"
+           formControlName="selectedVehicle3"
            (change)="calculateTimeTaken(3)">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles3 | async" [value]="vehicle" >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle3" *ngFor="let vehicle of filteredVehicles3 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -135,13 +135,13 @@
         <div class="col" [hidden]="showVehicle4">
           <mat-label>Select Vehicle 4</mat-label>
           <mat-radio-group
-          #selectedVehicle4="matRadioGroup"
+          #Vehicle4="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle4"
-           [ngModelOptions]="{standalone: true}"
+           formControlName="selectedVehicle4"
            (change)="calculateTimeTaken(4)">
-           <mat-radio-button class="example-radio-button" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle" >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -152,7 +152,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Search</button>
-       <button mat-raised-button color="primary" type="reset">Reset</button>
+       <button mat-raised-button color="primary" type="reset" click="onReset(4)">Reset</button>
       
     </mat-card-actions>
   </mat-card>

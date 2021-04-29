@@ -30,42 +30,42 @@ import {FindFalconRequest} from '../find-falcon-request';
 
 export class SearchComponent implements OnInit{
   
-  filteredPlanets1: Observable<Planets[]>; 
+  filteredPlanets1: Observable<Planets[]>;
   filteredPlanets2: Observable<Planets[]>; 
   filteredPlanets3: Observable<Planets[]>; 
   filteredPlanets4: Observable<Planets[]>; 
-
-    searchForm = this.fb.group({
-  //  company: null,
- //   firstName: [null, Validators.required],
-    //shipping: ['free', Validators.required]
-    
-     
-  });
-  Destination1: FormControl=new FormControl();
-    Destination2:FormControl= new FormControl();
-    Destination3:FormControl= new FormControl();
-    Destination4:FormControl= new FormControl();
-    selectedVehicle1:FormControl=new FormControl();
-    selectedVehicle2:FormControl=new FormControl();
-    selectedVehicle3:FormControl=new FormControl();
-    selectedVehicle4:FormControl=new FormControl();
-  Token: Token={} as Token;
-  vehicle1: Vehicles;
-  vehicle2: Vehicles;
-  vehicle3: Vehicles;
-  vehicle4: Vehicles;
-  planet1: Planets;
-  planet2: Planets;
-  planet3: Planets;
-  planet4: Planets;
-  timeTaken=0;
-  Planets: Planets[]=[];
-  Vehicles: Vehicles[]=[];
   filteredVehicles1:Observable<Vehicles[]>; 
   filteredVehicles2: Observable<Vehicles[]>; 
   filteredVehicles3: Observable<Vehicles[]>; 
   filteredVehicles4: Observable<Vehicles[]>; 
+
+    searchForm = this.fb.group({
+ 
+    selectedVehicle1: new FormControl(),
+    selectedVehicle2: new FormControl(),
+    selectedVehicle3: new FormControl(),
+    selectedVehicle4: new FormControl()
+         
+  });
+
+    Destination1: FormControl=new FormControl();
+    Destination2: FormControl= new FormControl();
+    Destination3: FormControl= new FormControl();
+    Destination4: FormControl= new FormControl();
+   
+  Token: Token={} as Token;
+  vehicle1: Vehicles={} as Vehicles;
+  vehicle2: Vehicles={} as Vehicles;
+  vehicle3: Vehicles={} as Vehicles;
+  vehicle4: Vehicles={} as Vehicles;
+  planet1: Planets={} as Planets;
+  planet2: Planets={} as Planets;
+  planet3: Planets={} as Planets;
+  planet4: Planets={} as Planets;
+  timeTaken=0;
+  Planets: Planets[]=[];
+  Vehicles: Vehicles[]=[];
+ 
   showVehicle1:  boolean=true;
   showVehicle2:  boolean=true;
   showVehicle3:  boolean=true;
@@ -80,7 +80,8 @@ export class SearchComponent implements OnInit{
   filteredlist2:Vehicles[]=[];
   filteredlist3:Vehicles[]=[];
   filteredlist4:Vehicles[]=[];
-  
+  PlanetList:Planets[]=[];
+
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
@@ -101,7 +102,7 @@ ngOnInit() {
         startWith(null),
         map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
       );
-       this.filteredPlanets2 = this.Destination2.valueChanges
+      this.filteredPlanets2 = this.Destination2.valueChanges
       .pipe(
         startWith(null),
         map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
@@ -137,6 +138,7 @@ ngOnInit() {
     this.planetsService.getPlanets()
       .subscribe(Planets=>{this.Planets=Planets;
         console.log(this.Planets);
+        this.PlanetList=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanets1=of(this.Planets);
        });
    }
@@ -199,7 +201,7 @@ ngOnInit() {
       
    }
 
-
+  //Function to filter Vehicles according to distance
    filterAccordingToDistance(vehicles:Vehicles[],selectedPlanet:Planets):Vehicles[]
    {
 
@@ -606,5 +608,24 @@ findFalcon(token:Token ):void{
     this.addSelectedVehicles();
     this.SearchFalcon();
   }
+
+//Function to reset page
+onReset(stage:Number):void{
+
+  switch (stage) {
+    case 4:
+      // code...
+      this.filteredPlanets1=of(this.PlanetList);
+      this.Planets=JSON.parse(JSON.stringify(this.PlanetList));
+      this.filteredVehicles1=of(this.Vehicles);
+      this.searchForm.reset; 
+      break;
+
+    default:
+      // code...
+      break;
+  }
+
+}
 
 }
