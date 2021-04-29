@@ -29,7 +29,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { ResultComponent } from './result/result.component';
-//import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -64,7 +66,10 @@ import { ResultComponent } from './result/result.component';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
 
   ],
   exports:[
