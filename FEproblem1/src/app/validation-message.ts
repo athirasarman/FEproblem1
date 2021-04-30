@@ -1,10 +1,10 @@
 export interface ValidationMessage {
 	controlName:string;
-	error:[
+	validation:Array<
 	{
 	type:string,
 	message:string
     }
-	];
+	>;
 	
 }

@@ -1,4 +1,4 @@
-<form [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="searchForm" #Searchform (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title >Time Taken: {{timeTaken}}</mat-card-title>
@@ -15,74 +15,25 @@
              matInput 
              [formControl]="Destination1"
              [(ngModel)]="planet1"
+             required
              [matAutocomplete]="autoDestination1">
              <mat-autocomplete autoActiveFirstOption  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText">
               <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of filteredPlanets1 | async" [value]="planet" >
                 {{planet.name}}
               </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
+             </mat-autocomplete>
+           </mat-form-field>
+           <span *ngFor="let message of validationMessages" >
+              <mat-error *ngIf="message.controlName=='Destination1'">
+              <div  *ngFor="let validation of message.validation">
+              <div *ngIf="Destination1.hasError(validation.type)">
+               {{validation.message}}
+             </div>
+               </div>
+             </mat-error>
+           </span>
+       </div>
 
-        <div class="col">
-         <mat-form-field class="full-width" *ngIf="showPlanet2">
-            <mat-label>Destination 2</mat-label>
-            <input #destination2 type="text"
-             placeholder="Pick one"
-             aria-label="Destination 2"
-             matInput
-             [formControl]="Destination2"
-             [(ngModel)]="planet2"
-             [matAutocomplete]="autoDestination2">
-            <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
-               {{planet.name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-
-          <div class="col">
-           <mat-form-field class="full-width" *ngIf="showPlanet3">
-            <mat-label>Destination 3</mat-label>
-            <input #destination3 type="text"
-             placeholder="Pick one"
-             aria-label="Destination 3"
-             matInput
-             [(ngModel)]="planet3"
-             [formControl]="Destination3"
-             [matAutocomplete]="autoDestination3">
-            <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option *ngFor="let planet of filteredPlanets3 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest3',planet)">
-               {{planet.name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-
-        <div class="col">
-         <mat-form-field class="full-width" *ngIf="showPlanet4">
-            <mat-label>Destination 4</mat-label>
-            <input #destination4 type="text"
-             placeholder="Pick one"
-             aria-label="Destination 4"
-             matInput
-             [(ngModel)]="planet4"
-             [formControl]="Destination4"
-             [matAutocomplete]="autoDestination4">
-            <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option *ngFor="let planet of filteredPlanets4 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest4',planet)">
-               {{planet.name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-
-
-      </div>
-     
-      
-      <div class="row">
 
         <div class="col" [hidden]="showVehicle1">
            <mat-label>Select Vehicle 1</mat-label>
@@ -91,6 +42,7 @@
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle1"
+           required
            formControlName="selectedVehicle1"
            (change)="calculateTimeTaken(1)"
            >
@@ -100,6 +52,38 @@
           </mat-radio-group>
         </div>
 
+     </div>
+
+<div class="row">
+        <div class="col" *ngIf="showPlanet2">
+         <mat-form-field class="full-width" >
+            <mat-label>Destination 2</mat-label>
+            <input #destination2 type="text"
+             placeholder="Pick one"
+             aria-label="Destination 2"
+             matInput
+             required 
+             [formControl]="Destination2"
+             [(ngModel)]="planet2"
+             [matAutocomplete]="autoDestination2">
+            <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
+               {{planet.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span *ngFor="let message of validationMessages" >
+              <mat-error *ngIf="message.controlName=='Destination2'">
+              <div  *ngFor="let validation of message.validation">
+              <div *ngIf="Destination2.hasError(validation.type)">
+               {{validation.message}}
+             </div>
+               </div>
+             </mat-error>
+           </span>
+        </div>
+
+
         <div class="col" [hidden]="showVehicle2">
            <mat-label>Select Vehicle 2</mat-label>
           <mat-radio-group
@@ -108,6 +92,7 @@
            class="example-radio-group"
            [(ngModel)]="vehicle2"
            formControlName="selectedVehicle2"
+           required
            (change)="calculateTimeTaken(2)">
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle2" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle" >
              {{vehicle.name}}
@@ -116,12 +101,43 @@
 
          
         </div>
+</div>
+<div class="row">
+          <div class="col" *ngIf="showPlanet3">
+           <mat-form-field class="full-width" >
+            <mat-label>Destination 3</mat-label>
+            <input #destination3 type="text"
+             placeholder="Pick one"
+             aria-label="Destination 3"
+             matInput
+             required="" 
+             [(ngModel)]="planet3"
+             [formControl]="Destination3"
+             [matAutocomplete]="autoDestination3">
+            <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option *ngFor="let planet of filteredPlanets3 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest3',planet)">
+               {{planet.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span *ngFor="let message of validationMessages" >
+              <mat-error *ngIf="message.controlName=='Destination3'">
+              <div  *ngFor="let validation of message.validation">
+              <div *ngIf="Destination3.hasError(validation.type)">
+               {{validation.message}}
+             </div>
+               </div>
+             </mat-error>
+           </span>
+           </div>
+
 
         <div class="col" [hidden]="showVehicle3">
           <mat-label>Select Vehicle 3</mat-label>
           <mat-radio-group
           #Vehicle3="matRadioGroup"
            aria-labelledby="example-radio-group-label"
+           required
            class="example-radio-group"
            [(ngModel)]="vehicle3"
            formControlName="selectedVehicle3"
@@ -131,6 +147,40 @@
            </mat-radio-button>
           </mat-radio-group>
         </div>
+        
+
+</div>
+
+<div class="row">
+        <div class="col" *ngIf="showPlanet4">
+         <mat-form-field class="full-width" >
+            <mat-label>Destination 4</mat-label>
+            <input #destination4 type="text"
+             placeholder="Pick one"
+             aria-label="Destination 4"
+             matInput
+             required 
+             [(ngModel)]="planet4"
+             [formControl]="Destination4"
+             [matAutocomplete]="autoDestination4">
+            <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText">
+              <mat-option *ngFor="let planet of filteredPlanets4 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest4',planet)">
+               {{planet.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span *ngFor="let message of validationMessages" >
+              <mat-error *ngIf="message.controlName=='Destination4'">
+              <div  *ngFor="let validation of message.validation">
+              <div *ngIf="Destination4.hasError(validation.type)">
+               {{validation.message}}
+             </div>
+               </div>
+             </mat-error>
+           </span>
+        </div>
+
+
 
         <div class="col" [hidden]="showVehicle4">
           <mat-label>Select Vehicle 4</mat-label>
@@ -139,6 +189,7 @@
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
            [(ngModel)]="vehicle4"
+           required
            formControlName="selectedVehicle4"
            (change)="calculateTimeTaken(4)">
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle" >
@@ -147,10 +198,13 @@
           </mat-radio-group>
         </div>
 
+
       </div>
 
     </mat-card-content>
     <mat-card-actions>
+
+    
       <button mat-raised-button color="primary" type="submit">Search</button>
        <button mat-raised-button color="primary" type="reset" click="onReset(4)">Reset</button>
       

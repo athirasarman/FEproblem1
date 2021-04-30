@@ -13,6 +13,8 @@ import {MatRadioChange } from '@angular/material/radio';
 //Importing Services
 import {PlanetsService} from '../planets.service';
 import {VehiclesService} from '../vehicles.service';
+import {ValidationMessage} from '../validation-message';
+import {ValidationMessageList} from '../MessageList';
 
 //Importing Interfaces
 import {Vehicles} from '../vehicles';
@@ -41,18 +43,28 @@ export class SearchComponent implements OnInit{
 
     searchForm = this.fb.group({
  
-    selectedVehicle1: new FormControl(),
-    selectedVehicle2: new FormControl(),
-    selectedVehicle3: new FormControl(),
-    selectedVehicle4: new FormControl()
+    selectedVehicle1: new FormControl(null,Validators.required),
+    selectedVehicle2: new FormControl(null,Validators.required),
+    selectedVehicle3: new FormControl(null,Validators.required),
+    selectedVehicle4: new FormControl(null,Validators.required)
          
   });
-
-    Destination1: FormControl=new FormControl();
-    Destination2: FormControl= new FormControl();
-    Destination3: FormControl= new FormControl();
-    Destination4: FormControl= new FormControl();
    
+   validationMessages=ValidationMessageList;
+    Destination1: FormControl=new FormControl('', 
+      { validators: [this.autocompleteObjectValidator(), Validators.required] });
+    Destination2: FormControl= new FormControl('', 
+      { validators: [this.autocompleteObjectValidator(), Validators.required] });
+    Destination3: FormControl= new FormControl('', 
+      { validators: [this.autocompleteObjectValidator(), Validators.required] });
+    Destination4: FormControl= new FormControl('', 
+      { validators: [this.autocompleteObjectValidator(), Validators.required] });
+   
+  // Destination1:FormControl=new FormControl();
+   //Destination2:FormControl=new FormControl();
+   //Destination3:FormControl=new FormControl();
+  // Destination4:FormControl=new FormControl();
+
   Token: Token={} as Token;
   vehicle1: Vehicles={} as Vehicles;
   vehicle2: Vehicles={} as Vehicles;
@@ -120,11 +132,23 @@ ngOnInit() {
   
     } 
 
+  autocompleteObjectValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (typeof control.value === 'string') {
+      return { 'invalidAutocompleteObject': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+ }
+
 //Function to filter planets
  filterPlanets(pName: any,initial:true) {
-
-
-    let planetName = pName.name || pName; // pName can be a planet or a string
+     let planetName = "";
+    if(pName){
+    // pName can be a planet or a string
+     let planetName = pName.name || pName;
+    }
+    
     return this.Planets.filter(planet =>
       planet.name.toLowerCase().indexOf(planetName.toLowerCase()) === 0);
 
@@ -604,9 +628,16 @@ findFalcon(token:Token ):void{
 
 //Function to enable search functionality
   onSubmit(): void {
+    if(this.searchForm.valid)
+    {
     this.addSelectedPlanet();
     this.addSelectedVehicles();
     this.SearchFalcon();
+    }
+    else
+    {
+      console.log("Form invalid");
+    }
   }
 
 //Function to reset page
