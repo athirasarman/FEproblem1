@@ -46,8 +46,8 @@ export class SearchComponent implements OnInit{
     selectedVehicle1: new FormControl(null,Validators.required),
     selectedVehicle2: new FormControl(null,Validators.required),
     selectedVehicle3: new FormControl(null,Validators.required),
-    selectedVehicle4: new FormControl(null,Validators.required)
-         
+    selectedVehicle4: new FormControl(null,Validators.required),
+            
   });
    
    validationMessages=ValidationMessageList;
@@ -59,11 +59,6 @@ export class SearchComponent implements OnInit{
       { validators: [this.autocompleteObjectValidator(), Validators.required] });
     Destination4: FormControl= new FormControl('', 
       { validators: [this.autocompleteObjectValidator(), Validators.required] });
-   
-  // Destination1:FormControl=new FormControl();
-   //Destination2:FormControl=new FormControl();
-   //Destination3:FormControl=new FormControl();
-  // Destination4:FormControl=new FormControl();
 
   Token: Token={} as Token;
   vehicle1: Vehicles={} as Vehicles;
@@ -82,7 +77,6 @@ export class SearchComponent implements OnInit{
   showVehicle2:  boolean=true;
   showVehicle3:  boolean=true;
   showVehicle4:  boolean=true;
-  showPlanet1:  boolean=false;
   showPlanet2:  boolean=false;
   showPlanet3:  boolean=false;
   showPlanet4:  boolean=false;
@@ -92,7 +86,13 @@ export class SearchComponent implements OnInit{
   filteredlist2:Vehicles[]=[];
   filteredlist3:Vehicles[]=[];
   filteredlist4:Vehicles[]=[];
+  filteredPlanetlist1:Planets[]=[];
+  filteredPlanetlist2:Planets[]=[];
+  filteredPlanetlist3:Planets[]=[];
+  filteredPlanetlist4:Planets[]=[];
+
   PlanetList:Planets[]=[];
+  stage=1;
 
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
@@ -161,9 +161,13 @@ ngOnInit() {
 
     this.planetsService.getPlanets()
       .subscribe(Planets=>{this.Planets=Planets;
-        console.log(this.Planets);
         this.PlanetList=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanets1=of(this.Planets);
+        this.filteredPlanetlist1=JSON.parse(JSON.stringify(Planets));
+        this.filteredPlanetlist2=JSON.parse(JSON.stringify(Planets));
+        this.filteredPlanetlist3=JSON.parse(JSON.stringify(Planets));
+        this.filteredPlanetlist4=JSON.parse(JSON.stringify(Planets));
+
        });
    }
 
@@ -174,27 +178,67 @@ ngOnInit() {
         // code...
         {
           this.showVehicle1=  false;
+          if(this.stage>1)
+          {
+          this.onReset(1);
           this.removeSelectedPlanet(selectedPlanet,1);
           this.filterVehicles(1,selectedPlanet);
+          }
+          else
+          {
+          if(!this.planet1.name)
+           {
+           this.removeSelectedPlanet(selectedPlanet,1);
+           this.filterVehicles(1,selectedPlanet);
+           }
+          }
           
           break;
       }
       case "dest2":
         {
           this.showVehicle2=  false;
+          if(this.stage>2)
+          {
+          this.onReset(2);
+          this.removeSelectedPlanet(this.planet1,1);
           this.removeSelectedPlanet(selectedPlanet,2);
           this.filterVehicles(2,selectedPlanet);
+          }
+          else
+          {
+            if(!this.planet2.name)
+            {
+              this.removeSelectedPlanet(selectedPlanet,2);
+              this.filterVehicles(2,selectedPlanet);
+            }
+          }
+          
           break;}
       case "dest3":
         {
           this.showVehicle3=  false;
+          if(this.stage>3)
+          {
+          this.onReset(3);
+          this.removeSelectedPlanet(this.planet1,1);
+          this.removeSelectedPlanet(this.planet2,2);
           this.removeSelectedPlanet(selectedPlanet,3);
           this.filterVehicles(3,selectedPlanet);
+          }
+          else
+          {
+            if(!this.planet3.name)
+            {
+              this.removeSelectedPlanet(selectedPlanet,3);
+              this.filterVehicles(3,selectedPlanet);
+            }
+          }
+        
           break;}
       case "dest4":
         {
           this.showVehicle4=  false;
-          this.removeSelectedPlanet(selectedPlanet,4);
           this.filterVehicles(4,selectedPlanet);
           break;}
       default:
@@ -215,11 +259,11 @@ ngOnInit() {
   {
      this.vehicleService.getVehicles().subscribe(
        data=>{
-         this.Vehicles=data;
-         this.filteredlist4=JSON.parse(JSON.stringify(this.Vehicles));
-         this.filteredlist3=JSON.parse(JSON.stringify(this.Vehicles));
-         this.filteredlist2=JSON.parse(JSON.stringify(this.Vehicles));
-         this.filteredlist1=JSON.parse(JSON.stringify(this.Vehicles));
+         this.Vehicles=JSON.parse(JSON.stringify(data));
+         this.filteredlist4=JSON.parse(JSON.stringify(data));
+         this.filteredlist3=JSON.parse(JSON.stringify(data));
+         this.filteredlist2=JSON.parse(JSON.stringify(data));
+         this.filteredlist1=JSON.parse(JSON.stringify(data));
        }
          );
       
@@ -490,6 +534,7 @@ filterVehicleUnits(vehicleNumber:number):void{
            this.timeTaken=this.timeTaken+time;
            this.filterVehicleUnits(1);
            this.showPlanet2=true;
+           this.stage=2;
          }
          break;
        case 2:
@@ -500,6 +545,7 @@ filterVehicleUnits(vehicleNumber:number):void{
            this.timeTaken=this.timeTaken+time;
            this.filterVehicleUnits(2);
            this.showPlanet3=true;
+           this.stage=3;
          }
          break;
        case 3:
@@ -510,6 +556,7 @@ filterVehicleUnits(vehicleNumber:number):void{
            this.timeTaken=this.timeTaken+time;
            this.filterVehicleUnits(3);
            this.showPlanet4=true;
+           this.stage=4;
          }
          break;
        case 4:
@@ -518,6 +565,7 @@ filterVehicleUnits(vehicleNumber:number):void{
          {
            time=this.planet4.distance/this.vehicle4.speed;
            this.timeTaken=this.timeTaken+time;
+           //this.stage=4;
          }
          break;
        
@@ -536,59 +584,52 @@ filterVehicleUnits(vehicleNumber:number):void{
 
 //Function to remove already selected planets from other autocomplete lists
 removeSelectedPlanet(selectedPlanet:Planets, destinationNumber:Number){
-  this.Planets.splice(this.Planets.indexOf(selectedPlanet),1)
+  //this.Planets.splice(this.Planets.indexOf(selectedPlanet),1)
 
 switch (destinationNumber) {
   case 1:
     // code...
-    this.filteredPlanets2.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets3.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets4.subscribe(
-                     data=>{data=this.Planets;
-          });
+   // let eIndex=this.filteredPlanetlist2.findIndex(element=>(element.name===selectedPlanet.name));
+    this.filteredPlanetlist2.splice(this.filteredPlanetlist2.findIndex(element=>(element.name===selectedPlanet.name)),1);
+    this.filteredPlanetlist3.splice(this.filteredPlanetlist3.findIndex(element=>(element.name===selectedPlanet.name)),1);
+    this.filteredPlanetlist4.splice(this.filteredPlanetlist4.findIndex(element=>(element.name===selectedPlanet.name)),1);
+
+    this.filteredPlanets2=of(this.filteredPlanetlist2);
+    this.filteredPlanets3=of(this.filteredPlanetlist3);
+    this.filteredPlanets4=of(this.filteredPlanetlist4);
     break;
 
    case 2:
     // code...
-    this.filteredPlanets1.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets3.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets4.subscribe(
-                     data=>{data=this.Planets;
-          });
+    //this.filteredPlanetlist1.splice(this.filteredPlanetlist1.findIndex(element=>(element.name===selectedPlanet.name)),1);
+    this.filteredPlanetlist3.splice(this.filteredPlanetlist3.findIndex(element=>(element.name===selectedPlanet.name)),1);
+    this.filteredPlanetlist4.splice(this.filteredPlanetlist4.findIndex(element=>(element.name===selectedPlanet.name)),1);
+
+    //this.filteredPlanets1=of(this.filteredPlanetlist1);
+    this.filteredPlanets3=of(this.filteredPlanetlist3);
+    this.filteredPlanets4=of(this.filteredPlanetlist4);
     break;
 
   case 3:
     // code...
-   this.filteredPlanets1.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets2.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets4.subscribe(
-                     data=>{data=this.Planets;
-          });
+   // this.filteredPlanetlist1.splice(this.filteredPlanetlist1.findIndex(element=>(element.name===selectedPlanet.name)),1);
+    //this.filteredPlanetlist2.splice(this.filteredPlanetlist2.findIndex(element=>(element.name===selectedPlanet.name)),1);
+    this.filteredPlanetlist4.splice(this.filteredPlanetlist4.findIndex(element=>(element.name===selectedPlanet.name)),1);
+
+    //this.filteredPlanets1=of(this.filteredPlanetlist1);
+   // this.filteredPlanets2=of(this.filteredPlanetlist2);
+    this.filteredPlanets4=of(this.filteredPlanetlist4);
     break;
 
   case 4:
     // code...
-   this.filteredPlanets1.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets2.subscribe(
-                     data=>{data=this.Planets;
-          });
-    this.filteredPlanets3.subscribe(
-                     data=>{data=this.Planets;
-          });
+    //this.filteredPlanetlist1.splice(this.filteredPlanetlist1.findIndex(element=>(element.name===selectedPlanet.name)),1);
+   // this.filteredPlanetlist2.splice(this.filteredPlanetlist2.findIndex(element=>(element.name===selectedPlanet.name)),1);
+   // this.filteredPlanetlist3.splice(this.filteredPlanetlist3.findIndex(element=>(element.name===selectedPlanet.name)),1);
+
+   // this.filteredPlanets1=of(this.filteredPlanetlist1);
+   // this.filteredPlanets2=of(this.filteredPlanetlist2);
+    //this.filteredPlanets3=of(this.filteredPlanetlist3);
     break;
   
   default:
@@ -644,12 +685,93 @@ findFalcon(token:Token ):void{
 onReset(stage:Number):void{
 
   switch (stage) {
+    case 1:
+    {
+      this.stage=1;
+      this.vehicle1={} as Vehicles;
+      this.vehicle2={} as Vehicles;
+      this.vehicle3={} as Vehicles;
+      this.vehicle4={} as Vehicles;
+      this.filteredlist1=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist2=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist3=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist4=JSON.parse(JSON.stringify(this.Vehicles));
+      this.planet2={} as Planets;
+      this.planet3={} as Planets;
+      this.planet4={} as Planets;
+      this.filteredPlanetlist2=JSON.parse(JSON.stringify(this.PlanetList));    
+      this.filteredPlanetlist3=JSON.parse(JSON.stringify(this.PlanetList));  
+      this.filteredPlanetlist4=JSON.parse(JSON.stringify(this.PlanetList));
+      this.showVehicle2=true;
+      this.showVehicle3=true;
+      this.showVehicle4=true;
+      this.showPlanet2=false;
+      this.showPlanet3=false;
+      this.showPlanet4=false; 
+      break;
+    }
+    case 2:
+    {
+      this.stage=2;
+      this.vehicle2={} as Vehicles;
+      this.vehicle3={} as Vehicles;
+      this.vehicle4={} as Vehicles;
+      this.filteredlist2=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist3=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist4=JSON.parse(JSON.stringify(this.Vehicles));
+      this.planet3={} as Planets;
+      this.planet4={} as Planets;
+      this.filteredPlanetlist3=JSON.parse(JSON.stringify(this.PlanetList));  
+      this.filteredPlanetlist4=JSON.parse(JSON.stringify(this.PlanetList));
+      this.showVehicle3=true;
+      this.showVehicle4=true;
+      this.showPlanet3=false;
+      this.showPlanet4=false;
+      break;
+    }
+    case 3:
+    {
+      this.stage=3;
+      this.vehicle3={} as Vehicles;
+      this.vehicle4={} as Vehicles;
+      this.filteredlist3=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist4=JSON.parse(JSON.stringify(this.Vehicles));
+      this.planet3={} as Planets;
+      this.planet4={} as Planets;  
+      this.filteredPlanetlist4=JSON.parse(JSON.stringify(this.PlanetList));
+      this.showVehicle4=true;
+      this.showPlanet4=false;
+      break;
+    }
+
     case 4:
       // code...
+      this.searchForm.reset;
       this.filteredPlanets1=of(this.PlanetList);
-      this.Planets=JSON.parse(JSON.stringify(this.PlanetList));
-      this.filteredVehicles1=of(this.Vehicles);
-      this.searchForm.reset; 
+      this.filteredPlanetlist1=JSON.parse(JSON.stringify(this.PlanetList));
+      this.filteredPlanetlist2=JSON.parse(JSON.stringify(this.PlanetList));
+      this.filteredPlanetlist3=JSON.parse(JSON.stringify(this.PlanetList));
+      this.filteredPlanetlist4=JSON.parse(JSON.stringify(this.PlanetList));
+      this.filteredVehicles1=of(this.Vehicles); 
+      this.stage=1;    
+      this.showVehicle2=true;
+      this.showVehicle3=true;
+      this.showVehicle4=true;
+      this.showPlanet2=false;
+      this.showPlanet3=false;
+      this.showPlanet4=false; 
+      this.filteredlist1=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist2=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist3=JSON.parse(JSON.stringify(this.Vehicles));
+      this.filteredlist4=JSON.parse(JSON.stringify(this.Vehicles));
+      this.vehicle1={} as Vehicles;
+      this.vehicle2={} as Vehicles;
+      this.vehicle3={} as Vehicles;
+      this.vehicle4={} as Vehicles;
+      this.planet1={} as Planets;
+      this.planet2={} as Planets;
+      this.planet3={} as Planets;
+      this.planet4={} as Planets;
       break;
 
     default:

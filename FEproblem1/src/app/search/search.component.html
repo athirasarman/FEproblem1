@@ -1,4 +1,4 @@
-<form [formGroup]="searchForm" #Searchform (ngSubmit)="onSubmit()">
+<form [formGroup]="searchForm" #Searchform>
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title >Time Taken: {{timeTaken}}</mat-card-title>
@@ -204,9 +204,11 @@
     </mat-card-content>
     <mat-card-actions>
 
-    
-      <button mat-raised-button color="primary" type="submit">Search</button>
-       <button mat-raised-button color="primary" type="reset" click="onReset(4)">Reset</button>
+     
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Search</button>
+
+        <button mat-raised-button type="reset"color="primary" (click)="onReset(4)">Reset</button>
+      
       
     </mat-card-actions>
   </mat-card>
