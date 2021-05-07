@@ -18,12 +18,12 @@ export class FalconDashboardComponent {
     map(({ matches }) => {
       if (matches) {
         return [
-          { id:1,  title: 'Select planets and vehicles you want to search in', cols: 2, rows: 2, img:"../../assets/img/logo.png" }
+          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png" }
         ];
       }
 
       return [
-          { id:1,  title: 'Select planets and vehicles you want to search in', cols: 2, rows: 2, img:"../../assets/img/logo.png" }
+          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png" }
        
       ];
     })
