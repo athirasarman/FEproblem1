@@ -7,7 +7,7 @@ import {MatButtonModule} from '@angular/material/button';
 
 
 @Component({
-  selector: 'app-falcon-dashboard',
+  selector: 'app-falcon-dashboard-dummy',
   templateUrl: './falcon-dashboard.component.html',
   styleUrls: ['./falcon-dashboard.component.css']
 })

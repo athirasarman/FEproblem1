@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FalconDashboardComponent } from './falcon-dashboard/falcon-dashboard.component';
+//import { FindingfalconeModule } from './findingfalcone/findingfalcone.module';
 import {ResultComponent}from './result/result.component';
 
 
 const routes: Routes = [
-   { path: 'dashboard', component: FalconDashboardComponent },
+
    { path:'result',component:ResultComponent},
+   { path: 'findingfalcone', loadChildren: () => import('./finding-falcone/finding-falcone.module').then(m => m.FindingFalconeModule) },
+   { path: '', redirectTo:'/navigation', pathMatch:'full'}
    //{ path:'**',component:PageNotFoundComponent}
 ];
 
