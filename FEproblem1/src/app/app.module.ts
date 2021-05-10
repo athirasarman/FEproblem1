@@ -29,7 +29,7 @@ import { MatSliderModule } from '@angular/material/slider';
 
 import {FindingFalconeModule} from './finding-falcone/finding-falcone.module';
 import { FalconDashboardComponent } from './falcon-dashboard/falcon-dashboard.component';
-//import { NavigationComponent } from './navigation/navigation.component';
+////import { NavigationComponent } from './navigation/navigation.component';
 import { ResultComponent } from './result/result.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
@@ -44,7 +44,7 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
     FalconDashboardComponent,
     //NavigationComponent,
     //SearchComponent,
-    ResultComponent,
+    //ResultComponent,
 
   ],
   imports: [

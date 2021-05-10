@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, Validators,ValidatorFn,AbstractControl } from '@angular/forms';
 import { ActivatedRoute,Router} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
@@ -29,6 +29,8 @@ import {FindFalconRequest} from '../find-falcon-request';
 })
 
 export class SearchComponent implements OnInit{
+
+  @Output() result= new EventEmitter<{}>();
   
   filteredPlanets1: Observable<Planets[]>;
   filteredPlanets2: Observable<Planets[]>; 
@@ -688,11 +690,15 @@ findFalcon(token:Token ):void{
  //Routing to result page
  this.FindingfalconeService.findFalcon(FindFalconRequest)
     .subscribe(data=>{console.log(data);
-      this.router.navigateByUrl('/result', { state: data });
+    //  this.router.navigateByUrl('/result', { state: data });
+    //this.result.emit(data);
+   // console.log(this.result);
+   this.addNewItem(data);
     });
-
-
 }
+   addNewItem(value: {}) {
+    this.result.emit(value);
+  }
 
 //Function to enable search functionality
   onSubmit(): void {

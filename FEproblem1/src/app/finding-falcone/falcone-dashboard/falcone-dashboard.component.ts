@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter,Input } from '@angular/core';
 import { map } from 'rxjs/operators';
+import {Observable,of} from 'rxjs';
+import { Router,NavigationExtras} from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -8,37 +10,25 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./falcone-dashboard.component.css']
 })
 export class FalconeDashboardComponent {
-  /** Based on the screen size, switch from standard to one column per row 
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
-        ];
-      }
+ @Output() searchResultEvent=new EventEmitter<{}>();
+ showSearchCard:boolean=true;
+ showResultCard:boolean=false
+ searchresult={};
 
-      return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
-      ];
-    })
-  );*/
 
    cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return [
-          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png" }
+          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png"}
+         // { id:2,  title: '', cols: 2, rows: 2, img:"" ,}
+
         ];
       }
 
       return [
-          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png" }
+          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png"}
+          //{ id:2,  title: '', cols: 2, rows: 2, img:""}
        
       ];
     })
@@ -46,5 +36,16 @@ export class FalconeDashboardComponent {
 
 
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+         private router: Router) {}
+
+   addItem(newItem:{}) {
+     
+    console.log(newItem);
+    this.searchresult=newItem;
+    let navigationExtras: NavigationExtras = {
+            queryParams: this.searchresult
+        };
+    this.router.navigate(["/result"],navigationExtras);
+  }
 }

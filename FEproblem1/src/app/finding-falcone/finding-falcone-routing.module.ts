@@ -11,7 +11,7 @@ const routes: Routes = [
 
 { path: 'dashboard', component: FalconeDashboardComponent },
 
-{pathMatch:'result', component:ResultComponent }
+{ path:'result', component:ResultComponent }
 ];
 
 @NgModule({
