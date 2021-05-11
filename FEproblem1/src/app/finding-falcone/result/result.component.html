@@ -1,7 +1,74 @@
-<form >
-    <p>
-    	{{result}}
-    </p>
-    
-    <p>King shan is pleased with you</p>
-</form>
+
+
+<div class="grid-container">
+  <h1></h1>
+  
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile [colspan]="2" [rowspan]="2" [ngSwitch]="status">
+      <mat-card class="dashboard-card"  *ngSwitchCase="'success'">
+        <mat-card-header >
+          <mat-card-title>
+            Success
+          </mat-card-title>
+
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content" >
+          <div >
+             <p>Success. Congratulations on Finding Falcone. King Shan is mighty pleased.</p>
+              <p >
+                Planet:	{{planetName}}
+              </p>
+               <p>
+    	        Time taken:{{result.timeTaken}}
+              </p> 
+             
+          </div>
+         
+        </mat-card-content>
+        <mat-card-actions>
+     <button mat-flat-button color="primary" routerLink="/navigation">Start Again</button>
+  </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="dashboard-card"  *ngSwitchCase="'false'">
+        <mat-card-header >
+          <mat-card-title >
+            Failed
+          </mat-card-title>
+
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content" >
+          <div >
+              Better Luck Next Time!!!
+              
+          </div>
+         
+        </mat-card-content>
+
+        <mat-card-actions>
+     <button mat-flat-button color="primary" routerLink="/navigation">Start Again</button>
+  </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="dashboard-card"  *ngSwitchCase="'error'">
+        <mat-card-header >
+          <mat-card-title *ngSwitchCase="'error'">
+            Error
+          </mat-card-title>
+
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content" >
+          <div >
+             <p> {{error}}</p>
+              
+          </div>
+         
+        </mat-card-content>
+
+        <mat-card-actions>
+     <button mat-flat-button color="primary" routerLink="/navigation">Start Again</button>
+  </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

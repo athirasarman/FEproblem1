@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse,HttpHeaders} from '@angular/common/http';
 import {Token} from './token';
 import {FindFalconRequest} from './find-falcon-request';
+import {Result} from './result';
+
 
 import { Observable, of } from 'rxjs';
 import { retry,catchError, map, tap } from 'rxjs/operators';
@@ -16,6 +18,7 @@ export class FindingfalconeService {
   private findFalconUrl="https://findfalcone.herokuapp.com/find";//url to search falcon
   Token: Token[]=[];
   findFalconeRequest: FindFalconRequest[]=[];
+  private result:Result={} as Result;
 
   constructor(
   	private http:HttpClient
@@ -36,12 +39,15 @@ export class FindingfalconeService {
   }
 
  
-  findFalcon(FindFalconRequest:FindFalconRequest):Observable<FindFalconRequest[]>
+  findFalcon(FindFalconRequest:FindFalconRequest,timeTaken:number):Observable<FindFalconRequest[]>
   {
       return  this.http.post<FindFalconRequest[]>(this.findFalconUrl,FindFalconRequest,this.httpOptions)
        .pipe(
          retry(1),
          map((data: any) => {
+             this.result.searchResult=data;
+             this.result.timeTaken=timeTaken;
+
              return data;
            }),
          tap(_ => this.log("Searching Done")  ),
@@ -49,6 +55,9 @@ export class FindingfalconeService {
          );
   }
 
+  getResult():Result{
+    return this.result;
+  }
 
 /**
    * Handle Http operation that failed.
@@ -60,6 +69,8 @@ export class FindingfalconeService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
+      this.result.searchResult.error=error;
+      this.result.searchResult.status="error";
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
@@ -75,6 +86,7 @@ export class FindingfalconeService {
   private log(message: string) {
    // this.messageService.add(`HeroService: ${message}`);
    console.log(message);
+
   }
 
   

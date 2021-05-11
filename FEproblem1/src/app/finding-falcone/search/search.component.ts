@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, Validators,ValidatorFn,AbstractControl } from '@angular/forms';
-import { ActivatedRoute,Router} from '@angular/router';
+import { ActivatedRoute,Router,NavigationExtras} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Observable,of} from 'rxjs';
 import {map,filter,startWith,tap,switchMap} from 'rxjs/operators';
@@ -688,16 +688,18 @@ findFalcon(token:Token ):void{
  };
 
  //Routing to result page
- this.FindingfalconeService.findFalcon(FindFalconRequest)
+ this.FindingfalconeService.findFalcon(FindFalconRequest,this.timeTaken)
     .subscribe(data=>{console.log(data);
-    //  this.router.navigateByUrl('/result', { state: data });
-    //this.result.emit(data);
-   // console.log(this.result);
-   this.addNewItem(data);
+              this.addNewItem(data);
     });
 }
-   addNewItem(value: {}) {
-    this.result.emit(value);
+   addNewItem(data: {}) {
+    //=this.timeTaken;
+    let searchResult:any={
+          rdata: data,
+          timeTaken:this.timeTaken
+    };
+    this.result.emit(searchResult);
   }
 
 //Function to enable search functionality

@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {Observable,of} from 'rxjs';
 
 import {ActivatedRoute, Router,ParamMap} from '@angular/router';
+import {FindingfalconeService} from '../findingfalcone.service';
+import {Result} from '../result';
+
 
 
 @Component({
@@ -13,14 +16,22 @@ import {ActivatedRoute, Router,ParamMap} from '@angular/router';
 
 export class ResultComponent {
 
-  result={};
+  result:Result={} as Result;
+  planetName:string="";
+  status:string="";
+  error:string="";
+  timeTaken=0;
 
-  constructor(private route:ActivatedRoute) { 
+  constructor(private route:ActivatedRoute,
+  	private FindingfalconeService: FindingfalconeService) { 
  
-  this.route.queryParams.subscribe(params => {
-            this.result=params;
-            console.log(this.result);
-        });
+ 
+         this.result=this.FindingfalconeService.getResult();
+         this.planetName=this.result.searchResult.planet_name;
+         this.status=this.result.searchResult.status;
+         this.error=this.result.searchResult.error;
+
+
 }
 
 

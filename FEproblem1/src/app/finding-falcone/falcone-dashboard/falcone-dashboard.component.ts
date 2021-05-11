@@ -20,14 +20,14 @@ export class FalconeDashboardComponent {
     map(({ matches }) => {
       if (matches) {
         return [
-          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png"}
+          { id:1,  title: 'Search', cols: 2, rows: 2, img:"../../assets/img/logo.png"}
          // { id:2,  title: '', cols: 2, rows: 2, img:"" ,}
 
         ];
       }
 
       return [
-          { id:1,  title: '', cols: 2, rows: 2, img:"../../assets/img/logo.png"}
+          { id:1,  title: 'Search', cols: 2, rows: 2, img:"../../assets/img/logo.png"}
           //{ id:2,  title: '', cols: 2, rows: 2, img:""}
        
       ];
@@ -46,6 +46,6 @@ export class FalconeDashboardComponent {
     let navigationExtras: NavigationExtras = {
             queryParams: this.searchresult
         };
-    this.router.navigate(["/result"],navigationExtras);
+    this.router.navigate(["/result"],{state:this.searchresult});
   }
 }
