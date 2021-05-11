@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit{
   @Output() result= new EventEmitter<{}>();
   error={
     show:false,
-    errorMessage:""
+    errorMessage:"Please Select all *Required Fields."
   };
   
   filteredPlanets1: Observable<Planets[]>;
@@ -482,23 +482,33 @@ filterVehicleUnits(vehicleNumber:number):void{
 
   //Function to add a planet to a selected array
   addSelectedPlanet():void
-  {
+  {  
+       if(this.planet1.name&&this.planet2.name&&this.planet3.name&&this.planet4.name)
+       {
         this.selectedPlanets.push(this.planet1.name.toString());
         this.selectedPlanets.push(this.planet2.name.toString());
         this.selectedPlanets.push(this.planet3.name.toString());
         this.selectedPlanets.push(this.planet4.name.toString());
-        console.log("planet added");
+      }
+      else{
+        this.ShowError();
+      }
   }
 
   //Function to add a planet to a selected array
   addSelectedVehicles():void
   {
-        //this.selectedVehicles.push(vehicle.name);
+       if(this.vehicle1.name&&this.vehicle2.name&&this.vehicle3.name&&this.vehicle4.name)
+       {
         this.selectedVehicles.push(this.vehicle1.name.toString());
         this.selectedVehicles.push(this.vehicle2.name.toString());
         this.selectedVehicles.push(this.vehicle3.name.toString());
         this.selectedVehicles.push(this.vehicle4.name.toString());
-         console.log("Vehicle added");
+       }
+       else
+       {
+         this.ShowError();
+       }
   }
 
 
@@ -700,7 +710,10 @@ findFalcon(token:Token ):void{
     {
     this.addSelectedPlanet();
     this.addSelectedVehicles();
-    this.SearchFalcon();
+    if(!this.error.show)
+     {
+      this.SearchFalcon();
+     }
     }
     else
     {
@@ -710,8 +723,7 @@ findFalcon(token:Token ):void{
 
   ShowError():void{
      this.error.show=true;
-     this.error.errorMessage="Please Select all *Required Fields.";
-  }
+   }
 
 //Function to reset page
 onReset(stage:Number):void{
