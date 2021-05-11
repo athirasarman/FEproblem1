@@ -19,3 +19,10 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+.card-actions
+{
+  align-content: center;
+  flex-wrap: wrap;
+  display: flex;
+}
