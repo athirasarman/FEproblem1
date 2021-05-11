@@ -36,15 +36,16 @@
 
 
         <div class="col" [hidden]="showVehicle1">
-           <mat-label>Select Vehicle 1</mat-label>
+          <mat-label>Select Vehicle 1</mat-label>
           <mat-radio-group
            #Vehicle1="matRadioGroup"
            aria-labelledby="example-radio-group-label"
            class="example-radio-group"
-           [(ngModel)]="vehicle1"
+          
            required
            formControlName="selectedVehicle1"
-           (change)="onSelectingVehicle(1)"
+            [(ngModel)]="vehicle1"
+           (change)="onSelectingVehicle(1,vehicle1)" 
            >
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle1" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" >
              {{vehicle.name}}
@@ -93,8 +94,9 @@
            [(ngModel)]="vehicle2"
            formControlName="selectedVehicle2"
            required
-           (change)="onSelectingVehicle(2)">
-           <mat-radio-button class="example-radio-button" radioGroup="Vehicle2" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle" >
+           (change)="onSelectingVehicle(2,vehicle2)"
+           >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle2" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle"  >
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -141,7 +143,8 @@
            class="example-radio-group"
            [(ngModel)]="vehicle3"
            formControlName="selectedVehicle3"
-           (change)="onSelectingVehicle(3)">
+           (change)="onSelectingVehicle(3,vehicle3)"
+           >
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle3" *ngFor="let vehicle of filteredVehicles3 | async" [value]="vehicle" >
              {{vehicle.name}}
            </mat-radio-button>
@@ -191,8 +194,9 @@
            [(ngModel)]="vehicle4"
            required
            formControlName="selectedVehicle4"
-           (change)="onSelectingVehicle(4)">
-           <mat-radio-button class="example-radio-button" radioGroup="Vehicle" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle" >
+            (change)="onSelectingVehicle(4,vehicle4)"
+           >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle">
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>

@@ -315,7 +315,7 @@ filterVehicleUnits(vehicleNumber:number):void{
   switch (vehicleNumber) {
     case 1:
       // code...
-       for(let value of this.filteredlist2)
+      { for(let value of this.filteredlist2)
        {
          if(value.name===this.vehicle1.name)
          {
@@ -364,24 +364,10 @@ filterVehicleUnits(vehicleNumber:number):void{
         this.filteredVehicles3=of(this.filteredlist3);
         this.filteredVehicles4=of(this.filteredlist4);
       break;
-
+}
       case 2:
       // code...
-       /*for(let value of this.filteredlist1)
-       {
-         if(value.name===this.vehicle2.name)
-         {
-         if(value.total_no>1)
-         {
-           value.total_no=value.total_no-1;
-         }
-         else
-           {
-            this.filteredlist1.splice(this.filteredlist1.indexOf(value),1);
-           }
-         }
-       }*/
-
+      {
        for(let value of this.filteredlist3)
        {
          if(value.name===this.vehicle2.name)
@@ -412,43 +398,14 @@ filterVehicleUnits(vehicleNumber:number):void{
          }
        }
 
-      //  this.filteredVehicles1=of(this.filteredlist1);
         this.filteredVehicles3=of(this.filteredlist3);
         this.filteredVehicles4=of(this.filteredlist4);
       break;
+    }
 
       case 3:
       // code...
-      /* for(let value of this.filteredlist1)
        {
-         if(value.name===this.vehicle3.name)
-         {
-         if(value.total_no>1)
-         {
-           value.total_no=value.total_no-1;
-         }
-         else
-           {
-            this.filteredlist1.splice(this.filteredlist1.indexOf(value),1);
-           }
-         }
-       }*/
-
-      /* for(let value of this.filteredlist2)
-       {
-         if(value.name===this.vehicle3.name)
-         {
-         if(value.total_no>1)
-         {
-           value.total_no=value.total_no-1;
-         }
-         else
-           {
-            this.filteredlist2.splice(this.filteredlist2.indexOf(value),1);
-           }
-         }
-       }*/
-
        for(let value of this.filteredlist4)
        {
          if(value.name===this.vehicle3.name)
@@ -466,7 +423,7 @@ filterVehicleUnits(vehicleNumber:number):void{
         this.filteredVehicles4=of(this.filteredlist4);
         //this.filteredVehicles2=of(this.filteredlist2);
        // this.filteredVehicles1=of(this.filteredlist1);
-      break;
+      break;}
     default:
       // code...
       break;
@@ -552,54 +509,85 @@ filterVehicleUnits(vehicleNumber:number):void{
   }
 
 
-  onSelectingVehicle(option: number){
+  onSelectingVehicle(option: number,vehicle:Vehicles){
 
      let time:number= 0;
      switch (option) {
        case 1:
          // code...
-         if(this.vehicle1)
+         {if(this.vehicle1.name)
          {
-           this.calculateTimeTaken(this.vehicle1,this.planet1);
+           
+           if(this.showPlanet2)
+             {
+               this.onReset(1);
+               this.removeSelectedPlanet(this.planet1,1);
+               this.vehicle1=vehicle;
+            }      
+
+           this.calculateTimeTaken(vehicle,this.planet1);
            this.filterVehicleUnits(1);
+           
            this.showPlanet2=true;
-           //this.stage=2;
-         }
+           }
+         
          break;
+       }
        case 2:
          // code...
-         if(this.vehicle2)
          {
-          // time=this.planet2.distance/this.vehicle2.speed;
-           //this.timeTaken=this.timeTaken+time;
-           this.calculateTimeTaken(this.vehicle2,this.planet2);
-           this.filterVehicleUnits(2);
-           this.showPlanet3=true;
-           //this.stage=3;
+           if(this.vehicle2.name)
+           {
+              
+             if(this.showPlanet3)
+             {
+               let vehicle1=this.vehicle1;
+               this.onReset(2);
+               this.vehicle1=vehicle1;
+               this.vehicle2=vehicle;
+               //this.calculateTimeTaken(this.vehicle1,this.planet1);
+               this.removeSelectedPlanet(this.planet1,1);
+               this.removeSelectedPlanet(this.planet2,2);
+               this.filterVehicles(1,this.planet1);
+              } 
+             this.calculateTimeTaken(vehicle,this.planet2);
+             this.filterVehicleUnits(2);
+             this.showPlanet3=true;
          }
-         break;
+         break;}
        case 3:
          // code...
-         if(this.vehicle3)
+         {if(this.vehicle3.name)
          {
-           //time=this.planet3.distance/this.vehicle3.speed;
-           //this.timeTaken=this.timeTaken+time;
-           this.calculateTimeTaken(this.vehicle3,this.planet3);
+           if(this.showPlanet4)
+             {
+               let vehicle1=this.vehicle1;
+               let vehicle2=this.vehicle2;
+               this.onReset(3);
+               this.vehicle3=vehicle;
+               this.vehicle1=vehicle1;
+               this.vehicle2=vehicle2;
+              // this.calculateTimeTaken(this.vehicle1,this.planet1);
+               //this.calculateTimeTaken(this.vehicle2,this.planet2);
+               this.removeSelectedPlanet(this.planet1,1);
+               this.removeSelectedPlanet(this.planet2,2);
+               this.removeSelectedPlanet(this.planet3,3);
+               this.filterVehicles(1,this.planet1);
+               this.filterVehicles(2,this.planet2);
+              } 
+           this.calculateTimeTaken(vehicle,this.planet3);
            this.filterVehicleUnits(3);
            this.showPlanet4=true;
-           //this.stage=4;
          }
-         break;
+         break;}
        case 4:
          // code...
-         if(this.vehicle4)
+        {if(!this.vehicle4.name)
          {
-           //time=this.planet4.distance/this.vehicle4.speed;
-           //this.timeTaken=this.timeTaken+time;
-           //this.stage=4;
-           this.calculateTimeTaken(this.vehicle4,this.planet4);
+           this.calculateTimeTaken(vehicle,this.planet4);
          }
          break;
+       }
        
        default:
          // code...
