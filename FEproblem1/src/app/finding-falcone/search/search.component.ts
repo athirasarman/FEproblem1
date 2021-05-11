@@ -31,6 +31,10 @@ import {FindFalconRequest} from '../find-falcon-request';
 export class SearchComponent implements OnInit{
 
   @Output() result= new EventEmitter<{}>();
+  error={
+    show:false,
+    errorMessage:""
+  };
   
   filteredPlanets1: Observable<Planets[]>;
   filteredPlanets2: Observable<Planets[]>; 
@@ -678,7 +682,7 @@ findFalcon(token:Token ):void{
  //Routing to result page
  this.FindingfalconeService.findFalcon(FindFalconRequest,this.timeTaken)
     .subscribe(data=>{console.log(data);
-              this.addNewItem(data);
+              //this.addNewItem(data);
     });
 }
    addNewItem(data: {}) {
@@ -687,7 +691,7 @@ findFalcon(token:Token ):void{
           rdata: data,
           timeTaken:this.timeTaken
     };
-    this.result.emit(searchResult);
+   // this.result.emit(searchResult);
   }
 
 //Function to enable search functionality
@@ -700,8 +704,13 @@ findFalcon(token:Token ):void{
     }
     else
     {
-      console.log("Form invalid");
+      this.ShowError();
     }
+  }
+
+  ShowError():void{
+     this.error.show=true;
+     this.error.errorMessage="Please Select all *Required Fields.";
   }
 
 //Function to reset page

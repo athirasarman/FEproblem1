@@ -28,5 +28,11 @@ export const ValidationMessageList:ValidationMessage[]= [
       { type: 'invalidAutocompleteObject', message: 'Destination 4 name not recognized. Click one of the autocomplete options.' },
       { type: 'required', message: 'Destination 4 is required.' }
     ]
+},
+{
+controlName:'Search',
+  validation:[
+      { type: 'required', message: 'Please Select all Required Fields.' }
+    ]
 }
 ];
