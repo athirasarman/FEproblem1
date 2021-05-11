@@ -1,6 +1,8 @@
 <form [formGroup]="searchForm" #Searchform>
 
-<mat-card *ngIf="this.error.show">{{this.error.errorMessage}}</mat-card>
+<mat-card *ngIf="this.error.show">
+<mat-error>{{this.error.errorMessage}}</mat-error>
+</mat-card>
 
 
   <mat-card class="shipping-card">

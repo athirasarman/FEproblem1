@@ -33,6 +33,7 @@ import { FalconDashboardComponent } from './falcon-dashboard/falcon-dashboard.co
 import { ResultComponent } from './result/result.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -42,10 +43,7 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
     AppHeaderComponent,
     AppFooterComponent,
     FalconDashboardComponent,
-    //NavigationComponent,
-    //SearchComponent,
-    //ResultComponent,
-
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
