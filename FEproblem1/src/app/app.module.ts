@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule,HttpClient} from '@angular/common/http';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
@@ -28,9 +28,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSliderModule } from '@angular/material/slider';
 
 import {FindingFalconeModule} from './finding-falcone/finding-falcone.module';
-import { FalconDashboardComponent } from './falcon-dashboard/falcon-dashboard.component';
-////import { NavigationComponent } from './navigation/navigation.component';
-import { ResultComponent } from './result/result.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -42,7 +39,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppComponent,
     AppHeaderComponent,
     AppFooterComponent,
-    FalconDashboardComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -77,7 +73,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppHeaderComponent,
     AppFooterComponent
   ],
-  providers: [],
+  providers: [HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

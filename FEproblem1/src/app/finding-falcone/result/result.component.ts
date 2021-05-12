@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Observable,of} from 'rxjs';
 
-import {ActivatedRoute, Router,ParamMap} from '@angular/router';
 import {FindingfalconeService} from '../findingfalcone.service';
 import {Result} from '../result';
 
@@ -22,14 +21,11 @@ export class ResultComponent {
   error:string="";
   timeTaken=0;
 
-  constructor(private route:ActivatedRoute,
-  	private FindingfalconeService: FindingfalconeService) { 
+  constructor(private FindingfalconeService: FindingfalconeService) { 
  
  
          this.result=this.FindingfalconeService.getResult();
-         this.planetName=this.result.searchResult.planet_name;
-         this.status=this.result.searchResult.status;
-         this.error=this.result.searchResult.error;
+     
 
 
 }
@@ -37,6 +33,36 @@ export class ResultComponent {
 
   ngOnInit(): void {
 
+   if(this.result.searchResult)
+   {
+    switch (this.result.searchResult.status) {
+      case "success":
+        // code...
+        {
+        this.planetName=this.result.searchResult.planet_name;
+        this.status=this.result.searchResult.status;
+        break;
+        }
+        case "false":
+        // code...
+        {
+        this.status=this.result.searchResult.status;
+        break;
+        }
+        case "error":
+        {
+         this.status=this.result.searchResult.status;
+         break;
+        } 
+      default:
+        // code...
+        {
+          this.status="error";
+        break;
+        }
+     }
+
+    }
 }
 
 

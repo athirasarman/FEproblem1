@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { HttpClientModule, HttpClient} from '@angular/common/http';
+
 import { FindingFalconeRoutingModule } from './finding-falcone-routing.module';
 //import { FindingFalconeComponent } from './finding-falcone.component';
 import { FalconeDashboardComponent } from './falcone-dashboard/falcone-dashboard.component';
@@ -32,6 +34,7 @@ import { ResultComponent } from './result/result.component';
   declarations: [ FalconeDashboardComponent, SearchComponent, NavigationComponent, ResultComponent],
   imports: [
     CommonModule,
+    HttpClientModule,
     FindingFalconeRoutingModule,
     MatGridListModule,
     MatCardModule,
@@ -43,7 +46,7 @@ import { ResultComponent } from './result/result.component';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-
+    HttpClientModule,
 
     BrowserAnimationsModule,
     MatSliderModule,
@@ -66,6 +69,7 @@ import { ResultComponent } from './result/result.component';
     MatPaginatorModule,
     MatSortModule,
 
-  ]
+  ],
+  providers: [HttpClient]
 })
 export class FindingFalconeModule { }

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-//import {PlanetsService} from '../../planets.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { HttpClientModule }from '@angular/common/http';
+
+import { HttpClientTestingModule} from '@angular/common/http/testing';
 
 import { PlanetsService } from './planets.service';
 
@@ -10,7 +10,10 @@ describe('PlanetsService', () => {
   let service: PlanetsService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+       imports:[ HttpClientTestingModule]
+    });
+      
     service = TestBed.inject(PlanetsService);
   });
 

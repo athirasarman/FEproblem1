@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResultComponent}from './result/result.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 
@@ -10,7 +9,7 @@ const routes: Routes = [
   
    { path: 'findingfalcone', loadChildren: () => import('./finding-falcone/finding-falcone.module').then(m => m.FindingFalconeModule) },
    { path: '', redirectTo:'/navigation', pathMatch:'full'},
-
+   { path: 'result',redirectTo:'result',pathMatch:'full'},
    { path:'404', component:PageNotFoundComponent},
     {path: '**', redirectTo: '/404'}
 ];
@@ -20,3 +19,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+	

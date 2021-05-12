@@ -4,10 +4,7 @@ import { ActivatedRoute,Router,NavigationExtras} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Observable,of} from 'rxjs';
 import {map,filter,startWith,tap,switchMap} from 'rxjs/operators';
-import {MatAutocompleteSelectedEvent}from '@angular/material/autocomplete';
-import {MatAutocompleteActivatedEvent}from '@angular/material/autocomplete';
 import {FindingfalconeService} from '../findingfalcone.service';
-import {MatRadioChange } from '@angular/material/radio';
 
 
 //Importing Services
@@ -693,17 +690,10 @@ findFalcon(token:Token ):void{
  this.FindingfalconeService.findFalcon(FindFalconRequest,this.timeTaken)
     .subscribe(data=>{console.log(data);
               //this.addNewItem(data);
+              this.router.navigateByUrl("result");
     });
 }
-   addNewItem(data: {}) {
-    //=this.timeTaken;
-    let searchResult:any={
-          rdata: data,
-          timeTaken:this.timeTaken
-    };
-   // this.result.emit(searchResult);
-  }
-
+   
 //Function to enable search functionality
   onSubmit(): void {
     if(this.searchForm.valid)
@@ -713,6 +703,7 @@ findFalcon(token:Token ):void{
     if(!this.error.show)
      {
       this.SearchFalcon();
+
      }
     }
     else

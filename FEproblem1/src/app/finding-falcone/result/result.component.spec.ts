@@ -1,4 +1,7 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule} from '@angular/common/http';
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +20,8 @@ describe('ResultComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ResultComponent ],
       imports: [
+        HttpClientTestingModule,
+        HttpClientModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
         MatButtonModule,
