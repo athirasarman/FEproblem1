@@ -1,7 +1,9 @@
 // tslint:disable-next-line: no-namespace
 declare  namespace jasmine {
-  export interface Matchers<T> {
-    toHaveText(actual: any, expectationFailOutput?: any): jasmine.CustomMatcher;
+   interface Matchers<T> {
+    toHaveText(actual: any, expectationFailOutput?: any): any;
+
+    //jasmine.CustomMatcher;
   }
 }
 
