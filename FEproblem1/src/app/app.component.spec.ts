@@ -26,6 +26,7 @@ import { MatSliderModule } from '@angular/material/slider';
 
 
 describe('AppComponent', () => {
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [

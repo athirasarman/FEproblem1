@@ -21,13 +21,8 @@ export class ResultComponent {
   error:string="";
   timeTaken=0;
 
-  constructor(private FindingfalconeService: FindingfalconeService) { 
- 
- 
+  constructor(private FindingfalconeService: FindingfalconeService) {  
          this.result=this.FindingfalconeService.getResult();
-     
-
-
 }
 
 
