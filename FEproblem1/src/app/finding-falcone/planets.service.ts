@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+
 import { Observable, of } from 'rxjs';
 import { retry,catchError, map, tap } from 'rxjs/operators';
 
@@ -12,7 +13,7 @@ import {Planets} from './planets';
 })
 export class PlanetsService {
 
-  private planetsUrl = 'https://findfalcone.herokuapp.com/planets';  // URL to web api to fetch planets
+  readonly planetsUrl = 'https://findfalcone.herokuapp.com/planets';  // URL to web api to fetch planets
    Planets: Planets[]=[];	
 
   constructor(private http: HttpClient) 
@@ -21,35 +22,35 @@ export class PlanetsService {
 
 /** GET planets from the server */
  getPlanets(): Observable<Planets[]> {
-    return this.http.get<Planets[]>(this.planetsUrl)
+      return this.http.get<Planets[]>(this.planetsUrl)
       .pipe(
-      	retry(1),
-        tap(_ => this.log('fetched planets')	),
-        catchError(this.handleError<Planets[]>('getPlanets', []))
-      ) ;
+        tap(planets => this.log(`fetched planets`)),
+        catchError(this.handleError('getPlanets'))
+      ) as Observable<Planets[]>;
 
   }
 
-/**
-   * Handle Http operation that failed.
-   * Let the app continue.
+
+   /**
+   * Returns a function that handles Http operation failures.
+   * This error handler lets the app continue to run as if no error occurred.
    * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  private handleError<T>(operation = 'operation') {
+    return (error: HttpErrorResponse): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
+      const message = (error.error instanceof ErrorEvent) ?
+        error.error.message :
+       `server returned code ${error.status} with body "${error.error}"`;
+
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
+      throw new Error(`${operation} failed: ${message}`);
     };
-  }
 
+  }
 
    /** Log a PlanetService message with the MessageService */
   private log(message: string) {
