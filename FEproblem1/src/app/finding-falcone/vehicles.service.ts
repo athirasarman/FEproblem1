@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+
 import { Observable, of } from 'rxjs';
 import { retry,catchError, map, tap } from 'rxjs/operators';
 
@@ -10,41 +11,43 @@ import {Vehicles} from './vehicles';
 })
 export class VehiclesService {
 
-   private vehiclesUrl = 'https://findfalcone.herokuapp.com/vehicles';  // URL to web api to fetch vehicles
+   readonly vehiclesUrl = 'https://findfalcone.herokuapp.com/vehicles';  // URL to web api to fetch vehicles
    Vehicles: Vehicles[]=[];	
 
   constructor(private http: HttpClient) { }
 
   /** GET Vehicles from the server */
  getVehicles(): Observable<Vehicles[]> {
-    return this.http.get<Vehicles[]>(this.vehiclesUrl)
+ 
+      return this.http.get<Vehicles[]>(this.vehiclesUrl)
       .pipe(
-      	retry(1),
-        tap(_ => this.log('fetched vehicles')	),
-        catchError(this.handleError<Vehicles[]>('getVehicles', []))
-      ) ;
+        tap(vehicles => this.log(`fetched vehicles`)),
+        catchError(this.handleError('getVehicles'))
+      ) as Observable<Vehicles[]>;
 
   }
 
 
-/**
-   * Handle Http operation that failed.
-   * Let the app continue.
+
+   /**
+   * Returns a function that handles Http operation failures.
+   * This error handler lets the app continue to run as if no error occurred.
    * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  private handleError<T>(operation = 'operation') {
+    return (error: HttpErrorResponse): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      const message = (error.error instanceof ErrorEvent) ?
+        error.error.message :
+       `server returned code ${error.status} with body "${error.error}"`;
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
+      // TODO: better job of transforming error for user consumption
+      throw new Error(`${operation} failed: ${message}`);
     };
+
   }
 
 
