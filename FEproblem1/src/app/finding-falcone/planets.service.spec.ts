@@ -60,7 +60,6 @@ describe('PlanetsService (with spies)', () => {
       planetService.getPlanets().subscribe(
       planets => fail('expected an error, not planets'),
       error  => {
-        console.log(error);
         expect(error.message).toContain('server returned code 404 with body "404 Not Found"');}
     );
   })
@@ -112,7 +111,7 @@ describe('PlanetsService(with mocks)', () => {
         fail
       );
 
-      // PlanetsService should have made one vehicles to GET planets from expected URL
+      // PlanetsService should have made one request to GET planets from expected URL
       const req = httpTestingController.expectOne(planetService.planetsUrl);
       expect(req.request.method).toEqual('GET');
 
@@ -133,7 +132,7 @@ describe('PlanetsService(with mocks)', () => {
     it('should turn 404 into a user-friendly error', () => {
       const msg = 'Deliberate 404';
       planetService.getPlanets().subscribe(
-        vehicles => fail('expected to fail'),
+        planets => fail('expected to fail'),
         error => expect(error.message).toContain(msg)
       );
 

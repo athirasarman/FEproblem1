@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse,HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import {Token} from './token';
 import {FindFalconRequest} from './find-falcon-request';
 import {Result} from './result';
@@ -16,15 +16,15 @@ import { retry,catchError, map, tap } from 'rxjs/operators';
 
 
 export class FindingfalconeService {
-	private tokenUrl="https://findfalcone.herokuapp.com/token";//url to fetch token
-  private findFalconUrl="https://findfalcone.herokuapp.com/find";//url to search falcon
+  readonly tokenUrl="https://findfalcone.herokuapp.com/token";//url to fetch token
+  readonly findFalconUrl="https://findfalcone.herokuapp.com/find";//url to search falcon
   Token: Token[]=[];
   findFalconeRequest: FindFalconRequest[]=[];
   private result:Result={} as Result;
 
   constructor(
-  	private http:HttpClient
-  	) { }
+    private http:HttpClient
+    ) { }
 
     httpOptions = {
     headers: new HttpHeaders({ 'Accept': 'application/json' , 'Content-Type':'application/json'})
@@ -34,10 +34,10 @@ export class FindingfalconeService {
   {
       return  this.http.post<Token>(this.tokenUrl,null,this.httpOptions)
        .pipe(
-         retry(1),
+        // retry(1),
          tap(_ => this.log("Token fetched")  ),
          catchError(this.handleError<Token>('findingFalconToken'))
-         );
+         )as Observable<Token>;
   }
 
  
@@ -53,7 +53,7 @@ export class FindingfalconeService {
              return data;
            }),
          tap(_ => this.log("Searching Done")  ),
-         catchError(this.handleError<any>('findFalcon',[]))
+         catchError(this.handleError<any>('findFalcon'))
          );
   }
 
@@ -65,26 +65,26 @@ export class FindingfalconeService {
    * Handle Http operation that failed.
    * Let the app continue.
    * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
+  private handleError<T>(operation = 'operation') {
+    return (error: HttpErrorResponse): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      this.result.searchResult.error=error;
-      this.result.searchResult.status="error";
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+        // TODO: better job of transforming error for user consumption
+      const message = (error.error instanceof ErrorEvent) ?
+        error.error.message :
+       `server returned code ${error.status} with body "${error.error}"`;
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
+        // this.result.searchResult.error=message;
+        // this.result.searchResult.status="error";
+         throw new Error(`${operation} failed: ${message}`);
+
     };
   }
 
 
-   /** Log a PlanetService message with the MessageService */
+   /** Log a FindingfalconeService message with the MessageService */
   private log(message: string) {
    // this.messageService.add(`HeroService: ${message}`);
    console.log(message);

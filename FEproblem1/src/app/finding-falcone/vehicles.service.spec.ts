@@ -111,7 +111,7 @@ describe('VehiclesService(with mocks)', () => {
         fail
       );
 
-      // VehiclesService should have made one vehicles to GET vehicles from expected URL
+      // VehiclesService should have made one request to GET vehicles from expected URL
       const req = httpTestingController.expectOne(vehicleService.vehiclesUrl);
       expect(req.request.method).toEqual('GET');
 
