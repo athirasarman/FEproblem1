@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 
 export class PageNotFoundComponent {
-
+  errorMessage="Sorry. This page does not exist.";
  
   constructor() {}
 

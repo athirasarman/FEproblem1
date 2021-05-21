@@ -1,4 +1,4 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 describe('PageNotFoundComponent', () => {
-  let component: PageNotFoundComponent;
+  let pageNotFoundComponent: PageNotFoundComponent;
   let fixture: ComponentFixture<PageNotFoundComponent>;
 
   beforeEach(waitForAsync(() => {
@@ -30,11 +30,28 @@ describe('PageNotFoundComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PageNotFoundComponent);
-    component = fixture.componentInstance;
+    pageNotFoundComponent = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should compile', () => {
-    expect(component).toBeTruthy();
+    expect(pageNotFoundComponent).toBeTruthy();
   });
+
+  it(`should have an error message 'Sorry. This page does not exist.'`, () => {
+     expect(pageNotFoundComponent.errorMessage).toEqual('Sorry. This page does not exist.');
+  });
+
+  it('should render error message in a span tag', async(() => {
+   
+   const compiled = fixture.debugElement.nativeElement;
+   expect(compiled.querySelector('span').textContent).toContain('Sorry. This page does not exist.');
+}));
+
+  it('should render button to navigate to Home page ', async(() => {
+   
+   const button = fixture.debugElement.nativeElement
+    expect(button.querySelector('a').textContent).toContain('Go to Home Page.');
+ 
+}));
 });
