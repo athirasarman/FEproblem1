@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app-footer.component.sass']
 })
 export class AppFooterComponent implements OnInit {
+  copyRight="@2012. All Rights Reserved.";
 
   constructor() { }
 

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { AppFooterComponent } from './app-footer.component';
 
@@ -22,4 +22,14 @@ describe('AppFooterComponent', () => {
   it('should create', () => {
     expect(appFootercomponent).toBeTruthy();
   });
+
+  it(`should have a copy right '@2012. All Rights Reserved.'`, () => {
+     expect(appFootercomponent.copyRight).toEqual('@2012. All Rights Reserved.');
+  });
+
+   it('should render title in a footer tag', async(() => {
+   
+   const compiled = fixture.debugElement.nativeElement;
+   expect(compiled.querySelector('footer').textContent).toContain('@2012. All Rights Reserved.');
+}));
 });
