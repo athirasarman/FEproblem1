@@ -50,7 +50,7 @@ describe('FindingfalconeService', () => {
       let error={
         statusText:"error"
       }
-      expectedResult={ 
+     let expectedResult={ 
         searchResult:{
           planet_name:"",
           status:"error",

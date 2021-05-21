@@ -12,7 +12,8 @@ import { Observable } from 'rxjs';
 
 
 export class AppHeaderComponent implements OnInit {
-	//welcomeMessage="Welcome King Shan";
+  title = 'Finding Falcone!';
+	
 	 isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
