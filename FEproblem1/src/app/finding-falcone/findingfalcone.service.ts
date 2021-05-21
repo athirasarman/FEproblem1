@@ -56,12 +56,18 @@ export class FindingfalconeService {
        
   }
 
-  setResult(data:any):void
+  setErrorResult(data:any):Result
   {
-    this.result.searchResult=data;
     this.result.timeTaken=0;
+    this.result.searchResult={
+      planet_name:"",
+      status:"error",
+      error:data.statusText
+    };
+  
     console.log("set result:");
     console.log(this.result);
+    return this.result;
   }
 
   getResult():Result{
@@ -78,12 +84,12 @@ export class FindingfalconeService {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-      this.setResult
         // TODO: better job of transforming error for user consumption
-      const message = (error.error instanceof ErrorEvent) ?
+        const message = (error.error instanceof ErrorEvent) ?
         error.error.message :
        `server returned code ${error.status} with body "${error.error}"`;
-        this.setResult(error);
+
+        this.setErrorResult(error);
          throw new Error(`${operation} failed: ${message}`);
 
     };

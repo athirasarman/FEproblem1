@@ -19,7 +19,8 @@ describe('FindingfalconeService', () => {
   let falconService: FindingfalconeService;
   let httpClientSpy: {get: jasmine.Spy};
   let HttpClient:HttpClient;
-  let httpTestingController:HttpTestingController
+  let httpTestingController:HttpTestingController;
+  let expectedResult:Result={} as Result;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -32,11 +33,33 @@ describe('FindingfalconeService', () => {
     //TODO: spy on other methods too
     httpClientSpy=jasmine.createSpyObj('HttpClient',['post']);
     falconService= new FindingfalconeService(httpClientSpy as any);
+   
   });
 
   it('should be created', () => {
     expect(falconService).toBeTruthy();
   });
+
+
+  it('#getResult should return expected result', () => {
+      let data=falconService.getResult();
+      expect(data).toEqual(expectedResult);
+    });
+
+   it('#setErrorResult should return expected result', () => {
+      let error={
+        statusText:"error"
+      }
+      expectedResult={ 
+        searchResult:{
+          planet_name:"",
+          status:"error",
+          error:"error"
+        },
+        timeTaken:0};
+      let data=falconService.setErrorResult(error);
+      expect(data).toEqual(expectedResult);
+    });
 
 });
 
@@ -186,6 +209,8 @@ describe('FindingfalconeService', () => {
       // Respond with the mock token
       req.flush(expectedResult);
     });
+
+
 
      it('should turn 404 error into user-facing error', () => {
       const msg = 'Deliberate 404';
