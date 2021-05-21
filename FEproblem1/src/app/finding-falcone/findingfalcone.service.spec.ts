@@ -40,7 +40,7 @@ describe('FindingfalconeService', () => {
 
 });
 
-describe('FindingfalconeService(with mocks)', () => {
+describe('FindingfalconeService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   let falconService: FindingfalconeService;
@@ -120,6 +120,92 @@ describe('FindingfalconeService(with mocks)', () => {
     });
 
        it('should turn network error into user-facing error', () => {
+      const emsg = 'simulated network error';
+
+      falconService.findingFalconToken().subscribe(
+        token => fail('expected to fail'),
+        error => expect(error.message).toContain(emsg)
+      );
+
+      const req = httpTestingController.expectOne(falconService.tokenUrl);
+
+      // Create mock ErrorEvent, raised when something goes wrong at the network level.
+      // Connection timeout, DNS error, offline, etc
+      const errorEvent = new ErrorEvent('so sad', {
+        message: emsg,
+        // The rest of this is optional and not used.
+        // Just showing that you could provide this too.
+        filename: 'findingfalcone.service.ts',
+        lineno: 42,
+        colno: 21
+      });
+
+      // Respond with mock error
+      req.error(errorEvent);
+    });
+
+  });
+
+  describe('#searchFalcon', () =>{
+    let findFalconRequest:FindFalconRequest;
+    let token:Token;
+    let timeTaken:number;
+    let expectedResult:Result;
+
+    beforeEach(() => {
+      falconService = TestBed.inject(FindingfalconeService);
+      token = {token:"exulvFtyYDWOsrqMOGqUxSWhNcAmhVxK"} as Token;
+      findFalconRequest={
+        token:"exulvFtyYDWOsrqMOGqUxSWhNcAmhVxK",
+        planet_names:["Donlon","Enchai","Jebing","Sapir"],
+        vehicle_names:["Space Pod","Space Pod","Space Rocket","Space Shuttle"]
+      };
+      timeTaken=225;
+      expectedResult={ 
+        searchResult:{
+          planet_name:"Donlon",
+          status:"success",
+          error:""
+        },
+        timeTaken:225};
+    });
+
+    it('should return expected result', () => {
+      
+
+      falconService.findFalcon(findFalconRequest,timeTaken).subscribe(
+        result =>{console.log(result);
+         expect(result).toEqual(expectedResult, 'should return expected result');},
+        fail
+      );
+
+      // FindingfalconeService should have made one request to GET token from expected URL
+      const req = httpTestingController.expectOne(falconService.findFalconUrl);
+      expect(req.request.method).toEqual('POST');
+
+      // Respond with the mock token
+      req.flush(expectedResult);
+    });
+
+     it('should turn 404 error into user-facing error', () => {
+      const msg = 'Deliberate 404';
+      falconService.findFalcon(findFalconRequest,timeTaken).subscribe(
+        result =>{ 
+         expect(result).toEqual(expectedResult, 'should return expected token');
+         fail('expected to fail');},
+        error =>{ console.error(error);
+          expect(error.message).toContain(msg);
+        }
+      );
+
+      const req = httpTestingController.expectOne(falconService.findFalconUrl);
+      
+      // respond with a 404 and the error message in the body
+
+      req.flush(msg, {status: 404, statusText: 'Not Found'});
+    });
+
+      it('should turn network error into user-facing error', () => {
       const emsg = 'simulated network error';
 
       falconService.findingFalconToken().subscribe(

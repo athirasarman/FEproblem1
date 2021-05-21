@@ -690,8 +690,7 @@ findFalcon(token:Token ):void{
  this.FindingfalconeService.findFalcon(FindFalconRequest,this.timeTaken)
     .subscribe(data=>{console.log(data);
               //this.addNewItem(data);
-              this.router.navigateByUrl("result");
-    });
+              this.router.navigateByUrl("result");});
 }
    
 //Function to enable search functionality

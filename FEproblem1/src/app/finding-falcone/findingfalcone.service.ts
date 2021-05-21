@@ -20,7 +20,7 @@ export class FindingfalconeService {
   readonly findFalconUrl="https://findfalcone.herokuapp.com/find";//url to search falcon
   Token: Token[]=[];
   findFalconeRequest: FindFalconRequest[]=[];
-  private result:Result={} as Result;
+  result:Result={} as Result;
 
   constructor(
     private http:HttpClient
@@ -41,20 +41,27 @@ export class FindingfalconeService {
   }
 
  
-  findFalcon(FindFalconRequest:FindFalconRequest,timeTaken:number):Observable<FindFalconRequest[]>
+  findFalcon(FindFalconRequest:FindFalconRequest,timeTaken:number):Observable<Result>
   {
-      return  this.http.post<FindFalconRequest[]>(this.findFalconUrl,FindFalconRequest,this.httpOptions)
+      return  this.http.post<Result>(this.findFalconUrl,FindFalconRequest,this.httpOptions)
        .pipe(
-         retry(1),
          map((data: any) => {
              this.result.searchResult=data;
              this.result.timeTaken=timeTaken;
-
              return data;
            }),
          tap(_ => this.log("Searching Done")  ),
-         catchError(this.handleError<any>('findFalcon'))
-         );
+         catchError(this.handleError<Result>('findFalcon'))
+         )as Observable<Result>;
+       
+  }
+
+  setResult(data:any):void
+  {
+    this.result.searchResult=data;
+    this.result.timeTaken=0;
+    console.log("set result:");
+    console.log(this.result);
   }
 
   getResult():Result{
@@ -68,16 +75,15 @@ export class FindingfalconeService {
    */
   private handleError<T>(operation = 'operation') {
     return (error: HttpErrorResponse): Observable<T> => {
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-
+      this.setResult
         // TODO: better job of transforming error for user consumption
       const message = (error.error instanceof ErrorEvent) ?
         error.error.message :
        `server returned code ${error.status} with body "${error.error}"`;
-
-        // this.result.searchResult.error=message;
-        // this.result.searchResult.status="error";
+        this.setResult(error);
          throw new Error(`${operation} failed: ${message}`);
 
     };
