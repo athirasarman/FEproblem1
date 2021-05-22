@@ -27,9 +27,9 @@ describe('AppFooterComponent', () => {
      expect(appFootercomponent.copyRight).toEqual('@2012. All Rights Reserved.');
   });
 
-   it('should render title in a footer tag', async(() => {
+   it('should render title in a span tag', async(() => {
    
    const compiled = fixture.debugElement.nativeElement;
-   expect(compiled.querySelector('footer').textContent).toContain('@2012. All Rights Reserved.');
+   expect(compiled.querySelector('span').textContent).toContain('@2012. All Rights Reserved.');
 }));
 });
