@@ -1,7 +1,20 @@
-<form >
+<div class="not-found-page">
+  <div class="not-found-page__content">
+    <div class="not-found-page__title">
+      <img class="not-found-page__title-img" src="./assets/img/logo.svg" alt="logo">
+      <h3 class="not-found-page__title-text">Finding Falcone</h3>
+    </div>
 
-  <span>{{errorMessage}}</span>
+    <mat-card class="not-found-page__card">
+      <mat-card-content class="not-found-page__content">
+        <h1 class="not-found-page__card-title">404</h1>
 
-   <a mat-flat-button color="primary" routerLink="/navigation">Go to Home Page.</a>
+        <p class="not-found-page__card-sub-title">Oops. Looks like the page you're looking for no longer exists</p>
+        <p class="not-found-page__card-sub-title-second">But we're here to bring you back to safety</p>
 
-</form>
+        <button class="not-found-page__card-button" mat-raised-button color="primary" routerLink="/">Back to Home</button>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
