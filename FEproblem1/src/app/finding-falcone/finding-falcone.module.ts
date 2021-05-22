@@ -4,15 +4,19 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient} from '@angular/common/http';
 
 import { FindingFalconeRoutingModule } from './finding-falcone-routing.module';
-//import { FindingFalconeComponent } from './finding-falcone.component';
+
+import { NavigationComponent } from './navigation/navigation.component';
+import { ResultComponent } from './result/result.component';
 import { FalconeDashboardComponent } from './falcone-dashboard/falcone-dashboard.component';
+
+import { SearchComponent } from './search/search.component';
+
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
-import { SearchComponent } from './search/search.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
@@ -27,8 +31,6 @@ import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { NavigationComponent } from './navigation/navigation.component';
-import { ResultComponent } from './result/result.component';
 
 @NgModule({
   declarations: [ FalconeDashboardComponent, SearchComponent, NavigationComponent, ResultComponent],
