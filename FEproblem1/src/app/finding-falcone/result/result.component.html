@@ -1,18 +1,21 @@
 
-
-<div class="grid-container">
-  <h1></h1>
+<div class="result-page">
+  <div class="result-page__content">
+        <div class="result-page__title">
+      <img class="result-page__title-img" src="./assets/img/logo.svg" alt="logo">
+  <h3 class="result-page__title-text">Finding Falcone</h3>
+    </div>
   
-  <mat-grid-list cols="2" rowHeight="350px">
+  <mat-grid-list cols="2">
     <mat-grid-tile [colspan]="2" [rowspan]="2" [ngSwitch]="status">
-      <mat-card class="dashboard-card"  *ngSwitchCase="'success'">
-        <mat-card-header >
-          <mat-card-title>
+      <mat-card class="result-page__card"  *ngSwitchCase="'success'">
+     
+          <h1 class="result-page__card-title">
             Success
-          </mat-card-title>
+          </h1>
 
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content" >
+        
+        <mat-card-content class="result-page__card-content" >
           <div >
              <p>Success. Congratulations on Finding Falcone. King Shan is mighty pleased.</p>
               <p >
@@ -25,39 +28,36 @@
           </div>
          
         </mat-card-content>
-        <mat-card-actions class="card-actions">
-     <button mat-flat-button color="primary" routerLink="/">Start Again</button>
+        <mat-card-actions >
+     <button mat-flat-button class= "result-page__card-button" color="primary" routerLink="/">Start Again</button>
   </mat-card-actions>
       </mat-card>
 
-      <mat-card class="dashboard-card"  *ngSwitchCase="'false'">
-        <mat-card-header >
-          <mat-card-title >
+      <mat-card class="result-page__card"  *ngSwitchCase="'false'">
+       
+          <h1  class="result-page__card-title">
             Failed
-          </mat-card-title>
+          </h1>
 
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content" >
+        <mat-card-content class="result-page__card-content" >
           <div >
-              Better Luck Next Time!!!
+            <p>  Better Luck Next Time!!!</p>
               
           </div>
          
         </mat-card-content>
 
-        <mat-card-actions class="card-actions">
-     <button mat-flat-button color="primary" routerLink="/">Start Again</button>
+        <mat-card-actions>
+     <button mat-flat-button class= "result-page__card-button" color="primary" routerLink="/">Start Again</button>
   </mat-card-actions>
       </mat-card>
 
-      <mat-card class="dashboard-card"  *ngSwitchCase="'error'">
-        <mat-card-header >
-          <mat-card-title *ngSwitchCase="'error'">
+      <mat-card class="result-page__card"  *ngSwitchCase="'error'">
+       
+          <h1 class="result-page__card-title" >
             Error
-          </mat-card-title>
-
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content" >
+          </h1>
+        <mat-card-content class="result-page__card-content">
           <div >
              <p> {{error}}</p>
               
@@ -65,8 +65,8 @@
          
         </mat-card-content>
 
-        <mat-card-actions class="card-actions">
-     <button mat-flat-button color="primary" routerLink="/">Start Again</button>
+        <mat-card-actions>
+     <button mat-flat-button class= "result-page__card-button" color="primary" routerLink="/">Start Again</button>
   </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
@@ -75,4 +75,4 @@
 <div  class="card-actions">
   <button mat-flat-button color="primary" routerLink="/navigation">Start Again</button>
 </div>-->
-</div>
+

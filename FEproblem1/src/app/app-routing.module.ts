@@ -8,7 +8,7 @@ const routes: Routes = [
    //{ path:'result',component:ResultComponent},
   
    { path: 'findingfalcone', loadChildren: () => import('./finding-falcone/finding-falcone.module').then(m => m.FindingFalconeModule) },
-   { path: '', redirectTo:'/navigation', pathMatch:'full'},
+   { path: '', redirectTo:'/dashboard', pathMatch:'full'},
    { path: 'result',redirectTo:'result',pathMatch:'full'},
    { path:'404', component:PageNotFoundComponent},
     {path: '**', redirectTo: '/404'}
