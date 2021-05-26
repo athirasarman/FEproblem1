@@ -1,0 +1,45 @@
+@import 'src/app/styles/variables';
+@import "src/app/styles/colors";
+
+.charts-wrapper {
+  display: flex;
+  margin: 0 8px;
+  margin-top: 20px;
+
+  @media (max-width: $normal) {
+    flex-wrap: wrap;
+  }
+}
+
+.form {
+  width: 100%;
+
+}
+.chart{
+  width:40%;
+}
+
+
+.layout {
+  width: 100%;
+}
+
+.layout-sidebar {
+  height:calc(100vh - 64px);
+  margin-top: 64px;
+
+  @media (max-width: $small) {
+    width: 218px;
+  }
+}
+
+.layout-content {
+  background-color: $background-color;
+  height:calc(100vh - 64px);
+  margin-top: 64px;
+
+  @media (max-width: $small) {
+    width: 100%;
+  }
+
+}

@@ -1,4 +1,5 @@
 <form [formGroup]="searchForm" #Searchform>
+  <mat-card  class="visits-chart">
 
 <mat-card *ngIf="this.error.show">
 <mat-error>{{this.error.errorMessage}}</mat-error>
@@ -222,4 +223,5 @@
       
     </mat-card-actions>
   </mat-card>
+</mat-card>
 </form>

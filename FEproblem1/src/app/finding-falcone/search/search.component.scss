@@ -1,0 +1,32 @@
+@import "src/app/styles/colors";
+@import "src/app/styles/font";
+
+.visits-chart {
+  display: flex;
+  box-shadow: 0 3px 11px 0 $shadow-white, 0 3px 3px -2px $shadow-grey, 0 1px 8px 0 $shadow-dark-grey;
+  height: 192px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-container {
+  margin: 10px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}

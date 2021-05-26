@@ -12,24 +12,24 @@ import {Vehicles} from './vehicles';
 export class VehiclesService {
 
    readonly vehiclesUrl = 'https://findfalcone.herokuapp.com/vehicles';  // URL to web api to fetch vehicles
-   Vehicles: Vehicles[]=[];	
+   Vehicles: Observable<Vehicles[]>;
 
   constructor(private http: HttpClient) { }
 
   /** GET Vehicles from the server */
  getVehicles(): Observable<Vehicles[]> {
  
-      return this.http.get<Vehicles[]>(this.vehiclesUrl)
+     this.Vehicles=  this.http.get<Vehicles[]>(this.vehiclesUrl)
       .pipe(
-        tap(vehicles => {this.Vehicles=vehicles;
+        tap(vehicles => {
           this.log(`fetched vehicles`);}),
         catchError(this.handleError('getVehicles'))
       ) as Observable<Vehicles[]>;
-
+     return this.Vehicles;
   }
 
 
-getList():Vehicles[]{
+getList():Observable<Vehicles[]>{
   return this.Vehicles;
 }
 

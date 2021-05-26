@@ -31,9 +31,11 @@ import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { PlanetsComponent } from './planets/planets.component';
+import { VehiclesComponent } from './vehicles/vehicles.component';
 
 @NgModule({
-  declarations: [ FalconeDashboardComponent, SearchComponent, ResultComponent],
+  declarations: [ FalconeDashboardComponent, SearchComponent, ResultComponent, PlanetsComponent, VehiclesComponent],
   imports: [
     CommonModule,
     HttpClientModule,

@@ -1,22 +1,22 @@
-<div class="grid-container">
-  <h1></h1>
-  
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content" [ngSwitch]="card.id">
-          <div *ngSwitchCase="1">
-               <app-search></app-search>
-              
-          </div>
-         
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+
+
+
+
+<mat-sidenav-container class="layout">
+
+  <mat-sidenav-content class="layout-content">
+    
+  <div class="charts-wrapper">
+    <mat-card class="chart">
+      <app-planets></app-planets>
+    </mat-card>
+    <mat-card class="form">
+      <app-search></app-search>
+    </mat-card>
+    <mat-card class="chart">
+      <app-vehicles></app-vehicles>
+    </mat-card>
+  </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
