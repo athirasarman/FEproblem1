@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter,Input } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {Observable,of} from 'rxjs';
-import { Router,NavigationExtras} from '@angular/router';
+import { Router,ActivatedRoute} from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 //Importing Services
@@ -44,6 +44,7 @@ export class FalconeDashboardComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
+               private route:ActivatedRoute,
               private planetsService: PlanetsService,
               private vehicleService: VehiclesService,) {}
 
@@ -52,4 +53,7 @@ export class FalconeDashboardComponent {
    this.VehicleList=of(this.vehicleService.getList());
   }
 
+onReload(){
+ this.router.navigate(['/'],{relativeTo:this.route})
+}
 }

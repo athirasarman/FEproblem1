@@ -7,8 +7,8 @@ import { ResultComponent } from './result/result.component';
 
 
 const routes: Routes = [
-{ path: 'dashboard', component: FalconeDashboardComponent },
 
+{ path: 'dashboard', component: FalconeDashboardComponent },
 { path:'result', component:ResultComponent }
 ];
 

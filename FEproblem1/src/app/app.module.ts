@@ -44,7 +44,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
+    
     NgbModule,
     BrowserAnimationsModule,
     MatSliderModule,
@@ -66,7 +66,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    FindingFalconeModule
+    FindingFalconeModule,
+    AppRoutingModule
 
   ],
   exports:[
