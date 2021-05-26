@@ -24,12 +24,17 @@ export class PlanetsService {
  getPlanets(): Observable<Planets[]> {
       return this.http.get<Planets[]>(this.planetsUrl)
       .pipe(
-        tap(planets => this.log(`fetched planets`)),
+        tap(planets => {
+          this.Planets=planets;
+          this.log(`fetched planets`);}),
         catchError(this.handleError('getPlanets'))
       ) as Observable<Planets[]>;
 
   }
 
+getList():Planets[]{
+  return this.Planets;
+}
 
    /**
    * Returns a function that handles Http operation failures.

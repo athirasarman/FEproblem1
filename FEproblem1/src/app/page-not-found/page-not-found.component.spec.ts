@@ -38,20 +38,21 @@ describe('PageNotFoundComponent', () => {
     expect(pageNotFoundComponent).toBeTruthy();
   });
 
-  it(`should have an error message 'Sorry. This page does not exist.'`, () => {
-     expect(pageNotFoundComponent.errorMessage).toEqual('Sorry. This page does not exist.');
+    it(`should have a title '404'`, () => {
+     expect(pageNotFoundComponent.title).toEqual("404");
+  });
+      it(`should have a sub title 'Oops. Looks like the page you're looking for no longer exists'`, () => {
+     expect(pageNotFoundComponent.subTitle).toEqual("Oops. Looks like the page you're looking for no longer exists");
   });
 
-  it('should render error message in a span tag', async(() => {
-   
-   const compiled = fixture.debugElement.nativeElement;
-   expect(compiled.querySelector('span').textContent).toContain('Sorry. This page does not exist.');
-}));
+  it(`should have an error message 'But we're here to bring you back to safety'`, () => {
+     expect(pageNotFoundComponent.errorMessage).toEqual("But we're here to bring you back to safety");
+  });
 
   it('should render button to navigate to Home page ', async(() => {
    
    const button = fixture.debugElement.nativeElement
-    expect(button.querySelector('a').textContent).toContain('Go to Home Page.');
+    expect(button.querySelector('button').textContent).toContain('Back to Home');
  
 }));
 });

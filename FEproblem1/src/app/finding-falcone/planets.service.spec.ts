@@ -63,6 +63,12 @@ describe('PlanetsService (with spies)', () => {
         expect(error.message).toContain('server returned code 404 with body "404 Not Found"');}
     );
   })
+
+    it('#getList should return expected result', () => {
+        const expectedPlanets: Planets[]=[];
+      let data=planetService.getList();
+      expect(data).toEqual(expectedPlanets);
+    });
   
 });
 

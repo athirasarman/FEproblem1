@@ -1,4 +1,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
+import { HttpClientModule} from '@angular/common/http';
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { RouterTestingModule } from "@angular/router/testing";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +22,8 @@ describe('FalconeDashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FalconeDashboardComponent],
       imports: [
+        HttpClientTestingModule,
+        HttpClientModule,
         RouterTestingModule,
         NoopAnimationsModule,
         LayoutModule,

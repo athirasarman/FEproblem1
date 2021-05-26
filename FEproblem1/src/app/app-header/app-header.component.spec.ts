@@ -28,21 +28,21 @@ describe('AppHeaderComponent', () => {
      expect(appHeaderComponent.title).toEqual('Finding Falcone!');
   });
 
-  it('should render title in a span tag', async(() => {
+  it('should render title in a h6 tag', async(() => {
    
    const compiled = fixture.debugElement.nativeElement;
- expect(compiled.querySelector('span').textContent).toContain('Finding Falcone!');
+ expect(compiled.querySelector('h6').textContent).toContain('Finding Falcone!');
 }));
 
   
   it('should render Home button ', async(() => {
    
    const button = fixture.debugElement.nativeElement
-    expect(button.querySelector('button').textContent).toContain('Home');
+    expect(button.querySelector('mat-icon').textContent).toContain('home');
  
 }));
 
-  it('should render Home button ', async(() => {
+  it('should render Geektrust Home button ', async(() => {
    
    const button = fixture.debugElement.nativeElement
     expect(button.querySelector('a').textContent).toContain('Geektrust Home');

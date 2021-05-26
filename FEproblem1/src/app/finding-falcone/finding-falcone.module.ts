@@ -5,7 +5,7 @@ import { HttpClientModule, HttpClient} from '@angular/common/http';
 
 import { FindingFalconeRoutingModule } from './finding-falcone-routing.module';
 
-import { NavigationComponent } from './navigation/navigation.component';
+
 import { ResultComponent } from './result/result.component';
 import { FalconeDashboardComponent } from './falcone-dashboard/falcone-dashboard.component';
 
@@ -33,7 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
-  declarations: [ FalconeDashboardComponent, SearchComponent, NavigationComponent, ResultComponent],
+  declarations: [ FalconeDashboardComponent, SearchComponent, ResultComponent],
   imports: [
     CommonModule,
     HttpClientModule,

@@ -179,6 +179,9 @@ ngOnInit() {
         // code...
         {
           this.showVehicle1=  false;
+          if(this.error.show)
+             this.error.show=false;
+
           if(this.stage>1)
           {
           this.onReset(1);
@@ -200,6 +203,9 @@ ngOnInit() {
       case "dest2":
         {
           this.showVehicle2=  false;
+          if(this.error.show)
+             this.error.show=false;
+
           if(this.stage>2&&this.planet3.name)
           {
           this.onReset(2);
@@ -223,6 +229,9 @@ ngOnInit() {
       case "dest3":
         {
           this.showVehicle3=  false;
+          if(this.error.show)
+             this.error.show=false;
+
           if(this.stage>=3&&(this.planet4.name))
           {
           this.onReset(3);
@@ -263,6 +272,9 @@ ngOnInit() {
       case "dest4":
         {
           this.showVehicle4=  false;
+          if(this.error.show)
+             this.error.show=false;
+
           this.filterVehicles(4,selectedPlanet);
           break;}
       default:
@@ -486,6 +498,7 @@ filterVehicleUnits(vehicleNumber:number):void{
         this.selectedPlanets.push(this.planet2.name.toString());
         this.selectedPlanets.push(this.planet3.name.toString());
         this.selectedPlanets.push(this.planet4.name.toString());
+        this.error.show=false;
       }
       else{
         this.ShowError();
@@ -501,6 +514,7 @@ filterVehicleUnits(vehicleNumber:number):void{
         this.selectedVehicles.push(this.vehicle2.name.toString());
         this.selectedVehicles.push(this.vehicle3.name.toString());
         this.selectedVehicles.push(this.vehicle4.name.toString());
+         this.error.show=false;
        }
        else
        {
@@ -538,7 +552,8 @@ filterVehicleUnits(vehicleNumber:number):void{
 
            this.calculateTimeTaken(vehicle,this.planet1);
            this.filterVehicleUnits(1);
-           
+           if(this.error.show)
+             this.error.show=false;
            this.showPlanet2=true;
            }
          
@@ -556,12 +571,13 @@ filterVehicleUnits(vehicleNumber:number):void{
                this.onReset(2);
                this.vehicle1=vehicle1;
                this.vehicle2=vehicle;
-               //this.calculateTimeTaken(this.vehicle1,this.planet1);
                this.removeSelectedPlanet(this.planet1,1);
                this.removeSelectedPlanet(this.planet2,2);
                this.filterVehicles(1,this.planet1);
               } 
              this.calculateTimeTaken(vehicle,this.planet2);
+              if(this.error.show)
+             this.error.show=false;
              this.filterVehicleUnits(2);
              this.showPlanet3=true;
          }
@@ -578,14 +594,15 @@ filterVehicleUnits(vehicleNumber:number):void{
                this.vehicle3=vehicle;
                this.vehicle1=vehicle1;
                this.vehicle2=vehicle2;
-              // this.calculateTimeTaken(this.vehicle1,this.planet1);
-               //this.calculateTimeTaken(this.vehicle2,this.planet2);
                this.removeSelectedPlanet(this.planet1,1);
                this.removeSelectedPlanet(this.planet2,2);
                this.removeSelectedPlanet(this.planet3,3);
                this.filterVehicles(1,this.planet1);
                this.filterVehicles(2,this.planet2);
               } 
+              if(this.error.show)
+             this.error.show=false;
+
            this.calculateTimeTaken(vehicle,this.planet3);
            this.filterVehicleUnits(3);
            this.showPlanet4=true;
@@ -597,6 +614,9 @@ filterVehicleUnits(vehicleNumber:number):void{
          {
            this.calculateTimeTaken(vehicle,this.planet4);
          }
+         if(this.error.show)
+             this.error.show=false;
+
          break;
        }
        
@@ -743,6 +763,7 @@ onReset(stage:Number):void{
       this.showPlanet3=false;
       this.showPlanet4=false; 
       this.timeTaken=0;
+      this.error.show=false;
       break;
     }
     case 2:
@@ -764,6 +785,7 @@ onReset(stage:Number):void{
       this.showPlanet4=false;
       this.timeTaken=0;
       this.calculateTimeTaken(this.vehicle1,this.planet1);
+      this.error.show=false;
       break;
     }
     case 3:
@@ -780,6 +802,7 @@ onReset(stage:Number):void{
       this.timeTaken=0;
       this.calculateTimeTaken(this.vehicle1,this.planet1);
       this.calculateTimeTaken(this.vehicle2,this.planet3);
+      this.error.show=false;
       break;
     }
 
@@ -812,6 +835,7 @@ onReset(stage:Number):void{
       this.planet3={} as Planets;
       this.planet4={} as Planets;
       this.timeTaken=0;
+      this.error.show=false;
       break;
 
     default:

@@ -21,13 +21,17 @@ export class VehiclesService {
  
       return this.http.get<Vehicles[]>(this.vehiclesUrl)
       .pipe(
-        tap(vehicles => this.log(`fetched vehicles`)),
+        tap(vehicles => {this.Vehicles=vehicles;
+          this.log(`fetched vehicles`);}),
         catchError(this.handleError('getVehicles'))
       ) as Observable<Vehicles[]>;
 
   }
 
 
+getList():Vehicles[]{
+  return this.Vehicles;
+}
 
    /**
    * Returns a function that handles Http operation failures.

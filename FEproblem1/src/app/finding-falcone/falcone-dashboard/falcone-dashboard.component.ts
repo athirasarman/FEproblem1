@@ -4,18 +4,23 @@ import {Observable,of} from 'rxjs';
 import { Router,NavigationExtras} from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
+//Importing Services
+import {PlanetsService} from '../planets.service';
+import {VehiclesService} from '../vehicles.service';
+
+//Importing Interfaces
+import {Vehicles} from '../vehicles';
+import {Planets} from '../planets';
+
 @Component({
   selector: 'app-falcone-dashboard',
   templateUrl: './falcone-dashboard.component.html',
   styleUrls: ['./falcone-dashboard.component.css']
 })
 export class FalconeDashboardComponent {
- @Output() searchResultEvent=new EventEmitter<{}>();
- showSearchCard:boolean=true;
- showResultCard:boolean=false
- searchresult={};
-
-
+ 
+   PlanetList: Observable<Planets[]>;
+   VehicleList: Observable<Vehicles[]>;
    cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -36,16 +41,15 @@ export class FalconeDashboardComponent {
 
 
 
-  constructor(private breakpointObserver: BreakpointObserver,
-         private router: Router) {}
 
-   addItem(newItem:{}) {
-     
-    console.log(newItem);
-    this.searchresult=newItem;
-    let navigationExtras: NavigationExtras = {
-            queryParams: this.searchresult
-        };
-    this.router.navigate(["/result"],{state:this.searchresult});
+  constructor(private breakpointObserver: BreakpointObserver,
+              private router: Router,
+              private planetsService: PlanetsService,
+              private vehicleService: VehiclesService,) {}
+
+  ngOnInit(): void {
+   this.PlanetList=of(this.planetsService.getList());
+   this.VehicleList=of(this.vehicleService.getList());
   }
+
 }

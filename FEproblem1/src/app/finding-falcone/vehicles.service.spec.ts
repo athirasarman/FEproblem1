@@ -62,7 +62,13 @@ describe('VehiclesService(with spies)', () => {
         console.log(error);
         expect(error.message).toContain('server returned code 404 with body "404 Not Found"');}
     );
-  })
+  });
+
+    it('#getList should return expected result', () => {
+        const expectedVehicles: Vehicles[]=[];
+      let data=vehicleService.getList();
+      expect(data).toEqual(expectedVehicles);
+    });
 
 });
 

@@ -39,7 +39,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppComponent,
     AppHeaderComponent,
     AppFooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
