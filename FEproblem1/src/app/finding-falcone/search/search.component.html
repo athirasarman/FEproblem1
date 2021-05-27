@@ -1,20 +1,28 @@
-<form [formGroup]="searchForm" #Searchform>
+<form [formGroup]="searchForm" #Searchform class="example-form">
   <mat-card  class="visits-chart">
+     <mat-card-title class="visits-chart__header">
+    <h5 class="visits-chart__title">Search</h5>
+  </mat-card-title>
 
 <mat-card *ngIf="this.error.show">
 <mat-error>{{this.error.errorMessage}}</mat-error>
 </mat-card>
 
+<mat-card *ngIf="this.info.show">
+<mat-error>{{this.info.infoMessage}}</mat-error>
+</mat-card>
 
-  <mat-card class="shipping-card">
+
+
+  <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title >Time Taken: {{timeTaken}}</mat-card-title>
+      <mat-card-title >Time Taken: {{timeTaken}} hours</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="" >
       <div class="row">
         
-        <div class="col">
-          <mat-form-field class="full-width">
+        <div class="col" >
+          <mat-form-field >
             <mat-label>Destination 1</mat-label>
             <input #destination1 type="text"
              placeholder="Pick one"
@@ -42,8 +50,9 @@
        </div>
 
 
-        <div class="col" [hidden]="showVehicle1">
-          <mat-label>Select Vehicle 1*</mat-label>
+        <div class="col" [hidden]="showVehicle1" >
+
+          <mat-label>Select Vehicle 1* </mat-label>
           <mat-radio-group
            #Vehicle1="matRadioGroup"
            aria-labelledby="example-radio-group-label"
@@ -93,7 +102,7 @@
 
 
         <div class="col" [hidden]="showVehicle2">
-           <mat-label>Select Vehicle 2*</mat-label>
+           <mat-label>Select Vehicle 2* </mat-label>
           <mat-radio-group
           #Vehicle2="matRadioGroup"
            aria-labelledby="example-radio-group-label"
@@ -142,7 +151,7 @@
 
 
         <div class="col" [hidden]="showVehicle3">
-          <mat-label>Select Vehicle 3*</mat-label>
+          <mat-label>Select Vehicle 3* </mat-label>
           <mat-radio-group
           #Vehicle3="matRadioGroup"
            aria-labelledby="example-radio-group-label"
@@ -193,7 +202,7 @@
 
 
         <div class="col" [hidden]="showVehicle4">
-          <mat-label>Select Vehicle 4*</mat-label>
+          <mat-label>Select Vehicle 4* </mat-label>
           <mat-radio-group
           #Vehicle4="matRadioGroup"
            aria-labelledby="example-radio-group-label"

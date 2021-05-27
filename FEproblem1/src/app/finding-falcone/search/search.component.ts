@@ -4,7 +4,12 @@ import { ActivatedRoute,Router,NavigationExtras} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Observable,of} from 'rxjs';
 import {map,filter,startWith,tap,switchMap} from 'rxjs/operators';
-import {FindingfalconeService} from '../findingfalcone.service';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+
 
 
 //Importing Services
@@ -12,6 +17,7 @@ import {PlanetsService} from '../planets.service';
 import {VehiclesService} from '../vehicles.service';
 import {ValidationMessage} from '../validation-message';
 import {ValidationMessageList} from '../MessageList';
+import {FindingfalconeService} from '../findingfalcone.service';
 
 //Importing Interfaces
 import {Vehicles} from '../vehicles';
@@ -32,6 +38,10 @@ export class SearchComponent implements OnInit{
     show:false,
     errorMessage:"Please Select all *Required Fields."
   };
+  info={
+    show:false,
+    infoMessage:"Please Select all *Required Fields Again on Resetting Values."
+  }
   
   filteredPlanets1: Observable<Planets[]>;
   filteredPlanets2: Observable<Planets[]>; 
@@ -160,7 +170,7 @@ ngOnInit() {
   getPlanets(): void
   {
 
-    this.planetsService.getPlanets()
+    this.planetsService.getList()
       .subscribe(Planets=>{this.Planets=Planets;
         this.PlanetList=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanets1=of(this.Planets);
@@ -173,14 +183,18 @@ ngOnInit() {
    }
 
   onSelectingPlanet(destination:string,  selectedPlanet:Planets):void{
+    if(this.error.show)
+             this.error.show=false;
+           if(this.info.show)
+             this.info.show=false;
       
     switch (destination) {
+
       case "dest1":
         // code...
         {
           this.showVehicle1=  false;
-          if(this.error.show)
-             this.error.show=false;
+          
 
           if(this.stage>1)
           {
@@ -203,8 +217,6 @@ ngOnInit() {
       case "dest2":
         {
           this.showVehicle2=  false;
-          if(this.error.show)
-             this.error.show=false;
 
           if(this.stage>2&&this.planet3.name)
           {
@@ -229,8 +241,6 @@ ngOnInit() {
       case "dest3":
         {
           this.showVehicle3=  false;
-          if(this.error.show)
-             this.error.show=false;
 
           if(this.stage>=3&&(this.planet4.name))
           {
@@ -293,7 +303,7 @@ ngOnInit() {
  //Function to get vehicles from server
   getVehicles():void
   {
-     this.vehicleService.getVehicles().subscribe(
+     this.vehicleService.getList().subscribe(
        data=>{
          this.Vehicles=JSON.parse(JSON.stringify(data));
          this.filteredlist4=JSON.parse(JSON.stringify(data));
@@ -535,6 +545,10 @@ filterVehicleUnits(vehicleNumber:number):void{
 
 
   onSelectingVehicle(option: number,vehicle:Vehicles){
+     if(this.error.show)
+             this.error.show=false;
+            if(this.info.show)
+             this.info.show=false;
 
      let time:number= 0;
      switch (option) {
@@ -552,8 +566,7 @@ filterVehicleUnits(vehicleNumber:number):void{
 
            this.calculateTimeTaken(vehicle,this.planet1);
            this.filterVehicleUnits(1);
-           if(this.error.show)
-             this.error.show=false;
+          
            this.showPlanet2=true;
            }
          
@@ -576,8 +589,7 @@ filterVehicleUnits(vehicleNumber:number):void{
                this.filterVehicles(1,this.planet1);
               } 
              this.calculateTimeTaken(vehicle,this.planet2);
-              if(this.error.show)
-             this.error.show=false;
+             
              this.filterVehicleUnits(2);
              this.showPlanet3=true;
          }
@@ -600,8 +612,6 @@ filterVehicleUnits(vehicleNumber:number):void{
                this.filterVehicles(1,this.planet1);
                this.filterVehicles(2,this.planet2);
               } 
-              if(this.error.show)
-             this.error.show=false;
 
            this.calculateTimeTaken(vehicle,this.planet3);
            this.filterVehicleUnits(3);
@@ -735,9 +745,13 @@ findFalcon(token:Token ):void{
      this.error.show=true;
    }
 
+   ShowInfo():void{
+     this.info.show=true;
+   }
+
 //Function to reset page
 onReset(stage:Number):void{
-
+  this.ShowInfo();
   switch (stage) {
     case 1:
     {
