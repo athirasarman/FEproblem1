@@ -556,8 +556,16 @@ filterVehicleUnits(vehicleNumber:number):void{
   */
   calculateTimeTaken(vehicle:Vehicles,planet:Planets):void
   {
+    if(vehicle.speed&&planet.distance)
+  {
     let time=planet.distance/vehicle.speed;
     this.timeTaken=this.timeTaken+time;
+  }
+  else
+  {
+    this.ShowError();//ShowError if input is not valid
+  }
+
   }
 
 
