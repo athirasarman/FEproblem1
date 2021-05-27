@@ -27,9 +27,13 @@ export class FindingfalconeService {
     ) { }
 
     httpOptions = {
-    headers: new HttpHeaders({ 'Accept': 'application/json' , 'Content-Type':'application/json'})
+    headers: new HttpHeaders({ 'Accept': 'application/json' , 'Content-Type':'application/json'})//header options
   };
   
+   /**
+   * Returns token from server
+   * FUnction to fetch token
+   */
   findingFalconToken():Observable<Token>
   {
       return  this.http.post<Token>(this.tokenUrl,null,this.httpOptions)
@@ -40,7 +44,12 @@ export class FindingfalconeService {
          )as Observable<Token>;
   }
 
- 
+  /**
+   * Returns result after searching for falcon
+   * FUnction to search for falcon
+   * @params FindFalconRequest: request parameters
+   * @params timeTaken: total time taken for searching in all planets
+   */
   findFalcon(FindFalconRequest:FindFalconRequest,timeTaken:number):Observable<Result>
   {
       return  this.http.post<Result>(this.findFalconUrl,FindFalconRequest,this.httpOptions)
@@ -55,7 +64,11 @@ export class FindingfalconeService {
          )as Observable<Result>;
        
   }
-
+ /**
+   * Returns result after error occurs
+   * FUnction to custom add error message to result
+   * @params data: error message
+   */
   setErrorResult(data:any):Result
   {
     this.result.timeTaken=0;
@@ -70,6 +83,10 @@ export class FindingfalconeService {
     return this.result;
   }
 
+ /**
+   * Returns result after searching
+   * FUnction to return result
+   */
   getResult():Result{
     return this.result;
   }
@@ -96,7 +113,7 @@ export class FindingfalconeService {
   }
 
 
-   /** Log a FindingfalconeService message with the MessageService */
+   /** Log a FindingfalconeService message  */
   private log(message: string) {
    // this.messageService.add(`HeroService: ${message}`);
    console.log(message);

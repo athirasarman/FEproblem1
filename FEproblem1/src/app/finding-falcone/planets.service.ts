@@ -18,9 +18,11 @@ export class PlanetsService {
 
   constructor(private http: HttpClient) 
   { }
-
-
-/** GET planets from the server */
+  
+/**
+   * Returns a list of planets.
+   * Function  fetch planets from server
+   */
  getPlanets(): Observable<Planets[]> {
      this.Planets=  this.http.get<Planets[]>(this.planetsUrl)
       .pipe(
@@ -32,6 +34,10 @@ export class PlanetsService {
 
   }
 
+ /**
+   * Returns a list of planets.
+   * Function to get list after fetching from server
+   */
 getList():Observable<Planets[]>{
   return this.Planets;
 }

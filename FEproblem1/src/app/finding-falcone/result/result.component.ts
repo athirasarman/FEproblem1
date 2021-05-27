@@ -2,7 +2,10 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Observable,of} from 'rxjs';
 
+//Importing services
 import {FindingfalconeService} from '../findingfalcone.service';
+
+//importing Interfaces
 import {Result} from '../result';
 
 
@@ -22,7 +25,7 @@ export class ResultComponent {
   timeTaken=0;
 
   constructor(private FindingfalconeService: FindingfalconeService) {  
-         this.result=this.FindingfalconeService.getResult();
+         this.result=this.FindingfalconeService.getResult();//Fetching result from service
 }
 
 

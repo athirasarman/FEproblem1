@@ -4,12 +4,7 @@ import { ActivatedRoute,Router,NavigationExtras} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Observable,of} from 'rxjs';
 import {map,filter,startWith,tap,switchMap} from 'rxjs/operators';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
-
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 
 
 //Importing Services
@@ -119,7 +114,8 @@ export class SearchComponent implements OnInit{
   }
 
 ngOnInit() {
-          
+
+      //Autocomplete Filter Process        
       this.filteredPlanets1 = this.Destination1.valueChanges
       .pipe(
         startWith(null),
@@ -143,6 +139,10 @@ ngOnInit() {
   
     } 
 
+/**
+   * Returns a Validator that handles Autocomplete Validation.
+   * This validation handler helps in validating autocomplete on entering values.
+   */
   autocompleteObjectValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (typeof control.value === 'string') {
@@ -152,143 +152,137 @@ ngOnInit() {
   }
  }
 
-//Function to filter planets
+/**
+   * Returns a list of planet that is filtered according to the user input.
+   * This filter helps in filtering autocomplete on entering values.
+   */
  filterPlanets(pName: any,initial:true) {
      let planetName = "";
     if(pName){
     // pName can be a planet or a string
      let planetName = pName.name || pName;
     }
-    
+    //returns filtered list
     return this.Planets.filter(planet =>
       planet.name.toLowerCase().indexOf(planetName.toLowerCase()) === 0);
 
   }
   
 
-  //Function to get planets from server
+  /**
+   * Assigns a list of planet fetched from service to autocomplete lists.
+   * This function helps in fetching Planets from Service and assigns them to Autocomplete objects for further processing
+   */
   getPlanets(): void
   {
 
     this.planetsService.getList()
       .subscribe(Planets=>{this.Planets=Planets;
+        //deep copying fetched data for further processing
         this.PlanetList=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanets1=of(this.Planets);
         this.filteredPlanetlist1=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanetlist2=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanetlist3=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanetlist4=JSON.parse(JSON.stringify(Planets));
-
        });
    }
 
+/**
+   * Triggered when a Planet is selected by User
+   * This function is used for step by step processing once planets are selected
+   * @param destination - name of the destination that has been selected
+   * @param selectedPlanet - Planet Object that has been selected
+   */
   onSelectingPlanet(destination:string,  selectedPlanet:Planets):void{
-    if(this.error.show)
+           if(this.error.show) // Checking whether erro message is displayed
              this.error.show=false;
-           if(this.info.show)
+           if(this.info.show) // Checking whether info message is displayed
              this.info.show=false;
       
     switch (destination) {
-
+   
       case "dest1":
-        // code...
+        // code when first destination is selected...
         {
-          this.showVehicle1=  false;
-          
+          this.showVehicle1=  false; //for displaying vehicle1 options  
 
-          if(this.stage>1)
+          if(this.stage>1)// Checking whether Resetting needs to be done
           {
-          this.onReset(1);
-          this.removeSelectedPlanet(selectedPlanet,1);
-          this.filterVehicles(1,selectedPlanet);
+          this.onReset(1); //Resetting
+          this.removeSelectedPlanet(selectedPlanet,1); //Removing selected planet1 from all other autocompletes
+          this.filterVehicles(1,selectedPlanet); //Filtering vehicles according to planet distance
           }
           else
           {
-          if(!this.planet1.name&&!this.vehicle1.name)
+          if(!this.planet1.name&&!this.vehicle1.name)//Checking whether all inputs are proper
            {
-           this.removeSelectedPlanet(selectedPlanet,1);
-           this.filterVehicles(1,selectedPlanet);
-           //this.stage=2;
+           this.removeSelectedPlanet(selectedPlanet,1);  //Removing selected planet1 from all other autocompletes
+           this.filterVehicles(1,selectedPlanet); //Filtering vehicles according to planet1 distance
           }
           }
           
           break;
       }
       case "dest2":
+       // code when second destination is selected...
         {
-          this.showVehicle2=  false;
+          this.showVehicle2=  false;//for displaying vehicle2 options  
 
-          if(this.stage>2&&this.planet3.name)
+          if(this.stage>2&&this.planet3.name)// Checking whether Resetting needs to be done
           {
-          this.onReset(2);
-          this.removeSelectedPlanet(this.planet1,1);
-          this.removeSelectedPlanet(selectedPlanet,2);
-          this.filterVehicles(1,this.planet1);
-          this.filterVehicles(2,selectedPlanet);
+          this.onReset(2); //Resetting
+          this.removeSelectedPlanet(this.planet1,1);//Removing selected planet1 from all other autocompletes
+          this.removeSelectedPlanet(selectedPlanet,2)//Removing selected planet2 from all other autocompletes
+          this.filterVehicles(1,this.planet1);//Filtering vehicles according to planet1 distance
+          this.filterVehicles(2,selectedPlanet);//Filtering vehicles according to planet2 distance
           }
           else
           {
-            if(this.stage<2&&!this.planet2.name&&!this.vehicle2.name)
+            if(this.stage<2&&!this.planet2.name&&!this.vehicle2.name)//Checking whether all inputs are proper
             {
-              this.removeSelectedPlanet(selectedPlanet,2);
-              this.filterVehicles(2,selectedPlanet);
-              this.stage=2;
+              this.removeSelectedPlanet(selectedPlanet,2);//Removing selected planet2 from all other autocompletes
+              this.filterVehicles(2,selectedPlanet);//Filtering vehicles according to planet2 distance
+              this.stage=2; //Stage 2 started
             }
           }
           
           break;
         }
       case "dest3":
+      // code when third destination is selected...
         {
-          this.showVehicle3=  false;
+          this.showVehicle3=  false;//for displaying vehicle3 options 
 
-          if(this.stage>=3&&(this.planet4.name))
+          if(this.stage>=3&&(this.planet4.name))// Checking whether Resetting needs to be done
           {
-          this.onReset(3);
-          console.log(this.planet3);
-          console.log(this.planet4);
-          console.log(this.vehicle3);
-          console.log(this.vehicle4);
-          this.removeSelectedPlanet(this.planet1,1);
-          this.removeSelectedPlanet(this.planet2,2);
-        // if(!this.planet4.name&&this.stage==3)
-          //{
-           this.removeSelectedPlanet(selectedPlanet,3);
-           this.filterVehicles(3,selectedPlanet);
-         // }
-          /*else
-          {
-            this.removeSelectedPlanet(this.planet3,3);
-            this.filterVehicles(3,this.planet3);
-          }*/
-
-          this.filterVehicles(1,this.planet1);
-          this.filterVehicles(2,this.planet2);
-          //this.filterVehicles(3,selectedPlanet);
+          this.onReset(3); //Resetting
+          this.removeSelectedPlanet(this.planet1,1);//Removing selected planet1 from all other autocompletes
+          this.removeSelectedPlanet(this.planet2,2);//Removing selected planet2 from all other autocompletes
+          this.removeSelectedPlanet(selectedPlanet,3);//Removing selected planet3 from all other autocompletes
+          this.filterVehicles(1,this.planet1);//Filtering vehicles according to planet1 distance
+          this.filterVehicles(2,this.planet2);//Filtering vehicles according to planet2 distance          
+          this.filterVehicles(3,selectedPlanet);//Filtering vehicles according to planet3 distance
           }
           else
-          {
-            if(this.stage<3)
-            {
-              
-              this.removeSelectedPlanet(selectedPlanet,3);
-              this.filterVehicles(3,selectedPlanet);
-              this.stage=3;
-            }
+          {                          
+              this.removeSelectedPlanet(selectedPlanet,3);//Removing selected planet3 from all other autocompletes
+              this.filterVehicles(3,selectedPlanet);//Filtering vehicles according to planet3 distance
+              this.stage=3;//Stage 3 started
+           
           }
         
           break;
         }
       case "dest4":
+      // code when fourth destination is selected...
         {
-          this.showVehicle4=  false;
-          if(this.error.show)
-             this.error.show=false;
-
-          this.filterVehicles(4,selectedPlanet);
-          break;}
+          this.showVehicle4=  false; //for displaying vehicle4 options 
+          this.filterVehicles(4,selectedPlanet);//Filtering vehicles according to planet4 distance
+          break;
+        }
       default:
-        // code...
+        // code for default case...
        {
         this.showVehicle1=  true;
         this.showVehicle2=  true;
@@ -300,11 +294,16 @@ ngOnInit() {
         
    }
 
- //Function to get vehicles from server
+ /**
+   * Assigns a list of vehicles fetched from service to radio group lists.
+   * This function helps in fetching vehicles from Service and assigns them to radio group objects for further processing
+   */
   getVehicles():void
   {
      this.vehicleService.getList().subscribe(
        data=>{
+
+        //deep copying fetched data for further processing
          this.Vehicles=JSON.parse(JSON.stringify(data));
          this.filteredlist4=JSON.parse(JSON.stringify(data));
          this.filteredlist3=JSON.parse(JSON.stringify(data));
@@ -314,8 +313,12 @@ ngOnInit() {
          );
       
    }
-
-  //Function to filter Vehicles according to distance
+/**
+   * Returns Filtered Vehicle List According to Distance of Selected Planet
+   * This function is used for filtering Vehicle List once planet is selected
+   * @param vehicles - Vehicle array
+   * @param selectedPlanet - Planet Object that has been selected
+   */
    filterAccordingToDistance(vehicles:Vehicles[],selectedPlanet:Planets):Vehicles[]
    {
 
@@ -332,13 +335,17 @@ ngOnInit() {
    }
  
 
-//Function to filter vehicle units
+/**
+   * This function is used for updating Vehicles List once a vehicle has been selected
+   * @param vehicleNumber - denotes which vehicle has been selected
+   */
 filterVehicleUnits(vehicleNumber:number):void{
 
   switch (vehicleNumber) {
     case 1:
-      // code...
-      { for(let value of this.filteredlist2)
+      // code when first vehicle has been selected
+      { 
+        for(let value of this.filteredlist2)// Filtering Second Vehicle List
        {
          if(value.name===this.vehicle1.name)
          {
@@ -353,7 +360,7 @@ filterVehicleUnits(vehicleNumber:number):void{
          }
        }
 
-       for(let value of this.filteredlist3)
+       for(let value of this.filteredlist3)// Filtering 3rd Vehicle List
        {
          if(value.name===this.vehicle1.name)
          {
@@ -368,7 +375,7 @@ filterVehicleUnits(vehicleNumber:number):void{
          }
        }
 
-       for(let value of this.filteredlist4)
+       for(let value of this.filteredlist4)// Filtering 4th Vehicle List
        {
          if(value.name===this.vehicle1.name)
          {
@@ -382,16 +389,17 @@ filterVehicleUnits(vehicleNumber:number):void{
            }
          }
        }
-
+        //Assigning Filtered Lists to Respective Radio Groups
         this.filteredVehicles2=of(this.filteredlist2);
         this.filteredVehicles3=of(this.filteredlist3);
         this.filteredVehicles4=of(this.filteredlist4);
       break;
-}
+      }
+
       case 2:
-      // code...
+     // code when 2nd vehicle has been selected
       {
-       for(let value of this.filteredlist3)
+       for(let value of this.filteredlist3)// Filtering 3rd Vehicle List
        {
          if(value.name===this.vehicle2.name)
          {
@@ -406,7 +414,7 @@ filterVehicleUnits(vehicleNumber:number):void{
          }
        }
 
-       for(let value of this.filteredlist4)
+       for(let value of this.filteredlist4)// Filtering 4th Vehicle List
        {
          if(value.name===this.vehicle2.name)
          {
@@ -420,16 +428,16 @@ filterVehicleUnits(vehicleNumber:number):void{
            }
          }
        }
-
+       //Assigning Filtered Lists to Respective Radio Groups
         this.filteredVehicles3=of(this.filteredlist3);
         this.filteredVehicles4=of(this.filteredlist4);
       break;
     }
 
       case 3:
-      // code...
+         // code when 3rd vehicle has been selected
        {
-       for(let value of this.filteredlist4)
+       for(let value of this.filteredlist4)// Filtering 4th Vehicle List
        {
          if(value.name===this.vehicle3.name)
          {
@@ -443,9 +451,8 @@ filterVehicleUnits(vehicleNumber:number):void{
            }
          }
        }
+       //Assigning Filtered Lists to Respective Radio Groups
         this.filteredVehicles4=of(this.filteredlist4);
-        //this.filteredVehicles2=of(this.filteredlist2);
-       // this.filteredVehicles1=of(this.filteredlist1);
       break;}
     default:
       // code...
@@ -457,35 +464,39 @@ filterVehicleUnits(vehicleNumber:number):void{
 }
 
 
-  //Function to filter vehicles according to requirement
+/**
+   * This function is used for updating Vehicles List once a planet has been selected
+   * @param count - denotes which planet has been selected
+   * @param selectedPlanet - Planet Object that has been selected
+   */
   filterVehicles(count:number,selectedPlanet:Planets):void
   {
 
 
     switch (count) {
       case 1:
-        // code...
+        // code when 1st planet has been selected...
         {
         this.filteredlist1=this.filterAccordingToDistance(this.filteredlist1,selectedPlanet);
         this.filteredVehicles1=of(this.filteredlist1);
         break;
         }
        case 2:
-               // code...
+         // code when 2nd planet has been selected...
         {
         this.filteredlist2=this.filterAccordingToDistance(this.filteredlist2,selectedPlanet);
         this.filteredVehicles2=of(this.filteredlist2);
         break;
         }
         case 3:
-               // code...
+        // code when 3rd planet has been selected...
         {
         this.filteredlist3=this.filterAccordingToDistance(this.filteredlist3,selectedPlanet);
         this.filteredVehicles3=of(this.filteredlist3);
         break;
         }
         case 4:
-               // code...
+        // code when 4th planet has been selected...
         {
         this.filteredlist4=this.filterAccordingToDistance(this.filteredlist4,selectedPlanet);
         this.filteredVehicles4=of(this.filteredlist4);
@@ -499,7 +510,9 @@ filterVehicleUnits(vehicleNumber:number):void{
     
   }
 
-  //Function to add a planet to a selected array
+/**
+   * This function is used for updating Planets List once all planets are selected
+   */
   addSelectedPlanet():void
   {  
        if(this.planet1.name&&this.planet2.name&&this.planet3.name&&this.planet4.name)
@@ -511,11 +524,13 @@ filterVehicleUnits(vehicleNumber:number):void{
         this.error.show=false;
       }
       else{
-        this.ShowError();
+        this.ShowError();// show error message if all planets are not selected
       }
   }
 
-  //Function to add a planet to a selected array
+/**
+   * This function is used for updating Vehicles List once all planets are selected
+   */
   addSelectedVehicles():void
   {
        if(this.vehicle1.name&&this.vehicle2.name&&this.vehicle3.name&&this.vehicle4.name)
@@ -528,14 +543,16 @@ filterVehicleUnits(vehicleNumber:number):void{
        }
        else
        {
-         this.ShowError();
+         this.ShowError();// show error message if all vehicles are not selected
        }
   }
 
 
-  /*
-  Function to calculate time taken
-  time=distance/speed
+  /**
+  * Function to calculate time taken
+  * time=distance/speed
+  * @params vehicle: selected vehicle
+  * @params planet: selected planet
   */
   calculateTimeTaken(vehicle:Vehicles,planet:Planets):void
   {
@@ -544,89 +561,91 @@ filterVehicleUnits(vehicleNumber:number):void{
   }
 
 
-  onSelectingVehicle(option: number,vehicle:Vehicles){
-     if(this.error.show)
-             this.error.show=false;
-            if(this.info.show)
-             this.info.show=false;
+  /**
+  * Function for further processing when a vehicle is selected
+  * @params option: selected vehicle number
+  * @params vehicle: selected vehicle
+  */
+  onSelectingVehicle(option: number,vehicle:Vehicles):void{
+     if(this.error.show)//Checking whether error message is displayed
+         this.error.show=false;
+     if(this.info.show)//Checking whether error message is displayed
+         this.info.show=false;
 
      let time:number= 0;
      switch (option) {
        case 1:
-         // code...
+         // code when 1st vehicle has been selected...
          {if(this.vehicle1.name)
          {
            
-           if(this.showPlanet2)
+           if(this.showPlanet2)// Checking whether reset should be done
              {
-               this.onReset(1);
-               this.removeSelectedPlanet(this.planet1,1);
-               this.vehicle1=vehicle;
+               this.onReset(1);// Resetting
+               this.removeSelectedPlanet(this.planet1,1);// filtering planet1 from other autocompletes
+               this.vehicle1=vehicle;//reassigning value to vehicle1 radio group
             }      
 
-           this.calculateTimeTaken(vehicle,this.planet1);
-           this.filterVehicleUnits(1);
+           this.calculateTimeTaken(vehicle,this.planet1);//Calculating time taken
+           this.filterVehicleUnits(1);//Filtering vehicles lists according to selected vehicle1
           
-           this.showPlanet2=true;
+           this.showPlanet2=true;//displaying second planet
            }
          
          break;
        }
        case 2:
-         // code...
+         // code when 2nd vehicle has been selected...
          {
            if(this.vehicle2.name)
            {
               
-             if(this.showPlanet3)
+             if(this.showPlanet3)// Checking whether reset should be done
              {
                let vehicle1=this.vehicle1;
-               this.onReset(2);
-               this.vehicle1=vehicle1;
-               this.vehicle2=vehicle;
-               this.removeSelectedPlanet(this.planet1,1);
-               this.removeSelectedPlanet(this.planet2,2);
-               this.filterVehicles(1,this.planet1);
+               this.onReset(2);// Resetting
+               this.vehicle1=vehicle1;//reassigning value to vehicle1 radio group
+               this.vehicle2=vehicle;//reassigning value to vehicle2 radio group
+               this.removeSelectedPlanet(this.planet1,1);// filtering planet1 from other autocompletes
+               this.removeSelectedPlanet(this.planet2,2);// filtering planet1 from other autocompletes
+               this.filterVehicles(1,this.planet1);//Filtering vehicles lists according to vehicle1
               } 
-             this.calculateTimeTaken(vehicle,this.planet2);
+             this.calculateTimeTaken(vehicle,this.planet2);//Calculating time taken
              
-             this.filterVehicleUnits(2);
-             this.showPlanet3=true;
+             this.filterVehicleUnits(2);//Filtering vehicles lists according to selected vehicle2
+             this.showPlanet3=true;//displaying 3rd planet
          }
          break;}
        case 3:
-         // code...
+         // code when 3rd vehicle has been selected...
          {if(this.vehicle3.name)
          {
-           if(this.showPlanet4)
+           if(this.showPlanet4)// Checking whether reset should be done
              {
                let vehicle1=this.vehicle1;
                let vehicle2=this.vehicle2;
-               this.onReset(3);
-               this.vehicle3=vehicle;
-               this.vehicle1=vehicle1;
-               this.vehicle2=vehicle2;
-               this.removeSelectedPlanet(this.planet1,1);
-               this.removeSelectedPlanet(this.planet2,2);
-               this.removeSelectedPlanet(this.planet3,3);
-               this.filterVehicles(1,this.planet1);
-               this.filterVehicles(2,this.planet2);
+               this.onReset(3);// Resetting
+               this.vehicle1=vehicle1;//reassigning value to vehicle1 radio group
+               this.vehicle2=vehicle2;//reassigning value to vehicle2 radio group               
+               this.vehicle3=vehicle;//reassigning value to vehicle3 radio group 
+               this.removeSelectedPlanet(this.planet1,1);// filtering planet1 from other autocompletes
+               this.removeSelectedPlanet(this.planet2,2);// filtering planet2 from other autocompletes
+               this.removeSelectedPlanet(this.planet3,3);// filtering planet3 from other autocompletes
+               this.filterVehicles(1,this.planet1);//Filtering vehicles lists according to vehicle1
+               this.filterVehicles(2,this.planet2);//Filtering vehicles lists according to vehicle1
               } 
 
-           this.calculateTimeTaken(vehicle,this.planet3);
-           this.filterVehicleUnits(3);
-           this.showPlanet4=true;
+           this.calculateTimeTaken(vehicle,this.planet3);//Calculating time taken
+           this.filterVehicleUnits(3);//Filtering vehicles lists according to selected vehicle3
+           this.showPlanet4=true;//displaying 4th planet
          }
          break;}
        case 4:
-         // code...
+           // code when 4th vehicle has been selected...
         {if(!this.vehicle4.name)
          {
-           this.calculateTimeTaken(vehicle,this.planet4);
+           this.calculateTimeTaken(vehicle,this.planet4);//Calculating time taken
          }
-         if(this.error.show)
-             this.error.show=false;
-
          break;
        }
        
@@ -638,19 +657,27 @@ filterVehicleUnits(vehicleNumber:number):void{
    
   }
 
-//Function to display planet name in autocomplete
+/**
+*Function to display planet name in autocomplete
+*returns planet name for display in autocomplete
+*/
  getSelectedPlanetText(planet:Planets) {
      return planet ? planet.name :'';
    }
 
-//Function to remove already selected planets from other autocomplete lists
+/**
+  * Function to remove already selected planets from other autocomplete lists
+  * @params selectedPlanet: selected planet
+  * @params destinationNumber: number denoting which destination has been selected
+    */
 removeSelectedPlanet(selectedPlanet:Planets, destinationNumber:Number){
-  //this.Planets.splice(this.Planets.indexOf(selectedPlanet),1)
 
 switch (destinationNumber) {
   case 1:
-    // code...
-    {let eIndex=this.filteredPlanetlist2.findIndex(element=>(element.name===selectedPlanet.name));
+    // code when 1st planet has been selected ...
+    {
+      //Filtering Planet Lists
+      let eIndex=this.filteredPlanetlist2.findIndex(element=>(element.name===selectedPlanet.name));
       if(eIndex>=0)
     this.filteredPlanetlist2.splice(eIndex,1);
 
@@ -661,16 +688,17 @@ switch (destinationNumber) {
     eIndex=this.filteredPlanetlist4.findIndex(element=>(element.name===selectedPlanet.name));
     if(eIndex>=0)
     this.filteredPlanetlist4.splice(eIndex,1);
-
+    //Assigning filtered lists to autocomplete 
     this.filteredPlanets2=of(this.filteredPlanetlist2);
     this.filteredPlanets3=of(this.filteredPlanetlist3);
     this.filteredPlanets4=of(this.filteredPlanetlist4);
     break;}
 
    case 2:
-    // code..
-
-    {let eIndex=this.filteredPlanetlist3.findIndex(element=>(element.name===selectedPlanet.name));
+      // code when 2nd planet has been selected ...
+    {
+       //Filtering Planet Lists
+      let eIndex=this.filteredPlanetlist3.findIndex(element=>(element.name===selectedPlanet.name));
     if(eIndex>=0)
     this.filteredPlanetlist3.splice(eIndex,1);
 
@@ -678,15 +706,18 @@ switch (destinationNumber) {
     if(eIndex>=0)
     this.filteredPlanetlist4.splice(eIndex,1);
 
+    
+    //Assigning filtered lists to autocomplete 
     this.filteredPlanets3=of(this.filteredPlanetlist3);
     this.filteredPlanets4=of(this.filteredPlanetlist4);
     break;}
 
   case 3:
-    // code...
+     // code when 3rd planet has been selected ...
    {  
     let eIndex=this.filteredPlanetlist4.findIndex(element=>(element.name===selectedPlanet.name));
     if(eIndex>=0)
+      //Assigning filtered list to autocomplete 
     this.filteredPlanetlist4.splice(eIndex,1);
     break;}
   
@@ -697,7 +728,9 @@ switch (destinationNumber) {
 }
 
 
-//Function to get token from server
+/**
+  * Function to get token from server
+*/
    SearchFalcon(): void
   {
 
@@ -708,7 +741,10 @@ switch (destinationNumber) {
 
    }
  
-//Function to find findingFalcon
+/**
+  * Function to find Falcon
+  * @params token: token fetched from server
+    */
 findFalcon(token:Token ):void{
  let FindFalconRequest:FindFalconRequest={
    token:token.token,
@@ -716,45 +752,57 @@ findFalcon(token:Token ):void{
    vehicle_names:this.selectedVehicles
  };
 
- //Routing to result page
+ //Routing to result page once searching is done
  this.FindingfalconeService.findFalcon(FindFalconRequest,this.timeTaken)
-    .subscribe(data=>{console.log(data);
-              //this.addNewItem(data);
-              this.router.navigateByUrl("result");});
+    .subscribe(data=>{this.router.navigateByUrl("result");});
 }
    
-//Function to enable search functionality
+/**
+  * Function to enable search functionality
+    */
   onSubmit(): void {
     if(this.searchForm.valid)
     {
-    this.addSelectedPlanet();
-    this.addSelectedVehicles();
+    this.addSelectedPlanet();// Adding all selected planets to parameter list
+    this.addSelectedVehicles();// Adding all selected vehicles to parameter list
     if(!this.error.show)
      {
-      this.SearchFalcon();
+      this.SearchFalcon();// Searching done for falcon falcon 
 
      }
     }
     else
     {
-      this.ShowError();
+      this.ShowError();//displays error message if all input values are not proper
     }
   }
 
+   
+/**
+  * Function to display error message
+    */
   ShowError():void{
      this.error.show=true;
    }
-
+   
+/**
+  * Function to display info message
+    */
    ShowInfo():void{
      this.info.show=true;
    }
 
-//Function to reset page
+/**
+  * Function to reset page
+  * @params stage: stage of form input
+    */
 onReset(stage:Number):void{
-  this.ShowInfo();
+  this.ShowInfo();// displaying info message
   switch (stage) {
     case 1:
+    //code when 1st planet or vehicle has been reset
     {
+      //Resetting all input values and variables
       this.stage=1;
       this.vehicle1={} as Vehicles;
       this.vehicle2={} as Vehicles;
@@ -781,7 +829,10 @@ onReset(stage:Number):void{
       break;
     }
     case 2:
-    {
+    //code when 2nd planet or vehicle has been reset
+    { 
+
+      //Resetting all input values and variables
       this.stage=2;
       this.vehicle2={} as Vehicles;
       this.vehicle3={} as Vehicles;
@@ -803,7 +854,9 @@ onReset(stage:Number):void{
       break;
     }
     case 3:
+    //code when 3rd planet or vehicle has been reset
     {
+      //Resetting all input values and variables
       this.stage=3;
       this.vehicle3={} as Vehicles;
       this.vehicle4={} as Vehicles;
@@ -821,7 +874,9 @@ onReset(stage:Number):void{
     }
 
     case 4:
-      // code...
+      // code when user clicks Reseet Button
+      {
+       //Resetting all input values and variables
       this.searchForm.reset;
       this.filteredPlanets1=of(this.PlanetList);
       this.filteredPlanetlist1=JSON.parse(JSON.stringify(this.PlanetList));
@@ -851,6 +906,7 @@ onReset(stage:Number):void{
       this.timeTaken=0;
       this.error.show=false;
       break;
+    }
 
     default:
       // code...

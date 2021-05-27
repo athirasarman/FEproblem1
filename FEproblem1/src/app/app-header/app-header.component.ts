@@ -13,9 +13,6 @@ import { Observable } from 'rxjs';
 
 export class AppHeaderComponent implements OnInit {
   title = 'Finding Falcone!';
-
-  @Input() isMenuOpened: boolean;
-  @Output() isShowSidebar = new EventEmitter<boolean>();
 	
 	 isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,12 +24,6 @@ export class AppHeaderComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
-  }
-  
-  public openMenu(): void {
-    this.isMenuOpened = !this.isMenuOpened;
-
-    this.isShowSidebar.emit(this.isMenuOpened);
   }
 
 }

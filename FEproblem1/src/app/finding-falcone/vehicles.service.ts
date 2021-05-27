@@ -16,7 +16,10 @@ export class VehiclesService {
 
   constructor(private http: HttpClient) { }
 
-  /** GET Vehicles from the server */
+  /**
+   * Returns a list of vehicles.
+   * Function  fetch vehicles from server
+   */
  getVehicles(): Observable<Vehicles[]> {
  
      this.Vehicles=  this.http.get<Vehicles[]>(this.vehiclesUrl)
@@ -28,7 +31,10 @@ export class VehiclesService {
      return this.Vehicles;
   }
 
-
+/**
+   * Returns a list of vehicles.
+   * Function to get list after fetching from server
+   */
 getList():Observable<Vehicles[]>{
   return this.Vehicles;
 }

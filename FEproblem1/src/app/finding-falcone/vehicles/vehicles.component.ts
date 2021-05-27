@@ -21,7 +21,7 @@ export class VehiclesComponent {
   }
   ngOnInit(){
      
-      this.vehiclesList=this.vehiclesService.getList();//Fetching all vehicles
+      this.vehiclesList=this.vehiclesService.getList();//Fetching all vehicles from service
        
 
   }

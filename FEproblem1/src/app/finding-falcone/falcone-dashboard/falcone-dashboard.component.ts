@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter,Input } from '@angular/core';
 import { map } from 'rxjs/operators';
-import {Observable,of} from 'rxjs';;
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import {Observable,of} from 'rxjs';
 
 //Importing Services
 import {PlanetsService} from '../planets.service';
@@ -18,11 +17,12 @@ import {Planets} from '../planets';
 })
 export class FalconeDashboardComponent {
  
-  constructor(private breakpointObserver: BreakpointObserver,
+  constructor(
               private planetsService: PlanetsService,
               private vehicleService: VehiclesService,) 
-  { this.planetsService.getPlanets();
-    this.vehicleService.getVehicles();
+  { 
+    this.planetsService.getPlanets();//fetch planets from server
+    this.vehicleService.getVehicles();//fetch vehicles from server
    }
 
   ngOnInit(): void {

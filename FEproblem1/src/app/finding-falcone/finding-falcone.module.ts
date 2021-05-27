@@ -33,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { PlanetsComponent } from './planets/planets.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [ FalconeDashboardComponent, SearchComponent, ResultComponent, PlanetsComponent, VehiclesComponent],
@@ -51,7 +52,7 @@ import { VehiclesComponent } from './vehicles/vehicles.component';
     MatRadioModule,
     ReactiveFormsModule,
     HttpClientModule,
-
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     MatSliderModule,
     MatGridListModule,

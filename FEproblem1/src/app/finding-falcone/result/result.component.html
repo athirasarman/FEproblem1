@@ -6,8 +6,9 @@
   <h3 class="result-page__title-text">Finding Falcone</h3>
     </div>
   
-  <mat-grid-list cols="2">
+  <mat-grid-list cols="2" >
     <mat-grid-tile [colspan]="2" [rowspan]="2" [ngSwitch]="status">
+
       <mat-card class="result-page__card"  *ngSwitchCase="'success'">
      
           <h1 class="result-page__card-title">

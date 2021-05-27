@@ -14,15 +14,15 @@ import {Planets} from '../planets';
   styleUrls: ['./planets.component.scss']
 })
 export class PlanetsComponent {
-     planetList: Observable<Planets[]>;
+  planetList: Observable<Planets[]>;
+
   constructor(private planetsService: PlanetsService) {
 
-       
-
   }
+  
   ngOnInit(){
      
-      this.planetList=this.planetsService.getList();//Fetching all planets
+      this.planetList=this.planetsService.getList();//Fetching all planets from service
        
 
   }
