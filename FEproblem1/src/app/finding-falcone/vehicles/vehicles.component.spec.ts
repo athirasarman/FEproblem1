@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { VehiclesComponent } from './vehicles.component';
 
@@ -24,6 +25,7 @@ describe('VehiclesComponent', () => {
         MatInputModule,
         MatRadioModule,
         MatSelectModule,
+        HttpClientTestingModule
       ]
     }).compileComponents();
   }));

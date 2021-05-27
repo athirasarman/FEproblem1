@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClientModule, HttpClient, HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 import { asyncData, asyncError } from '../../testing/async-observable-helpers';
 
@@ -65,9 +66,12 @@ describe('VehiclesService(with spies)', () => {
   });
 
     it('#getList should return expected result', () => {
-        const expectedVehicles: Vehicles[]=[];
+        const vehicles: Vehicles[]=[];
+         let expectedVehicles: Observable<Vehicles[]>=of(vehicles);
       let data=vehicleService.getList();
-      expect(data).toEqual(expectedVehicles);
+       data.subscribe(list=>{
+         expectedVehicles.subscribe(elist=>expect(elist).toEqual(list));
+       });
     });
 
 });

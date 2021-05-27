@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { asyncData, asyncError } from '../../testing/async-observable-helpers';
-
+import { Observable, of } from 'rxjs';
 
 import { HttpClientModule, HttpClient, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 
@@ -65,9 +65,12 @@ describe('PlanetsService (with spies)', () => {
   })
 
     it('#getList should return expected result', () => {
-        const expectedPlanets: Planets[]=[];
+       
+      let expectedPlanets:Observable<Planets[]>=of([]);
       let data=planetService.getList();
-      expect(data).toEqual(expectedPlanets);
+       data.subscribe(list=>{
+         expectedPlanets.subscribe(elist=>expect(elist).toEqual(list));
+       });
     });
   
 });

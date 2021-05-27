@@ -14,7 +14,7 @@ import {Planets} from './planets';
 export class PlanetsService {
 
   readonly planetsUrl = 'https://findfalcone.herokuapp.com/planets';  // URL to web api to fetch planets
-  Planets: Observable<Planets[]>;
+  Planets: Observable<Planets[]>=of([]);
 
   constructor(private http: HttpClient) 
   { }
