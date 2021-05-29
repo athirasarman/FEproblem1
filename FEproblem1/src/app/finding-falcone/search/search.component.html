@@ -14,11 +14,11 @@
 
 
 
-  <mat-card class="example-card">
+  <mat-card class="visits-chart__content">
     <mat-card-header>
-      <mat-card-title >Time Taken: {{timeTaken}} hours</mat-card-title>
+      <mat-card-title class="visits-chart__content-info-title" >Time Taken: {{timeTaken}} hours</mat-card-title>
     </mat-card-header>
-    <mat-card-content class="" >
+    <mat-card-content class="visits-chart__content-info-chart" >
       <div class="row">
         
         <div class="col" >
@@ -83,7 +83,7 @@
              [formControl]="Destination2"
              [(ngModel)]="planet2"
              [matAutocomplete]="autoDestination2">
-            <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText">
+            <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
               <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet,$event)">
                {{planet.name}}
               </mat-option>
@@ -128,11 +128,11 @@
              placeholder="Pick one"
              aria-label="Destination 3"
              matInput
-             required="" 
+             required
              [(ngModel)]="planet3"
              [formControl]="Destination3"
              [matAutocomplete]="autoDestination3">
-            <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText">
+            <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
               <mat-option *ngFor="let planet of filteredPlanets3 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest3',planet,$event)">
                {{planet.name}}
               </mat-option>
@@ -183,7 +183,7 @@
              [(ngModel)]="planet4"
              [formControl]="Destination4"
              [matAutocomplete]="autoDestination4">
-            <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText">
+            <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
               <mat-option *ngFor="let planet of filteredPlanets4 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest4',planet,$event)">
                {{planet.name}}
               </mat-option>

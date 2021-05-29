@@ -33,13 +33,12 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
     AppFooterComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

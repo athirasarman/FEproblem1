@@ -176,7 +176,7 @@ ngOnInit() {
   getPlanets(): void
   {
 
-    this.planetsService.getPlanets()
+    this.planetsService.getList()
       .subscribe(Planets=>{this.Planets=Planets;
         //deep copying fetched data for further processing
         this.PlanetList=JSON.parse(JSON.stringify(Planets));
@@ -312,7 +312,7 @@ ngOnInit() {
    */
   getVehicles():void
   {
-     this.vehicleService.getVehicles().subscribe(
+     this.vehicleService.getList().subscribe(
        data=>{
 
         //deep copying fetched data for further processing

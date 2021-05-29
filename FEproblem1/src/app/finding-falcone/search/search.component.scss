@@ -1,13 +1,17 @@
 @import "src/app/styles/colors";
 @import "src/app/styles/font";
+@import "src/app/styles/variables";
+
 
 
 .visits-chart {
-  display: flex;
-  box-shadow: 0 3px 11px 0 $shadow-white, 0 3px 3px -2px $shadow-grey, 0 1px 8px 0 $shadow-dark-grey;
+
  
-  flex-direction: column;
-  justify-content: space-between;
+  box-shadow: 0 3px 11px 0 $shadow-white, 0 3px 3px -2px $shadow-grey, 0 1px 8px 0 $shadow-dark-grey;
+   display: absolute;
+   flex-direction: column;
+
+    justify-content:space-between;
 
   &__header {
     align-items: center;
@@ -24,7 +28,7 @@
   }
 
   &__content {
-    display: flex;
+   display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 75%;
@@ -32,7 +36,6 @@
     &-info {
       align-items: center;
       display: flex;
-      height: 96px;
       justify-content: space-between;
 
       &-title {
@@ -112,5 +115,19 @@
     &__content {
       width:50%;
     }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
 }
 
