@@ -14,7 +14,7 @@ import {Vehicles} from '../vehicles';
   styleUrls: ['./vehicles.component.scss']
 })
 export class VehiclesComponent {
-	vehiclesList: Observable<Vehicles[]>;
+	vehiclesList: Observable<Vehicles[]>=of([]);
  constructor(private vehiclesService: VehiclesService) {
 
 
