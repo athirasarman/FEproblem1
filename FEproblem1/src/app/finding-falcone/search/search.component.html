@@ -50,7 +50,7 @@
        </div>
 
 
-        <div class="col" [hidden]="showVehicle1" >
+        <div class="col" *ngIf="!showVehicle1" >
 
           <mat-label>Select Vehicle 1* </mat-label>
           <mat-radio-group
@@ -101,7 +101,7 @@
         </div>
 
 
-        <div class="col" [hidden]="showVehicle2">
+        <div class="col" *ngIf="!showVehicle2">
            <mat-label>Select Vehicle 2* </mat-label>
           <mat-radio-group
           #Vehicle2="matRadioGroup"
@@ -150,7 +150,7 @@
            </div>
 
 
-        <div class="col" [hidden]="showVehicle3">
+        <div class="col" *ngIf="!showVehicle3">
           <mat-label>Select Vehicle 3* </mat-label>
           <mat-radio-group
           #Vehicle3="matRadioGroup"
@@ -202,7 +202,7 @@
 
 
 
-        <div class="col" [hidden]="showVehicle4">
+        <div class="col" *ngIf="!showVehicle4">
           <mat-label>Select Vehicle 4* </mat-label>
           <mat-radio-group
           #Vehicle4="matRadioGroup"
