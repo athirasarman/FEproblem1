@@ -176,7 +176,7 @@ ngOnInit() {
   getPlanets(): void
   {
 
-    this.planetsService.getList()
+    this.planetsService.getPlanets()
       .subscribe(Planets=>{this.Planets=Planets;
         //deep copying fetched data for further processing
         this.PlanetList=JSON.parse(JSON.stringify(Planets));
@@ -194,38 +194,46 @@ ngOnInit() {
    * @param destination - name of the destination that has been selected
    * @param selectedPlanet - Planet Object that has been selected
    */
-  onSelectingPlanet(destination:string,  selectedPlanet:Planets):void{
-           if(this.error.show) // Checking whether erro message is displayed
+  onSelectingPlanet(destination:string,  selectedPlanet:Planets, event:any):void{
+           if(this.error.show) // Checking whether error message is displayed
              this.error.show=false;
            if(this.info.show) // Checking whether info message is displayed
              this.info.show=false;
       
     switch (destination) {
    
-      case "dest1":
+      case "dest1":{
         // code when first destination is selected...
+        if(event.isUserInput)
         {
-          this.showVehicle1=  false; //for displaying vehicle1 options  
-
-          if(this.stage>1)// Checking whether Resetting needs to be done
+                  
+          if(this.stage>1 ||(this.planet1.name||this.vehicle1.name))// Checking whether Resetting needs to be done
           {
+             if(this.vehicle1.name)
+          this.ShowInfo();// displaying info message
           this.onReset(1); //Resetting
+
           this.removeSelectedPlanet(selectedPlanet,1); //Removing selected planet1 from all other autocompletes
           this.filterVehicles(1,selectedPlanet); //Filtering vehicles according to planet distance
+          //this.planet1=selectedPlanet;
           }
           else
           {
-          if(!this.planet1.name&&!this.vehicle1.name)//Checking whether all inputs are proper
-           {
+
            this.removeSelectedPlanet(selectedPlanet,1);  //Removing selected planet1 from all other autocompletes
            this.filterVehicles(1,selectedPlanet); //Filtering vehicles according to planet1 distance
+    
           }
-          }
+          this.showVehicle1=  false; //for displaying vehicle1 options  
           
-          break;
       }
+
+          break;
+    }
       case "dest2":
        // code when second destination is selected...
+       {
+       if(event.isUserInput)
         {
           this.showVehicle2=  false;//for displaying vehicle2 options  
 
@@ -246,11 +254,13 @@ ngOnInit() {
               this.stage=2; //Stage 2 started
             }
           }
-          
-          break;
         }
+         break;
+       }
       case "dest3":
       // code when third destination is selected...
+        {
+       if(event.isUserInput)
         {
           this.showVehicle3=  false;//for displaying vehicle3 options 
 
@@ -271,11 +281,13 @@ ngOnInit() {
               this.stage=3;//Stage 3 started
            
           }
+        }
         
           break;
         }
       case "dest4":
       // code when fourth destination is selected...
+
         {
           this.showVehicle4=  false; //for displaying vehicle4 options 
           this.filterVehicles(4,selectedPlanet);//Filtering vehicles according to planet4 distance
@@ -300,7 +312,7 @@ ngOnInit() {
    */
   getVehicles():void
   {
-     this.vehicleService.getList().subscribe(
+     this.vehicleService.getVehicles().subscribe(
        data=>{
 
         //deep copying fetched data for further processing
@@ -673,6 +685,14 @@ filterVehicleUnits(vehicleNumber:number):void{
      return planet ? planet.name :'';
    }
 
+   getSelectedVehicleText(vehicle:Vehicles){
+    let text=vehicle.name.toString();
+  
+    text.concat(vehicle.total_no.toString());
+    return text;
+   }
+
+
 /**
   * Function to remove already selected planets from other autocomplete lists
   * @params selectedPlanet: selected planet
@@ -839,7 +859,7 @@ onReset(stage:Number):void{
     case 2:
     //code when 2nd planet or vehicle has been reset
     { 
-
+        this.ShowInfo();// displaying info message
       //Resetting all input values and variables
       this.stage=2;
       this.vehicle2={} as Vehicles;
@@ -864,6 +884,7 @@ onReset(stage:Number):void{
     case 3:
     //code when 3rd planet or vehicle has been reset
     {
+        this.ShowInfo();// displaying info message
       //Resetting all input values and variables
       this.stage=3;
       this.vehicle3={} as Vehicles;

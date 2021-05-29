@@ -32,8 +32,8 @@
              [(ngModel)]="planet1"
              required
              [matAutocomplete]="autoDestination1">
-             <mat-autocomplete autoActiveFirstOption  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option (onSelectionChange)="onSelectingPlanet('dest1',planet)" *ngFor="let planet of filteredPlanets1 | async" [value]="planet" >
+             <mat-autocomplete autoActiveFirstOption  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
+              <mat-option *ngFor="let planet of filteredPlanets1 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest1',planet,$event)">
                 {{planet.name}}
               </mat-option>
              </mat-autocomplete>
@@ -63,7 +63,7 @@
             [(ngModel)]="vehicle1"
            (change)="onSelectingVehicle(1,vehicle1)" 
            >
-           <mat-radio-button class="example-radio-button" radioGroup="Vehicle1" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" >
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle1" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" required>
              {{vehicle.name}}
            </mat-radio-button>
           </mat-radio-group>
@@ -84,7 +84,7 @@
              [(ngModel)]="planet2"
              [matAutocomplete]="autoDestination2">
             <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet)">
+              <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet,$event)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -133,7 +133,7 @@
              [formControl]="Destination3"
              [matAutocomplete]="autoDestination3">
             <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option *ngFor="let planet of filteredPlanets3 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest3',planet)">
+              <mat-option *ngFor="let planet of filteredPlanets3 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest3',planet,$event)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
@@ -160,9 +160,10 @@
            [(ngModel)]="vehicle3"
            formControlName="selectedVehicle3"
            (change)="onSelectingVehicle(3,vehicle3)"
+
            >
-           <mat-radio-button class="example-radio-button" radioGroup="Vehicle3" *ngFor="let vehicle of filteredVehicles3 | async" [value]="vehicle" >
-             {{vehicle.name}}
+           <mat-radio-button class="example-radio-button" radioGroup="Vehicle3" *ngFor="let vehicle of filteredVehicles3 | async" [value]="vehicle">
+             {{vehicle.name}} {{vehicle.total_no}}
            </mat-radio-button>
           </mat-radio-group>
         </div>
@@ -183,7 +184,7 @@
              [formControl]="Destination4"
              [matAutocomplete]="autoDestination4">
             <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText">
-              <mat-option *ngFor="let planet of filteredPlanets4 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest4',planet)">
+              <mat-option *ngFor="let planet of filteredPlanets4 | async" [value]="planet" (onSelectionChange)="onSelectingPlanet('dest4',planet,$event)">
                {{planet.name}}
               </mat-option>
             </mat-autocomplete>
