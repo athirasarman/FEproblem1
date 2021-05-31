@@ -41,7 +41,7 @@ describe('VehiclesService(with spies)', () => {
     {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
     ];
     httpClientSpy.get.and.returnValue(asyncData(expectedVehicles));
-
+  
     vehicleService.getVehicles().subscribe(
       vehicles=>expect(vehicles).toEqual(expectedVehicles, 'expected vehicles'),
       fail

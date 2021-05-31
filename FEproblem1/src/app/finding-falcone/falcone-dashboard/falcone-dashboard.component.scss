@@ -13,14 +13,14 @@
 }
 
 .form {
-  width: 100%;
+  //width: 100%;
    @media (max-width: $small) {
   flex-wrap: wrap;
   }
 }
 .info{
   width: 100%;
-  @media (max-width: $small) {
+  @media (max-width: $normal) {
   flex-wrap: wrap;
   }
 }

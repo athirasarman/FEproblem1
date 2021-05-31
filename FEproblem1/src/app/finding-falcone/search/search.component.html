@@ -64,7 +64,7 @@
            (change)="onSelectingVehicle(1,vehicle1)" 
            >
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle1" *ngFor="let vehicle of filteredVehicles1 | async" [value]="vehicle" required>
-             {{vehicle.name}} (Available Units: {{vehicle.total_no}})
+             {{vehicle.name}} (Units: {{vehicle.total_no}})
            </mat-radio-button>
           </mat-radio-group>
         </div>
@@ -113,7 +113,7 @@
            (change)="onSelectingVehicle(2,vehicle2)"
            >
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle2" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle"  >
-             {{vehicle.name}} (Available Units: {{vehicle.total_no}})
+             {{vehicle.name}} (Units: {{vehicle.total_no}})
            </mat-radio-button>
           </mat-radio-group>
 
@@ -214,7 +214,7 @@
             (change)="onSelectingVehicle(4,vehicle4)"
            >
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle" *ngFor="let vehicle of filteredVehicles4 | async" [value]="vehicle">
-             {{vehicle.name}} (Available Units: {{vehicle.total_no}})
+             {{vehicle.name}} (Units: {{vehicle.total_no}})
            </mat-radio-button>
           </mat-radio-group>
         </div>

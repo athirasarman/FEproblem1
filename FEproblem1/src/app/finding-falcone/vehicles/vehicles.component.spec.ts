@@ -1,5 +1,8 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
+
+import {Observable,of} from 'rxjs';
 
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 import {
@@ -67,9 +70,6 @@ describe('VehiclesComponent', () => {
           fixture = TestBed.createComponent(VehiclesComponent);
           vehiclesComponent = fixture.componentInstance;
             let expectedVehicles: Vehicles[]=[];
-           // vehiclesService.getVehicles().subscribe(data=>expectedVehicles=data);
-
-          // getList spy returns observable of test vehicles
           vehicleServiceSpy.getList.and.returnValue(asyncData(expectedVehicles));
         });
 
@@ -98,54 +98,6 @@ describe('VehiclesComponent Before and After Getting Vehicles List  ', () => {
 
   tests();
 });
-
- /* describe('VehiclesComponent Display Tests', () => {
-   // let componentfixture: ComponentFixture<VehiclesComponent>;
-  
-  beforeAll(() => {
-    TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
-  });
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-       imports: [
-        NoopAnimationsModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        HttpClientTestingModule
-      ],
-      declarations: [VehiclesComponent]
-    }).compileComponents();
-    fixture = TestBed.createComponent(VehiclesComponent);
-    fixture.detectChanges();
-    harnessLoader = TestbedHarnessEnvironment.loader(fixture);
-  });
-
-  it('should DISPLAY heroes', async () => {
-    const cards = await harnessLoader.getAllHarnesses(MatCardHarness);
-    let title=cards[0].getTitleText();
-    expect(cards.length).toBe(4,'should DISPLAY heroes');
-   // expect(await cards[0].getTitleText()).toBe('Shiba Inu');
-  });
-
-  it('should get subtitle text', async () => {
-    const cards = await loader.getAllHarnesses(MatCardHarness);
-    expect(await parallel(() => cards.map(card => card.getSubtitleText()))).toEqual([
-      '',
-      'Dog Breed'
-    ]);
-  });
-
-  it('should act as a harness loader for user content', async () => {
-    const card = await loader.getHarness(MatCardHarness.with({title: 'Shiba Inu'}));
-    const footerSubcomponents = await card.getAllHarnesses(MatButtonHarness) ?? [];
-    expect(footerSubcomponents.length).toBe(2);
-  });
-});*/
 
 /** Add TestBed providers, compile, and create DashboardComponent */
 function compileAndCreate() {
@@ -186,7 +138,7 @@ function compileAndCreate() {
 }
 
 /**
- * The (almost) same tests for both.
+ * The  tests for Vehicles Component.
  */
 function tests() {
 
@@ -198,39 +150,33 @@ function tests() {
   });
 
   describe('after get list', () => {
-    const vehicleServiceSpy = jasmine.createSpyObj('VehiclesService', ['getList']);
-
      // Trigger component so it gets vehicles and binds to them
     beforeEach(waitForAsync(() => {
       
       fixture.detectChanges(); // runs ngOnInit -> getList
       fixture.whenStable() // No need for the `lastPromise` hack!
-        .then(() => fixture.detectChanges()); // bind to heroes
-           vehiclesService = TestBed.inject(VehiclesService);
+        .then(() => fixture.detectChanges()); // bind to vehiclesList
     }));
 
 
-    it('should HAVE vehicles', () => {
+    it('should HAVE vehicles', async() => {
        const expectedVehicles: Vehicles[]=[
     {name:"Space pod",total_no:2, max_distance:200,speed:2},
     {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
     ];
-    vehicleServiceSpy.getList.and.returnValue(asyncData(expectedVehicles));
+   vehiclesService.Vehicles=of(expectedVehicles);
       vehiclesComponent.ngOnInit();
      fixture.detectChanges();
     fixture.whenStable().then(()=>{
       fixture.detectChanges();});
       vehiclesComponent.vehiclesList.subscribe(list=>{
         console.log(list);
-      expect(list.length).toBe(0, 'should  have vehicles');
-    });
-     
-   
+      expect(list.length).toBeGreaterThan(0, 'should  have vehicles');
+    });   
     });
 
 
   it("should DISPLAY title as 'Available Vehicles'", async () => {
-   /// const cards = await harnessLoader.getAllHarnesses(MatCardHarness);
      const compiled = fixture.debugElement.nativeElement.childNodes;
      const cards=compiled[0].childNodes;
      let content=cards[0].childNodes;
@@ -239,41 +185,28 @@ function tests() {
 
   });
 
+
   it('should DISPLAY Vehicles', async () => {
-    vehiclesService.getVehicles().subscribe(data=>{
-        vehiclesComponent.ngOnInit();
-    fixture.detectChanges();
+     const expectedVehicles: Vehicles[]=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
+    ];
+   vehiclesService.Vehicles=of(expectedVehicles);
+      vehiclesComponent.ngOnInit();
+     fixture.detectChanges();
     fixture.whenStable().then(()=>{
-      fixture.detectChanges();
+      fixture.detectChanges();});
       vehiclesComponent.vehiclesList.subscribe(list=>{
-     console.log(list);
-      const compiled = fixture.debugElement.nativeElement.childNodes;
-     const cards=compiled[0];
-     console.log(cards);
-    });
-   
-
-   })
-
-
-    });
-   // const cards = await harnessLoader.getAllHarnesses(MatCardHarness);
-   vehiclesComponent.vehiclesList.subscribe(list=>{
-     console.log(list);
-      const compiled = fixture.debugElement.nativeElement.childNodes;
-     const cards=compiled[0];
-     console.log(cards);
-
-   })
-
-     //expect(vehicle.length).toBe(4);
-    // expect(title).toBe('Available Vehicles','should display title as Available Vehicles ' )
-
+        console.log(list);
+          const compiled = fixture.debugElement.nativeElement.childNodes;
+          const cardList=document.getElementsByClassName('example-card');
+          console.log(cardList); 
+          expect(cardList.length).toBe(2,'should display Vehicles ' )  
+         
+      });
   });
-
   });
 
 
 }
-
 

@@ -1,12 +1,13 @@
-<mat-card class="visits-chart" id="vehiclesList">
+<mat-card class="visits-chart">
   <mat-card-title class="visits-chart__header">
     <h5 class="visits-chart__title">Available Vehicles</h5>
   </mat-card-title>
 
-  <mat-card-content class="visits-chart__content" *ngFor="let vehicle of vehiclesList|async">
+
+ <mat-card-content class="visits-chart__content"  *ngFor="let vehicle of vehiclesList|async">
   
 
- <mat-card class="example-card" id="vehicle">
+ <mat-card class="example-card">
   <mat-card-header>
     <div mat-card-avatar  class="example-header-image"></div>
     <mat-card-title>{{vehicle.name}}</mat-card-title>
@@ -17,5 +18,7 @@
   </mat-card-header>
   
 </mat-card>
+
   </mat-card-content>
+
 </mat-card>

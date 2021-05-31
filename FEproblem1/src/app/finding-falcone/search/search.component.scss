@@ -144,6 +144,7 @@
    
     @media (max-width: $small) {
     flex-wrap: wrap;
+    float: left;
   }
 }
 
@@ -161,8 +162,9 @@
   .example-radio-group {
   //display: flex;
   //flex-direction: column;
-  margin: 15px 0;
+  margin: 15px;
     @media (max-width: $small) {
+        float: left;
     flex-wrap: wrap;
   }
 }
@@ -170,6 +172,8 @@
 .example-radio-button {
   margin: 5px;
     @media (max-width: $small) {
+    float: left;
+    clear: both;
     flex-wrap: wrap;
   }
 }
