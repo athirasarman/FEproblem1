@@ -203,9 +203,7 @@ it('should DISPLAY Failed Card on not Finding Falcone',() => {
       const message=details[0].textContent;
         console.log(title.textContent);
         expect(title.textContent).toBe(' Failed ','should display title as Failed' );
-        expect(message).toBe(' Better Luck Next Time!!!');
-        //expect(planet).toBe(" Planet: Donlon ");
-        //expect(timeTaken).toBe(" Time taken:225 hours ");
+        expect(message).toBe('Better Luck Next Time!!!');
 
 
       });
@@ -237,11 +235,7 @@ it('should DISPLAY Failed Card on not Finding Falcone',() => {
       const message=details[0].textContent;
         console.log(title.textContent);
         expect(title.textContent).toBe(' Error ','should display title as Error' );
-        expect(message).toBe(' Token not initialized. Please get a new token with the /token API.');
-        //expect(planet).toBe(" Planet: Donlon ");
-        //expect(timeTaken).toBe(" Time taken:225 hours ");
-
-
+        expect(message).toBe(' Token not initialized. Please get a new token with the /token API.');  
       });
 
   });

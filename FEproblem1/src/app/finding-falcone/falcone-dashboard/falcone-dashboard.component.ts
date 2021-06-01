@@ -16,16 +16,21 @@ import {Planets} from '../planets';
   styleUrls: ['./falcone-dashboard.component.scss']
 })
 export class FalconeDashboardComponent {
- 
+ planetList: Observable<Planets[]>=of([]);
+
+ vehiclesList: Observable<Vehicles[]>=of([]);
   constructor(
               private planetsService: PlanetsService,
               private vehicleService: VehiclesService,) 
   { 
-    this.planetsService.getPlanets();//fetch planets from server
-    this.vehicleService.getVehicles();//fetch vehicles from server
+    // this.planetList=this.planetsService.getPlanets();
+     //this.vehiclesList= this.vehicleService.getVehicles();
+    
    }
 
   ngOnInit(): void {
+    this.planetList=this.planetsService.getList();//fetch planets from server
+    this.vehiclesList= this.vehicleService.getList();//fetch vehicles from server
   }
 
 }
