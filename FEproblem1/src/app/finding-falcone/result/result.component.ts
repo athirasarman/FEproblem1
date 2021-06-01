@@ -25,12 +25,13 @@ export class ResultComponent {
   timeTaken=0;
 
   constructor(private FindingfalconeService: FindingfalconeService) {  
-         this.result=this.FindingfalconeService.getResult();//Fetching result from service
+        
 }
 
 
   ngOnInit(): void {
 
+   this.result=this.FindingfalconeService.getResult();//Fetching result from service
    if(this.result.searchResult)
    {
     switch (this.result.searchResult.status) {
@@ -50,6 +51,7 @@ export class ResultComponent {
         case "error":
         {
          this.status=this.result.searchResult.status;
+         this.error=this.result.searchResult.error;
          break;
         } 
       default:
