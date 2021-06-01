@@ -39,17 +39,15 @@ let vehiclesComponent: VehiclesComponent;
 let fixture: ComponentFixture<VehiclesComponent>;
 let httpClientSpy=jasmine.createSpyObj('HttpClient',['get']);
 let vehiclesService= new VehiclesService(httpClientSpy as any);
- let harnessLoader: HarnessLoader;
+
 
 
 /////// Tests //////
 describe('VehiclesComponent', () => {
-//var originalTimeout  = jasmine.DEFAULT_TIMEOUT_INTERVAL;;
   beforeEach(waitForAsync(() => {
     addMatchers();
     
     const vehicleServiceSpy = jasmine.createSpyObj('VehiclesService', ['getList']);
-       //jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed
         .configureTestingModule({
           declarations: [ VehiclesComponent ],
@@ -76,10 +74,6 @@ describe('VehiclesComponent', () => {
         vehiclesService = TestBed.inject(VehiclesService);
   }));
 
- afterEach(function() {
-      //jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-    });
-
   it('should compile', () => {
     expect(vehiclesComponent).toBeTruthy();
   });
@@ -99,7 +93,7 @@ describe('VehiclesComponent Before and After Getting Vehicles List  ', () => {
   tests();
 });
 
-/** Add TestBed providers, compile, and create DashboardComponent */
+/** Add TestBed providers, compile, and create VehicleComponent */
 function compileAndCreate() {
   let expectedVehicles:any;
   beforeEach(waitForAsync(() => {
@@ -125,7 +119,6 @@ function compileAndCreate() {
           fixture = TestBed.createComponent(VehiclesComponent);
           vehiclesComponent = fixture.componentInstance;
           vehiclesService = TestBed.inject(VehiclesService);
-          harnessLoader = TestbedHarnessEnvironment.loader(fixture);
 
           // getList spy returns observable of test vehicles
           vehiclesService.getVehicles().subscribe(data=>{

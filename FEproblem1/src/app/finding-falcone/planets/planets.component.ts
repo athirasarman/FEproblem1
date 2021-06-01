@@ -14,7 +14,7 @@ import {Planets} from '../planets';
   styleUrls: ['./planets.component.scss']
 })
 export class PlanetsComponent {
-  planetList: Observable<Planets[]>;
+  planetList: Observable<Planets[]>=of([]);
 
   constructor(private planetsService: PlanetsService) {
 
