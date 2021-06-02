@@ -28,7 +28,6 @@ import {FindFalconRequest} from '../find-falcon-request';
 
 export class SearchComponent implements OnInit{
 
-  @Output() result= new EventEmitter<{}>();
   error={
     show:false,
     errorMessage:"Please Select all *Required Fields."
@@ -38,14 +37,14 @@ export class SearchComponent implements OnInit{
     infoMessage:"Please Select all *Required Fields Again on Resetting Values."
   }
   
-  filteredPlanets1: Observable<Planets[]>;
-  filteredPlanets2: Observable<Planets[]>; 
-  filteredPlanets3: Observable<Planets[]>; 
-  filteredPlanets4: Observable<Planets[]>; 
-  filteredVehicles1:Observable<Vehicles[]>; 
-  filteredVehicles2: Observable<Vehicles[]>; 
-  filteredVehicles3: Observable<Vehicles[]>; 
-  filteredVehicles4: Observable<Vehicles[]>; 
+  filteredPlanets1: Observable<Planets[]>=of([]);
+  filteredPlanets2: Observable<Planets[]>=of([]); 
+  filteredPlanets3: Observable<Planets[]>=of([]);
+  filteredPlanets4: Observable<Planets[]>=of([]);
+  filteredVehicles1:Observable<Vehicles[]>=of([]); 
+  filteredVehicles2: Observable<Vehicles[]>=of([]); 
+  filteredVehicles3: Observable<Vehicles[]>=of([]); 
+  filteredVehicles4: Observable<Vehicles[]>=of([]);
 
     searchForm = this.fb.group({
  
@@ -101,20 +100,17 @@ export class SearchComponent implements OnInit{
   stage=1;
 
   constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
               private router: Router,
               private planetsService: PlanetsService,
               private vehicleService: VehiclesService,
               private FindingfalconeService: FindingfalconeService
 
-              ) {
-             
-              this.getPlanets();
-              this.getVehicles();
-  }
+              ) { }
 
 ngOnInit() {
 
+      this.getPlanets();
+      this.getVehicles();
       //Autocomplete Filter Process        
       this.filteredPlanets1 = this.Destination1.valueChanges
       .pipe(

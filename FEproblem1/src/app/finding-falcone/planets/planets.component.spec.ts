@@ -31,15 +31,15 @@ import { PlanetsComponent } from './planets.component';
 
 //Importing Services
 import { PlanetsService} from '../planets.service';
+import { TestPlanetService } from '../test-planet.service';
 
 //Importing Interfaces
 import { Planets} from '../planets';
 
+
 let planetsComponent: PlanetsComponent;
 let fixture: ComponentFixture<PlanetsComponent>;
-let httpClientSpy=jasmine.createSpyObj('HttpClient',['get']);
-let planetService= new PlanetsService(httpClientSpy as any);
-
+let planetService:PlanetsService;
 
 
 describe('PlanetsComponent', () => {
@@ -82,9 +82,7 @@ describe('PlanetsComponent', () => {
 
 /** Add TestBed providers, compile, and create PlanetComponents */
 function compileAndCreate() {
-  let expectedPlanets:any;
   beforeEach(waitForAsync(() => {
-    const planetServiceSpy = jasmine.createSpyObj('PlanetsService', ['getList']);
 
     TestBed
         .configureTestingModule({
@@ -99,7 +97,8 @@ function compileAndCreate() {
         MatSelectModule,
         HttpClientTestingModule
       ],
-          providers: [PlanetsService]
+          providers: [
+      {provide: PlanetsService, useClass: TestPlanetService},]
         })
         .compileComponents()
         .then(() => {
@@ -107,13 +106,8 @@ function compileAndCreate() {
           planetsComponent = fixture.componentInstance;
           planetService = TestBed.inject(PlanetsService);
 
-          // getList spy returns observable of test vehicles
-          planetService.getPlanets().subscribe(data=>{
-           expectedPlanets=data;
-           planetServiceSpy.getList.and.returnValue(asyncData(expectedPlanets));
           });
         
-        });
   }));
 }
 
@@ -143,15 +137,9 @@ function tests() {
 
 
     it('should HAVE planets', async() => {
-       const expectedPlanets: Planets[]=[
-    {name:"Donlon",distance:100},
-    {name:"Enchai",distance:200}
-    ];
-   planetService.Planets=of(expectedPlanets);
+    
       planetsComponent.ngOnInit();
-     fixture.detectChanges();
-    fixture.whenStable().then(()=>{
-      fixture.detectChanges();});
+   
       planetsComponent.planetList.subscribe(list=>{
         console.log(list);
       expect(list.length).toBeGreaterThan(0, 'should  have planets');
@@ -170,15 +158,8 @@ function tests() {
 
 
   it('should DISPLAY Planets', async () => {
-     const expectedPlanets: Planets[]=[
-    {name:"Donlon",distance:100},
-    {name:"Enchai",distance:200}
-    ];
-   planetService.Planets=of(expectedPlanets);
+  
       planetsComponent.ngOnInit();
-     fixture.detectChanges();
-    fixture.whenStable().then(()=>{
-      fixture.detectChanges();});
       planetsComponent.planetList.subscribe(list=>{
         console.log(list);
           const compiled = fixture.debugElement.nativeElement.childNodes;

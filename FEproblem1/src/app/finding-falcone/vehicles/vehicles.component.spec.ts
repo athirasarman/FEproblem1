@@ -30,6 +30,7 @@ import { VehiclesComponent } from './vehicles.component';
 
 //Importing Services
 import {VehiclesService} from '../vehicles.service';
+import { TestVehicleService} from '../test-vehicle.service';
 
 //Importing Interfaces
 import {Vehicles} from '../vehicles';
@@ -38,7 +39,7 @@ import {Vehicles} from '../vehicles';
 let vehiclesComponent: VehiclesComponent;
 let fixture: ComponentFixture<VehiclesComponent>;
 let httpClientSpy=jasmine.createSpyObj('HttpClient',['get']);
-let vehiclesService= new VehiclesService(httpClientSpy as any);
+let vehiclesService:VehiclesService;
 
 
 
@@ -95,7 +96,6 @@ describe('VehiclesComponent Before and After Getting Vehicles List  ', () => {
 
 /** Add TestBed providers, compile, and create VehicleComponent */
 function compileAndCreate() {
-  let expectedVehicles:any;
   beforeEach(waitForAsync(() => {
     const vehicleServiceSpy = jasmine.createSpyObj('VehiclesService', ['getList']);
 
@@ -112,22 +112,19 @@ function compileAndCreate() {
         MatSelectModule,
         HttpClientTestingModule
       ],
-          providers: [VehiclesService]
+       providers: [
+      {provide: VehiclesService, useClass: TestVehicleService},
+      ]
         })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(VehiclesComponent);
           vehiclesComponent = fixture.componentInstance;
           vehiclesService = TestBed.inject(VehiclesService);
-
-          // getList spy returns observable of test vehicles
-          vehiclesService.getVehicles().subscribe(data=>{
-           expectedVehicles=data;
-           vehicleServiceSpy.getList.and.returnValue(asyncData(expectedVehicles));
           });
         
-        });
-  }));
+        
+   }));
 }
 
 /**
@@ -157,11 +154,11 @@ function tests() {
     {name:"Space pod",total_no:2, max_distance:200,speed:2},
     {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
     ];
-   vehiclesService.Vehicles=of(expectedVehicles);
+   //vehiclesService.Vehicles=of(expectedVehicles);
       vehiclesComponent.ngOnInit();
-     fixture.detectChanges();
-    fixture.whenStable().then(()=>{
-      fixture.detectChanges();});
+     //fixture.detectChanges();
+    //fixture.whenStable().then(()=>{
+      //fixture.detectChanges();});
       vehiclesComponent.vehiclesList.subscribe(list=>{
         console.log(list);
       expect(list.length).toBeGreaterThan(0, 'should  have vehicles');
@@ -184,11 +181,11 @@ function tests() {
     {name:"Space pod",total_no:2, max_distance:200,speed:2},
     {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
     ];
-   vehiclesService.Vehicles=of(expectedVehicles);
+  // vehiclesService.Vehicles=of(expectedVehicles);
       vehiclesComponent.ngOnInit();
-     fixture.detectChanges();
-    fixture.whenStable().then(()=>{
-      fixture.detectChanges();});
+    // fixture.detectChanges();
+    //fixture.whenStable().then(()=>{
+      //fixture.detectChanges();});
       vehiclesComponent.vehiclesList.subscribe(list=>{
         console.log(list);
           const compiled = fixture.debugElement.nativeElement.childNodes;

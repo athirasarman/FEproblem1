@@ -16,8 +16,8 @@ import {Vehicles} from '../vehicles';
 export class VehiclesComponent {
 	vehiclesList: Observable<Vehicles[]>=of([]);
  constructor(private vehiclesService: VehiclesService) {
-
-
+  // this.vehiclesList=this.vehiclesService.getList();//Fetching all vehicles from service
+ 
   }
   ngOnInit(){
      

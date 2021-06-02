@@ -22,11 +22,10 @@ export class FalconeDashboardComponent {
   constructor(
               private planetsService: PlanetsService,
               private vehicleService: VehiclesService,) 
-  { 
-    // this.planetList=this.planetsService.getPlanets();
-     //this.vehiclesList= this.vehicleService.getVehicles();
-    
-   }
+ {
+   this.planetsService.getPlanets();
+   this.vehicleService.getVehicles();
+ }
 
   ngOnInit(): void {
     this.planetList=this.planetsService.getList();//fetch planets from server
