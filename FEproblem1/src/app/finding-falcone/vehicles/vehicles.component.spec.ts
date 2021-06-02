@@ -97,8 +97,6 @@ describe('VehiclesComponent Before and After Getting Vehicles List  ', () => {
 /** Add TestBed providers, compile, and create VehicleComponent */
 function compileAndCreate() {
   beforeEach(waitForAsync(() => {
-    const vehicleServiceSpy = jasmine.createSpyObj('VehiclesService', ['getList']);
-
     TestBed
         .configureTestingModule({
            declarations: [ VehiclesComponent ],
