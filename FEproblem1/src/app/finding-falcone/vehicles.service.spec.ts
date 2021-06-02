@@ -66,11 +66,14 @@ describe('VehiclesService(with spies)', () => {
   });
 
     it('#getList should return expected result', () => {
-        const vehicles: Vehicles[]=[];
-         let expectedVehicles: Observable<Vehicles[]>=of(vehicles);
-      let data=vehicleService.getList();
+       const expectedVehicles: Vehicles[]=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
+    ];
+    vehicleService.Vehicles=of(expectedVehicles);
+     let data=vehicleService.getList();
        data.subscribe(list=>{
-         expectedVehicles.subscribe(elist=>expect(elist).toEqual(list));
+        expect(list).toEqual(expectedVehicles);
        });
     });
 

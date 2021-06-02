@@ -66,10 +66,14 @@ describe('PlanetsService (with spies)', () => {
 
     it('#getList should return expected result', () => {
        
-      let expectedPlanets:Observable<Planets[]>=of([]);
+     const expectedPlanets: Planets[]=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200}
+    ];
+    planetService.Planets=of(expectedPlanets);
       let data=planetService.getList();
        data.subscribe(list=>{
-         expectedPlanets.subscribe(elist=>expect(elist).toEqual(list));
+        expect(expectedPlanets).toEqual(list);
        });
     });
   
