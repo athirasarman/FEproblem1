@@ -20,14 +20,38 @@ import {Planets} from '../planets';
 import {Token} from '../token';
 import {FindFalconRequest} from '../find-falcon-request';
 
+
+/**
+   * Returns a Validator that handles Autocomplete Validation.
+   * This validation handler helps in validating autocomplete on entering values.
+   */
+ function autocompleteObjectValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (typeof control.value === 'string') {
+      return { 'invalidAutocompleteObject': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+ }
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
 
-export class SearchComponent implements OnInit{
 
+export class SearchComponent implements OnInit{
+ // Destination1: FormControl=new FormControl();
+
+    Destination1: FormControl=new FormControl('', 
+      { validators: [autocompleteObjectValidator()] });
+    Destination2: FormControl= new FormControl('', 
+      { validators: [autocompleteObjectValidator(), Validators.required] });
+    Destination3: FormControl= new FormControl('', 
+      { validators: [autocompleteObjectValidator(), Validators.required] });
+    Destination4: FormControl= new FormControl('', 
+      { validators: [autocompleteObjectValidator(), Validators.required] });
   error={
     show:false,
     errorMessage:"Please Select all *Required Fields."
@@ -56,14 +80,7 @@ export class SearchComponent implements OnInit{
   });
    
    validationMessages=ValidationMessageList;
-    Destination1: FormControl=new FormControl('', 
-      { validators: [this.autocompleteObjectValidator(), Validators.required] });
-    Destination2: FormControl= new FormControl('', 
-      { validators: [this.autocompleteObjectValidator(), Validators.required] });
-    Destination3: FormControl= new FormControl('', 
-      { validators: [this.autocompleteObjectValidator(), Validators.required] });
-    Destination4: FormControl= new FormControl('', 
-      { validators: [this.autocompleteObjectValidator(), Validators.required] });
+ 
 
   Token: Token={} as Token;
   vehicle1: Vehicles={} as Vehicles;
@@ -111,58 +128,76 @@ ngOnInit() {
 
       this.getPlanets();
       this.getVehicles();
-      //Autocomplete Filter Process        
-      this.filteredPlanets1 = this.Destination1.valueChanges
-      .pipe(
-        startWith(null),
-        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
-      );
-      this.filteredPlanets2 = this.Destination2.valueChanges
-      .pipe(
-        startWith(null),
-        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
-      );
-       this.filteredPlanets3 = this.Destination3.valueChanges
-      .pipe(
-        startWith(null),
-        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
-      );
-       this.filteredPlanets4 = this.Destination4.valueChanges
-      .pipe(
-        startWith(null),
-        map(planet => planet ? this.filterPlanets(planet,true) : this.Planets.slice())
-      );
-  
-    } 
+      } 
 
-/**
-   * Returns a Validator that handles Autocomplete Validation.
-   * This validation handler helps in validating autocomplete on entering values.
-   */
-  autocompleteObjectValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (typeof control.value === 'string') {
-      return { 'invalidAutocompleteObject': { value: control.value } }
-    }
-    return null  /* valid option selected */
-  }
- }
 
 /**
    * Returns a list of planet that is filtered according to the user input.
    * This filter helps in filtering autocomplete on entering values.
    */
- filterPlanets(pName: any,initial:true) {
-     let planetName = "";
-    if(pName){
-    // pName can be a planet or a string
-     let planetName = pName.name || pName;
+ filterPlanets(pName: any,initial:true,destination:number):void {
+    
+    switch(destination){
+      case 1:
+      {let filtered:any=[];
+       if(pName=="")
+       {
+         filtered=this.filteredPlanetlist1;
+       }
+       else{
+         filtered= this.filteredPlanetlist1.filter(planet =>
+         planet.name.toLowerCase().indexOf(pName.toLowerCase()) === 0);
+         
+       }
+       this.filteredPlanets1=of(filtered);
+      break;
+      }
+      case 2:
+      {let filtered:any=[];
+       if(pName=="")
+       {
+         filtered=this.filteredPlanetlist2;
+       }
+       else{
+         filtered= this.filteredPlanetlist2.filter(planet =>
+         planet.name.toLowerCase().indexOf(pName.toLowerCase()) === 0);
+         
+       }
+       this.filteredPlanets2=of(filtered);
+      break;
+      }
+      case 3:
+      {let filtered:any=[];
+       if(pName=="")
+       {
+         filtered=this.filteredPlanetlist3;
+       }
+       else
+       {
+         filtered= this.filteredPlanetlist3.filter(planet =>
+         planet.name.toLowerCase().indexOf(pName.toLowerCase()) === 0);
+         
+       }
+       this.filteredPlanets3=of(filtered);
+      break;
+      }
+      case 4:
+      {let filtered:any=[];
+       if(pName=="")
+       {
+         filtered=this.filteredPlanetlist4;
+       }
+       else{
+         filtered= this.filteredPlanetlist4.filter(planet =>
+         planet.name.toLowerCase().indexOf(pName.toLowerCase()) === 0);
+         
+       }
+       this.filteredPlanets4=of(filtered);
+      break;
+      }
     }
-    //returns filtered list
-    return this.Planets.filter(planet =>
-      planet.name.toLowerCase().indexOf(planetName.toLowerCase()) === 0);
-
-  }
+    
+ }
   
 
   /**
@@ -176,7 +211,8 @@ ngOnInit() {
       .subscribe(Planets=>{this.Planets=Planets;
         //deep copying fetched data for further processing
         this.PlanetList=JSON.parse(JSON.stringify(Planets));
-        this.filteredPlanets1=of(this.Planets);
+        this.Planets=JSON.parse(JSON.stringify(Planets));
+        this.filteredPlanets1=of(Planets);
         this.filteredPlanetlist1=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanetlist2=JSON.parse(JSON.stringify(Planets));
         this.filteredPlanetlist3=JSON.parse(JSON.stringify(Planets));

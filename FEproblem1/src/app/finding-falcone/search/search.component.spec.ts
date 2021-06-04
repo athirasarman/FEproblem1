@@ -22,6 +22,7 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 import {MatCardHarness} from '@angular/material/card/testing';
+import {MatInputHarness} from '@angular/material/input/testing';
 
 import {HarnessLoader, parallel} from '@angular/cdk/testing';
 
@@ -30,7 +31,7 @@ import { addMatchers, asyncData, click } from '../../../testing';
 import {  asyncError } from '../../../testing/async-observable-helpers';
 
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatAutocompleteHarness} from '@angular/material/autocomplete/testing';
+import {MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 
 import { SearchComponent } from './search.component';
@@ -105,7 +106,7 @@ function tests()
      // Trigger component so it gets heroes and binds to them
     beforeEach(waitForAsync(() => {
       router = fixture.debugElement.injector.get(Router);
-      fixture.detectChanges(); // runs ngOnInit -> getHeroes
+      fixture.detectChanges(); // runs ngOnInit 
       fixture.whenStable() // No need for the `lastPromise` hack!
         .then(() => fixture.detectChanges()); // bind to heroes
     }));
@@ -147,12 +148,80 @@ function tests()
     it('should load autocomplete for Destination 1', async () => {
       const page = fixture.debugElement.nativeElement.childNodes;
       const form= page[0].childNodes;
-      const autocompletes=form[0].querySelectorAll('mat-autocomplete')
+      const autocompletes=form[0].querySelectorAll('mat-autocomplete');
       expect(autocompletes.length).toBe(1);
     }
   );
 
-  });
+
+  it('should load all autocomplete harness for Destination1', async () => {
+      const autocompletes = await loader.getAllHarnesses(MatAutocompleteHarness);
+      expect(autocompletes.length).toBe(1);
+    }
+  );
+
+  it('should load planets in autocomplete for Destination 1', async () => {
+    fixture.detectChanges();
+   const autocompletes = await loader.getHarness(MatAutocompleteHarness);
+   let text="";
+
+     fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));
+    
+   /*onst input=await loader.getHarness(MatInputHarness);
+    input.focus();
+     input.setValue("d");
+     input.dispatchEvent()*/
+
+   // await input.valueChanges();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+             const option=await autocompletes.getOptions();
+         
+             console.log(option.length);
+             expect(option.length).toBeGreaterThan(0,'should show all options');    
+   });
+
+
+  it('should filter destinations based on input', async () => {
+    fixture.detectChanges();
+   const autocompletes = await loader.getHarness(MatAutocompleteHarness);
+   let text="Donlon";
+
+     fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));
+     inputElement.nativeElement.dispatchEvent(new Event('blur'));
+      const option=document.querySelectorAll('mat-option');
+      const optionToClick = option[0] as HTMLElement;
+     optionToClick.click();
+     searchComponent.ngOnInit();
+  fixture.detectChanges();
+                         
+ await fixture.whenStable();
+ fixture.detectChanges();
+
+    searchComponent.filteredPlanets1.subscribe(list=>{
+      console.log("1");
+      console.log(list);
+    });
+   //ixture.detectChanges();
+   //nputElement.nativeElement.dispatchEvent(new Event('input'));
+           //const option=await autocompletes.getOptions();
+          
+         
+             console.log(option.length);
+             //expect(option.length).toBe(1,'should show filtered option');    
+   });
+
+   });
+
 }
 
 

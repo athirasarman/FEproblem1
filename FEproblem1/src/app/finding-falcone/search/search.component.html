@@ -30,11 +30,12 @@
              matInput 
              [formControl]="Destination1"
              [(ngModel)]="planet1"
+             (ngModelChange)="filterPlanets(planet1,true,1)"
              required
              [matAutocomplete]="autoDestination1">
              <mat-autocomplete autoActiveFirstOption  #autoDestination1="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
-              <mat-option *ngFor="let planet of filteredPlanets1 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest1',planet,$event)">
-                {{planet.name}}
+              <mat-option *ngFor="let planet of filteredPlanets1 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest1',planet,$event)"  id="plain">
+                {{planet.name}} 
               </mat-option>
              </mat-autocomplete>
            </mat-form-field>
@@ -82,6 +83,7 @@
              required 
              [formControl]="Destination2"
              [(ngModel)]="planet2"
+             (ngModelChange)="filterPlanets(planet2,true,2)"
              [matAutocomplete]="autoDestination2">
             <mat-autocomplete  #autoDestination2="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
               <mat-option *ngFor="let planet of filteredPlanets2 | async" [value]="planet"  (onSelectionChange)="onSelectingPlanet('dest2',planet,$event)">
@@ -130,6 +132,7 @@
              matInput
              required
              [(ngModel)]="planet3"
+             (ngModelChange)="filterPlanets(planet3,true,3)"
              [formControl]="Destination3"
              [matAutocomplete]="autoDestination3">
             <mat-autocomplete  #autoDestination3="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
@@ -181,6 +184,8 @@
              matInput
              required 
              [(ngModel)]="planet4"
+
+             (ngModelChange)="filterPlanets(planet4,true,4)"
              [formControl]="Destination4"
              [matAutocomplete]="autoDestination4">
             <mat-autocomplete  #autoDestination4="matAutocomplete" [displayWith]="getSelectedPlanetText" required>
