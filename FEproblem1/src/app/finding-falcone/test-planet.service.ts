@@ -24,7 +24,11 @@ export class TestPlanetService extends PlanetsService {
   }
     planets: Planets[]=[
     {name:"Donlon",distance:100},
-    {name:"Enchai",distance:200}
+    {name:"Enchai",distance:200},
+    {name:"Jebing",distance:300},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
     ];
     lastResult!: Observable<any>; // result from last method call
 

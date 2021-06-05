@@ -23,7 +23,9 @@ export class TestVehicleService extends VehiclesService{
   }
     vehicles: Vehicles[]=[
     {name:"Space pod",total_no:2, max_distance:200,speed:2},
-    {name:"Space Rocket",total_no:1,max_distance:300,speed:4}
+    {name:"Space Rocket",total_no:1,max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1,max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2,max_distance:600,speed:10}
     ];
     lastResult!: Observable<any>; // result from last method call
 
