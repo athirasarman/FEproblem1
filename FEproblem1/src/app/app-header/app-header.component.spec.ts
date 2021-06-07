@@ -37,7 +37,7 @@ describe('AppHeaderComponent', () => {
   
   it('should render Home button ', async(() => {
    
-   const button = fixture.debugElement.nativeElement
+   const button = fixture.debugElement.nativeElement;
     expect(button.querySelector('mat-icon').textContent).toContain('home');
  
 }));

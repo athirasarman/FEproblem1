@@ -30,6 +30,7 @@
              matInput 
              [formControl]="Destination1"
              [(ngModel)]="planet1"
+             id="planet1"
              (ngModelChange)="filterPlanets(planet1,true,1)"
              required
              [matAutocomplete]="autoDestination1">

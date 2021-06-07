@@ -243,7 +243,7 @@ ngOnInit() {
                   
           if(this.stage>1 ||(this.planet1.name||this.vehicle1.name))// Checking whether Resetting needs to be done
           {
-             if(this.vehicle1.name)
+          if(this.vehicle1.name)
           this.ShowInfo();// displaying info message
           this.onReset(1); //Resetting
 
@@ -368,11 +368,12 @@ ngOnInit() {
    filterAccordingToDistance(vehicles:Vehicles[],selectedPlanet:Planets):Vehicles[]
    {
 
-     for(let vehicle of vehicles)
+     //for(let vehicle of vehicles)
+       for (var i=vehicles.length-1; i >= 0; i--)
        {
-         if(vehicle.max_distance<selectedPlanet.distance)
+         if(vehicles[i].max_distance<selectedPlanet.distance)
          {
-           vehicles.splice(vehicles.indexOf(vehicle),1);
+           vehicles.splice(i,1);
          }
        }
      
@@ -874,6 +875,7 @@ onReset(stage:Number):void{
       this.vehicle2={} as Vehicles;
       this.vehicle3={} as Vehicles;
       this.vehicle4={} as Vehicles;
+      this.filteredVehicles1=of(this.Vehicles);
       this.filteredlist1=JSON.parse(JSON.stringify(this.Vehicles));
       this.filteredlist2=JSON.parse(JSON.stringify(this.Vehicles));
       this.filteredlist3=JSON.parse(JSON.stringify(this.Vehicles));
