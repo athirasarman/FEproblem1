@@ -694,8 +694,9 @@ filterVehicleUnits(vehicleNumber:number):void{
          break;}
        case 4:
            // code when 4th vehicle has been selected...
-        {if(!this.vehicle4.name)
+        {if(this.vehicle4.name)
          {
+
            this.calculateTimeTaken(vehicle,this.planet4);//Calculating time taken
          }
          break;

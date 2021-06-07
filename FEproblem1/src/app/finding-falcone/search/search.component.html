@@ -114,6 +114,7 @@
            formControlName="selectedVehicle2"
            required
            (change)="onSelectingVehicle(2,vehicle2)"
+           id="vehicles2"
            >
            <mat-radio-button class="example-radio-button" radioGroup="Vehicle2" *ngFor="let vehicle of filteredVehicles2 | async" [value]="vehicle"  >
              {{vehicle.name}} (Units: {{vehicle.total_no}})
@@ -131,6 +132,7 @@
              placeholder="Pick one"
              aria-label="Destination 3"
              matInput
+             id="planet3"
              required
              [(ngModel)]="planet3"
              (ngModelChange)="filterPlanets(planet3,true,3)"
@@ -185,7 +187,7 @@
              matInput
              required 
              [(ngModel)]="planet4"
-
+             id="planet4"
              (ngModelChange)="filterPlanets(planet4,true,4)"
              [formControl]="Destination4"
              [matAutocomplete]="autoDestination4">
