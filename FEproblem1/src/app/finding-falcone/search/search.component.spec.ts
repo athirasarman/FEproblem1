@@ -1,5 +1,6 @@
-import { waitForAsync, ComponentFixture, TestBed,inject } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed,inject,fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, Validators,ValidatorFn,AbstractControl } from '@angular/forms';
+import {Location} from "@angular/common";
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { ReactiveFormsModule } from '@angular/forms';
@@ -76,6 +77,7 @@ let radioLabelElements: HTMLLabelElement[];
 let radioInputElements: HTMLInputElement[];
 let groupInstance: MatRadioGroup;
 let radioInstances: MatRadioButton[];
+let location: Location;
 
 
 describe('SearchComponent', () => {
@@ -291,12 +293,14 @@ function testsForSearch(){
     expect(searchComponent.addSelectedVehicles).toHaveBeenCalled();
     expect(searchComponent.SearchFalcon).toHaveBeenCalled();
 });
+});
 
-
-
-
-
-  });
+it('navigate to "result" takes you to result page', fakeAsync(() => {
+    const spy = spyOn(router, 'navigateByUrl');
+  router.navigateByUrl('result');
+ const navArgs = spy.calls.first().args[0];
+   expect(navArgs).toBe('result', 'should nav to result page');
+}));
 
 }
 
@@ -2589,6 +2593,7 @@ function compileAndCreate() {
         radioInputElements = radioDebugElements
           .map(debugEl => debugEl.query(By.css('input'))!.nativeElement);
             router = TestBed.get(Router);
+            location = TestBed.get(Location); 
     })();
         });
   }));
