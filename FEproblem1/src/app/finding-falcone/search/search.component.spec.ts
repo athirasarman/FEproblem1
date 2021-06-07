@@ -529,6 +529,1180 @@ function testsForReset()
    expect(searchComponent.info.show).toBe(true,'should show info message');
   });
 
+     it('should RESET on Resetting Vehicle1 Radio Button', async() => {
+
+    fixture.detectChanges();
+    let text:Planets={name:"Jebing",distance:300};
+
+     fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling event for filter process
+    fixture.detectChanges();  
+    let options =overlayContainerElement.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+ 
+    const leftclickevent = {button: 0};
+    click(options[0],leftclickevent);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    //Setting Value to Destination1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    
+    console.log(fixture.componentInstance.Destination1.value);
+     fixture.detectChanges();
+     radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[0].click();
+   fixture.detectChanges();
+   expect(searchComponent.timeTaken).toBe(75);//time=distance/speed
+    fixture.detectChanges();
+    searchComponent.showVehicle2=true;
+    text={name:"Donlon",distance:100};
+
+     fixture.detectChanges();
+    //Complete Destination2 clicking Process 
+    let inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value=text.name;
+   inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges();        
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    let optionToClick = options[0] as HTMLElement;
+    optionToClick.click();  
+    fixture.detectChanges();
+
+    //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+
+    //Complete Vehicle2 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[3].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 3
+   text ={name:"Enchai",distance:200};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges(); 
+
+
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);  
+    
+
+    //Complete Vehicle3 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[6].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 4
+   text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[12];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination4.setValue(text);  
+    fixture.detectChanges();
+
+      //Complete Vehicle4 clicking Process 
+ 
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+  radioLabelElements[9].click();
+  fixture.detectChanges();
+  
+  //Resetting Vehicle1 Radio Button Group
+    
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[1].click();
+    fixture.detectChanges();
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Vehicle1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    fixture.detectChanges();
+
+   let expectedVehicles: Vehicles[]=[
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1,max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2,max_distance:600,speed:10}
+    ];
+    let expectedPlanets:Planets[]=[   
+    {name:"Jebing",distance:300}
+    ];
+    let vehicle: Vehicles={} as Vehicles;
+    let planet:Planets={} as Planets;
+   searchComponent.filteredPlanets1.subscribe(planets=>{
+     console.log(planets);     
+     expect(planets).toEqual(expectedPlanets,'should filter destination1 autocomplete');});
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Jebing",distance:300},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+     expect(searchComponent.filteredPlanetlist1).toEqual(expectedPlanets);
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist2).toEqual(expectedPlanets);
+   expect(searchComponent.filteredPlanetlist3).toEqual(expectedPlanets);
+   expect(searchComponent.filteredPlanetlist4).toEqual(expectedPlanets);
+   searchComponent.filteredVehicles1.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+   expect(searchComponent.stage).toBe(1,'should reset to stage 1');
+   expect(searchComponent.showVehicle2).toBe(true,'should hide vehicle2 radio button group');
+   expect(searchComponent.showVehicle3).toBe(true,'should hide vehicle3 radio button group');
+   expect(searchComponent.showVehicle4).toBe(true,'should hide vehicle4 radio button group');
+   expect(searchComponent.showPlanet2).toBe(true,'should show planet2 autocomplete');
+   expect(searchComponent.showPlanet3).toBe(false,'should hide planet3 autocomplete');
+   expect(searchComponent.showPlanet4).toBe(false,'should hide planet4 autocomplete');
+   expect(searchComponent.filteredlist1).toEqual(expectedVehicles);
+   expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist2).toEqual(expectedVehicles);
+   expect(searchComponent.filteredlist3).toEqual(expectedVehicles);
+   expect(searchComponent.filteredlist4).toEqual(expectedVehicles);
+   expect(searchComponent.vehicle2).toEqual(vehicle,'should reset vehicle2 ngmodel');
+   expect(searchComponent.vehicle3).toEqual(vehicle,'should reset vehicle3 ngmodel');
+   expect(searchComponent.vehicle4).toEqual(vehicle,'should reset vehicle4 ngmodel');
+  
+   expect(searchComponent.planet2).toEqual(planet,'should reset planet2 ngmodel');
+   expect(searchComponent.planet3).toEqual(planet,'should reset planet3 ngmodel');
+   expect(searchComponent.planet4).toEqual(planet,'should reset planet4 ngmodel');
+   expect(searchComponent.timeTaken).toBe(60,'should reset Time Taken');
+   expect(searchComponent.error.show).toBe(false,'should hide error message');
+   expect(searchComponent.info.show).toBe(true,'should show info message');
+  });
+
+
+ it('should RESET on Resetting Destination 2 Autocomplete ', async() => {
+
+    fixture.detectChanges();
+    let text:Planets={name:"Jebing",distance:300};
+
+     fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling event for filter process
+    fixture.detectChanges();  
+    let options =overlayContainerElement.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+ 
+    const leftclickevent = {button: 0};
+    click(options[0],leftclickevent);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    //Setting Value to Destination1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    
+    console.log(fixture.componentInstance.Destination1.value);
+     fixture.detectChanges();
+     radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[0].click();
+   fixture.detectChanges();
+   expect(searchComponent.timeTaken).toBe(75);//time=distance/speed
+    fixture.detectChanges();
+    searchComponent.showVehicle2=true;
+    text={name:"Donlon",distance:100};
+
+     fixture.detectChanges();
+    //Complete Destination2 clicking Process 
+    let inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value=text.name;
+   inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges();        
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    let optionToClick = options[0] as HTMLElement;
+    optionToClick.click();  
+    fixture.detectChanges();
+
+    //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+
+    //Complete Vehicle2 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[3].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 3
+   text ={name:"Enchai",distance:200};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges(); 
+
+
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);  
+    
+
+    //Complete Vehicle3 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[6].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 4
+   text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[12];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination4.setValue(text);  
+    fixture.detectChanges();
+
+      //Complete Vehicle4 clicking Process 
+ 
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+  radioLabelElements[9].click();
+  fixture.detectChanges();
+  
+  //Resetting Destination2 Autocomplete
+    text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+    fixture.detectChanges();
+
+   let expectedVehicles: Vehicles[]=[
+   {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1,max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2,max_distance:600,speed:10}
+    ];
+    let expectedPlanets:Planets[]=[   
+    {name:"Jebing",distance:300}
+    ];
+    let vehicle: Vehicles={} as Vehicles;
+    let planet:Planets={} as Planets;
+   searchComponent.filteredPlanets1.subscribe(planets=>{
+     console.log(planets);     
+     expect(planets).toEqual(expectedPlanets,'should filter destination1 autocomplete');});
+  expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Jebing",distance:300},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+     expect(searchComponent.filteredPlanetlist1).toEqual(expectedPlanets);
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist2).toEqual(expectedPlanets);
+    expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist3).toEqual(expectedPlanets);
+   expect(searchComponent.filteredPlanetlist4).toEqual(expectedPlanets);
+   searchComponent.filteredVehicles1.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+   expect(searchComponent.stage).toBe(2,'should reset to stage 2');
+   expect(searchComponent.showVehicle2).toBe(false,'should hide vehicle2 radio button group');
+   expect(searchComponent.showVehicle3).toBe(true,'should hide vehicle3 radio button group');
+   expect(searchComponent.showVehicle4).toBe(true,'should hide vehicle4 radio button group');
+   expect(searchComponent.showPlanet2).toBe(true,'should hide planet2 autocomplete');
+   expect(searchComponent.showPlanet3).toBe(false,'should hide planet3 autocomplete');
+   expect(searchComponent.showPlanet4).toBe(false,'should hide planet4 autocomplete');
+   expect(searchComponent.filteredlist1).toEqual(expectedVehicles);
+   expectedVehicles=[
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist2).toEqual(expectedVehicles);
+   expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist3).toEqual(expectedVehicles);
+   expect(searchComponent.filteredlist4).toEqual(expectedVehicles);
+   expect(searchComponent.vehicle2).toEqual(vehicle,'should reset vehicle2 ngmodel');
+   expect(searchComponent.vehicle3).toEqual(vehicle,'should reset vehicle3 ngmodel');
+   expect(searchComponent.vehicle4).toEqual(vehicle,'should reset vehicle4 ngmodel');
+  
+   expect(searchComponent.planet3).toEqual(planet,'should reset planet3 ngmodel');
+   expect(searchComponent.planet4).toEqual(planet,'should reset planet4 ngmodel');
+   expect(searchComponent.timeTaken).toBe(75,'should reset Time Taken');
+   expect(searchComponent.error.show).toBe(false,'should hide error message');
+   expect(searchComponent.info.show).toBe(true,'should show info message');
+  });
+
+it('should RESET on Resetting Vehicle2 Radio Button', async() => {
+
+    fixture.detectChanges();
+    let text:Planets={name:"Jebing",distance:300};
+
+     fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling event for filter process
+    fixture.detectChanges();  
+    let options =overlayContainerElement.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+ 
+    const leftclickevent = {button: 0};
+    click(options[0],leftclickevent);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    //Setting Value to Destination1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    
+    console.log(fixture.componentInstance.Destination1.value);
+     fixture.detectChanges();
+     radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[0].click();
+   fixture.detectChanges();
+   expect(searchComponent.timeTaken).toBe(75);//time=distance/speed
+    fixture.detectChanges();
+    searchComponent.showVehicle2=true;
+    text={name:"Donlon",distance:100};
+
+     fixture.detectChanges();
+    //Complete Destination2 clicking Process 
+    let inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value=text.name;
+   inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges();        
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    let optionToClick = options[0] as HTMLElement;
+    optionToClick.click();  
+    fixture.detectChanges();
+
+    //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+
+    //Complete Vehicle2 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[3].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 3
+   text ={name:"Enchai",distance:200};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges(); 
+
+
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);  
+    
+
+    //Complete Vehicle3 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[6].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 4
+   text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[12];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination4.setValue(text);  
+    fixture.detectChanges();
+
+      //Complete Vehicle4 clicking Process 
+ 
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+  radioLabelElements[9].click();
+  fixture.detectChanges();
+  
+  //Resetting Vehicle2 Radio Button Group
+    
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle2 clicking process
+   radioLabelElements[4].click();
+    fixture.detectChanges();
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Vehicle1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    fixture.detectChanges();
+
+   let expectedVehicles: Vehicles[]=[
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1,max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2,max_distance:600,speed:10}
+    ];
+    let expectedPlanets:Planets[]=[   
+    {name:"Jebing",distance:300}
+    ];
+    let vehicle: Vehicles={} as Vehicles;
+    let planet:Planets={} as Planets;
+   searchComponent.filteredPlanets1.subscribe(planets=>{
+     console.log(planets);     
+     expect(planets).toEqual(expectedPlanets,'should filter destination1 autocomplete');});
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Jebing",distance:300},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+     expect(searchComponent.filteredPlanetlist1).toEqual(expectedPlanets);
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist2).toEqual(expectedPlanets);
+    expectedPlanets=[
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+   expect(searchComponent.filteredPlanetlist3).toEqual(expectedPlanets);
+   expect(searchComponent.filteredPlanetlist4).toEqual(expectedPlanets);
+   searchComponent.filteredVehicles1.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+    expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+     {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   searchComponent.filteredVehicles2.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+   expect(searchComponent.stage).toBe(2,'should reset to stage 2');
+   expect(searchComponent.showVehicle2).toBe(false,'should show vehicle2 radio button group');
+   expect(searchComponent.showVehicle3).toBe(true,'should hide vehicle3 radio button group');
+   expect(searchComponent.showVehicle4).toBe(true,'should hide vehicle4 radio button group');
+   expect(searchComponent.showPlanet2).toBe(true,'should show planet2 autocomplete');
+   expect(searchComponent.showPlanet3).toBe(true,'should show planet3 autocomplete');
+   expect(searchComponent.showPlanet4).toBe(false,'should hide planet4 autocomplete');
+    expectedVehicles=[
+     {name:"Space Rocket",total_no:1, max_distance:300,speed:4}, 
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist1).toEqual(expectedVehicles);  
+    expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist2).toEqual(expectedVehicles);
+    expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist3).toEqual(expectedVehicles);
+   expect(searchComponent.filteredlist4).toEqual(expectedVehicles);
+   expect(searchComponent.vehicle3).toEqual(vehicle,'should reset vehicle3 ngmodel');
+   expect(searchComponent.vehicle4).toEqual(vehicle,'should reset vehicle4 ngmodel');
+  
+   expect(searchComponent.planet3).toEqual(planet,'should reset planet3 ngmodel');
+   expect(searchComponent.planet4).toEqual(planet,'should reset planet4 ngmodel');
+   expect(searchComponent.timeTaken).toBe(95,'should reset Time Taken');
+   expect(searchComponent.error.show).toBe(false,'should hide error message');
+   expect(searchComponent.info.show).toBe(true,'should show info message');
+  });
+
+
+
+ it('should RESET on Resetting Destination 3 Autocomplete ', async() => {
+
+    fixture.detectChanges();
+    let text:Planets={name:"Jebing",distance:300};
+
+     fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling event for filter process
+    fixture.detectChanges();  
+    let options =overlayContainerElement.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+ 
+    const leftclickevent = {button: 0};
+    click(options[0],leftclickevent);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    //Setting Value to Destination1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    
+    console.log(fixture.componentInstance.Destination1.value);
+     fixture.detectChanges();
+     radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[0].click();
+   fixture.detectChanges();
+   expect(searchComponent.timeTaken).toBe(75);//time=distance/speed
+    fixture.detectChanges();
+    searchComponent.showVehicle2=true;
+    text={name:"Donlon",distance:100};
+
+     fixture.detectChanges();
+    //Complete Destination2 clicking Process 
+    let inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value=text.name;
+   inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges();        
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    let optionToClick = options[0] as HTMLElement;
+    optionToClick.click();  
+    fixture.detectChanges();
+
+    //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+
+    //Complete Vehicle2 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[3].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 3
+   text ={name:"Enchai",distance:200};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges(); 
+
+
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);  
+    
+
+    //Complete Vehicle3 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[6].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 4
+   text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[12];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination4.setValue(text);  
+    fixture.detectChanges();
+
+      //Complete Vehicle4 clicking Process 
+ 
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+  radioLabelElements[9].click();
+  fixture.detectChanges();
+  
+  //Resetting Destination3 Autocomplete
+    text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);
+    fixture.detectChanges();
+
+   let expectedVehicles: Vehicles[]=[
+   {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1,max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2,max_distance:600,speed:10}
+    ];
+    let expectedPlanets:Planets[]=[   
+    {name:"Jebing",distance:300}
+    ];
+    let vehicle: Vehicles={} as Vehicles;
+    let planet:Planets={} as Planets;
+   searchComponent.filteredPlanets1.subscribe(planets=>{
+     console.log(planets);     
+     expect(planets).toEqual(expectedPlanets,'should filter destination1 autocomplete');});
+  expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Jebing",distance:300},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+     expect(searchComponent.filteredPlanetlist1).toEqual(expectedPlanets);
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist2).toEqual(expectedPlanets);
+    expectedPlanets=[
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist3).toEqual(expectedPlanets);
+    expectedPlanets=[
+    {name:"Enchai",distance:200},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+   expect(searchComponent.filteredPlanetlist4).toEqual(expectedPlanets);
+   searchComponent.filteredVehicles1.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+   expect(searchComponent.stage).toBe(3,'should reset to stage 3');
+   expect(searchComponent.showVehicle2).toBe(false,'should show vehicle2 radio button group');
+   expect(searchComponent.showVehicle3).toBe(false,'should show vehicle3 radio button group');
+   expect(searchComponent.showVehicle4).toBe(true,'should hide vehicle4 radio button group');
+   expect(searchComponent.showPlanet2).toBe(true,'should hide planet2 autocomplete');
+   expect(searchComponent.showPlanet3).toBe(true,'should show planet3 autocomplete');
+   expect(searchComponent.showPlanet4).toBe(false,'should hide planet4 autocomplete');
+   expect(searchComponent.filteredlist1).toEqual(expectedVehicles);
+   expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist2).toEqual(expectedVehicles);
+   expectedVehicles=[
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist3).toEqual(expectedVehicles);
+  expectedVehicles= [
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist4).toEqual(expectedVehicles);
+   expect(searchComponent.vehicle4).toEqual(vehicle,'should reset vehicle4 ngmodel');
+  
+   expect(searchComponent.planet4).toEqual(planet,'should reset planet4 ngmodel');
+   expect(searchComponent.timeTaken).toBe(75,'should reset Time Taken');
+   expect(searchComponent.error.show).toBe(false,'should hide error message');
+   expect(searchComponent.info.show).toBe(true,'should show info message');
+  });
+
+
+it('should RESET on Resetting Vehicle3 Radio Button', async() => {
+
+    fixture.detectChanges();
+    let text:Planets={name:"Jebing",distance:300};
+
+     fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling event for filter process
+    fixture.detectChanges();  
+    let options =overlayContainerElement.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+ 
+    const leftclickevent = {button: 0};
+    click(options[0],leftclickevent);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    //Setting Value to Destination1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    
+    console.log(fixture.componentInstance.Destination1.value);
+     fixture.detectChanges();
+     radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[0].click();
+   fixture.detectChanges();
+   expect(searchComponent.timeTaken).toBe(75);//time=distance/speed
+    fixture.detectChanges();
+    searchComponent.showVehicle2=true;
+    text={name:"Donlon",distance:100};
+
+     fixture.detectChanges();
+    //Complete Destination2 clicking Process 
+    let inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value=text.name;
+   inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges();        
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    let optionToClick = options[0] as HTMLElement;
+    optionToClick.click();  
+    fixture.detectChanges();
+
+    //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+
+    //Complete Vehicle2 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[3].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 3
+   text ={name:"Enchai",distance:200};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges(); 
+
+
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);  
+    
+
+    //Complete Vehicle3 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[6].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 4
+   text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[12];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination4.setValue(text);  
+    fixture.detectChanges();
+
+      //Complete Vehicle4 clicking Process 
+ 
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+  radioLabelElements[9].click();
+  fixture.detectChanges();
+  
+  //Resetting Vehicle3 Radio Button Group
+    
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle3 clicking process
+   radioLabelElements[7].click();
+    fixture.detectChanges();
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+   let expectedVehicles: Vehicles[]=[
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1,max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2,max_distance:600,speed:10}
+    ];
+    let expectedPlanets:Planets[]=[   
+    {name:"Jebing",distance:300}
+    ];
+    let vehicle: Vehicles={} as Vehicles;
+    let planet:Planets={} as Planets;
+   searchComponent.filteredPlanets1.subscribe(planets=>{
+     console.log(planets);     
+     expect(planets).toEqual(expectedPlanets,'should filter destination1 autocomplete');});
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Jebing",distance:300},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+     expect(searchComponent.filteredPlanetlist1).toEqual(expectedPlanets);
+   expectedPlanets=[
+    {name:"Donlon",distance:100},
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+ 
+   expect(searchComponent.filteredPlanetlist2).toEqual(expectedPlanets);
+    expectedPlanets=[
+    {name:"Enchai",distance:200},
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+   expect(searchComponent.filteredPlanetlist3).toEqual(expectedPlanets);
+    expectedPlanets=[
+    {name:"Sapir",distance:400},
+    {name:"Lerbin",distance:500},
+    {name:"Pingasor",distance:600}
+    ];
+   expect(searchComponent.filteredPlanetlist4).toEqual(expectedPlanets);
+   expectedVehicles=[
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+     {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   searchComponent.filteredVehicles1.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+    expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+     {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   searchComponent.filteredVehicles2.subscribe(vehicles=>{
+     console.log(vehicles);
+     expect(vehicles).toEqual(expectedVehicles,'Should filter vehicle 1 radio button group');});
+   expect(searchComponent.stage).toBe(3,'should reset to stage 3');
+   expect(searchComponent.showVehicle2).toBe(false,'should show vehicle2 radio button group');
+   expect(searchComponent.showVehicle3).toBe(false,'should show vehicle3 radio button group');
+   expect(searchComponent.showVehicle4).toBe(true,'should show vehicle4 radio button group');
+   expect(searchComponent.showPlanet2).toBe(true,'should show planet2 autocomplete');
+   expect(searchComponent.showPlanet3).toBe(true,'should show planet3 autocomplete');
+   expect(searchComponent.showPlanet4).toBe(true,'should show planet4 autocomplete');
+    expectedVehicles=[
+     {name:"Space Rocket",total_no:1, max_distance:300,speed:4}, 
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist1).toEqual(expectedVehicles);  
+    expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist2).toEqual(expectedVehicles);
+    expectedVehicles=[
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Shuttle",total_no:1, max_distance:400,speed:5},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist3).toEqual(expectedVehicles);
+   expectedVehicles=[   
+    {name:"Space pod",total_no:2, max_distance:200,speed:2},
+    {name:"Space Rocket",total_no:1, max_distance:300,speed:4},
+    {name:"Space Ship",total_no:2, max_distance:600,speed:10}
+    ];
+   expect(searchComponent.filteredlist4).toEqual(expectedVehicles);
+  
+   expect(searchComponent.timeTaken).toBe(215,'should reset Time Taken');
+   expect(searchComponent.error.show).toBe(false,'should hide error message');
+   expect(searchComponent.info.show).toBe(true,'should show info message');
+  });
+
 
 
 

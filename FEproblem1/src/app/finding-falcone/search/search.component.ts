@@ -373,7 +373,7 @@ ngOnInit() {
        {
          if(vehicles[i].max_distance<selectedPlanet.distance)
          {
-           vehicles.splice(i,1);
+             vehicles.splice(i,1);
          }
        }
      
@@ -638,6 +638,7 @@ filterVehicleUnits(vehicleNumber:number):void{
              {
                this.onReset(1);// Resetting
                this.removeSelectedPlanet(this.planet1,1);// filtering planet1 from other autocompletes
+               this.filterVehicles(1,this.planet1);
                this.vehicle1=vehicle;//reassigning value to vehicle1 radio group
             }      
 
