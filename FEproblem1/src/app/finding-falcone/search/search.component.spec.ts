@@ -77,6 +77,7 @@ let radioInputElements: HTMLInputElement[];
 let groupInstance: MatRadioGroup;
 let radioInstances: MatRadioButton[];
 
+
 describe('SearchComponent', () => {
 
   compileAndCreate();
@@ -105,22 +106,210 @@ describe('SearchComponent', () => {
 
 
 
-  tests();
+  testsForDisplay();
+  testsForSearch();
 
 
 });
 
-function tests()
-{
- describe('SearchComponent Tests for Fetching Data', () => {
+function testsForSearch(){
+  describe('SearchComponent Tests for Searching', () => {
+    let location: Location;
     let router: Router;
-
-     // Trigger component so it gets heroes and binds to them
+    // Trigger component so it gets data and binds to them
     beforeEach(waitForAsync(() => {
       router = fixture.debugElement.injector.get(Router);
       fixture.detectChanges(); // runs ngOnInit 
       fixture.whenStable() // No need for the `lastPromise` hack!
-        .then(() => fixture.detectChanges()); // bind to heroes
+        .then(() => fixture.detectChanges()); // binds data
+    }));
+
+     it('should DISPLAY error when all Destinations are not selected', () => {
+     searchComponent.onSubmit();
+     fixture.detectChanges();
+     let error=document.querySelectorAll('mat-error');
+     console.log('error');
+     console.log(error[0].textContent);
+     expect(error[0].textContent).toBe('Please Select all *Required Fields.')
+
+    });
+
+     it('should DISPLAY error when all Vehicles are not selected', () => {
+     searchComponent.onSubmit();
+     fixture.detectChanges();
+     let error=document.querySelectorAll('mat-error');
+     console.log('error');
+     console.log(error[0].textContent);
+     expect(error[0].textContent).toBe('Please Select all *Required Fields.')
+
+    });
+
+     it('should search for Falcone tell ROUTER to navigate to Result page',async () => {
+     
+    fixture.detectChanges();
+    let text:Planets={name:"Jebing",distance:300};
+
+     fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value = text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling event for filter process
+    fixture.detectChanges();  
+    let options =overlayContainerElement.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+ 
+    const leftclickevent = {button: 0};
+    click(options[0],leftclickevent);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    //Setting Value to Destination1 Control
+    fixture.componentInstance.Destination1.setValue(text);
+    
+    console.log(fixture.componentInstance.Destination1.value);
+     fixture.detectChanges();
+     radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+   radioLabelElements[0].click();
+   fixture.detectChanges();
+   expect(searchComponent.timeTaken).toBe(75);//time=distance/speed
+    fixture.detectChanges();
+    searchComponent.showVehicle2=true;
+    text={name:"Donlon",distance:100};
+
+     fixture.detectChanges();
+    //Complete Destination2 clicking Process 
+    let inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[4];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value=text.name;
+   inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges();        
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    let optionToClick = options[0] as HTMLElement;
+    optionToClick.click();  
+    fixture.detectChanges();
+
+    //Setting Value to Destination2 Control
+    fixture.componentInstance.Destination2.setValue(text);
+
+    //Complete Vehicle2 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[3].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 3
+   text ={name:"Enchai",distance:200};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[8];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();  
+    await fixture.whenStable();
+    fixture.detectChanges(); 
+
+
+    options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+
+    //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination3.setValue(text);  
+    
+
+    //Complete Vehicle3 clicking Process 
+    fixture.detectChanges();
+    radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance); 
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+      //Complete Vehicle2 clicking process
+   radioLabelElements[6].click();
+   fixture.detectChanges();
+
+   //Input process of Destination 4
+   text ={name:"Sapir",distance:400};
+     inputElements=fixture.debugElement.queryAll(By.css('input'));
+     inputElement=inputElements[12];
+    inputElement.nativeElement.dispatchEvent(new Event('focusin'));
+    inputElement.nativeElement.value= text.name;
+    inputElement.nativeElement.dispatchEvent(new Event('input'));// Calling eventfor filter process
+    fixture.detectChanges();
+     fixture.whenStable();
+    fixture.detectChanges();
+     options=document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+     optionToClick = options[0] as HTMLElement;
+    optionToClick.click();
+    fixture.detectChanges();
+    fixture.whenStable();
+    fixture.detectChanges();
+      //Setting Value to Destination3 Control
+    fixture.componentInstance.Destination4.setValue(text);  
+    fixture.detectChanges();
+
+      //Complete Vehicle4 clicking Process 
+ 
+   radioDebugElements = fixture.debugElement.queryAll(By.directive(MatRadioButton));
+        radioNativeElements = radioDebugElements.map(debugEl => debugEl.nativeElement);
+        radioInstances = radioDebugElements.map(debugEl => debugEl.componentInstance);
+
+        radioLabelElements = radioDebugElements
+         .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
+    
+    //Complete Vehicle1 clicking process
+  radioLabelElements[9].click();
+  fixture.detectChanges();
+    spyOn(searchComponent, 'onSubmit').and.callThrough();
+    spyOn(searchComponent, 'addSelectedPlanet').and.callThrough();
+    spyOn(searchComponent, 'addSelectedVehicles').and.callThrough();
+    spyOn(searchComponent, 'SearchFalcon').and.callThrough();
+  searchComponent.onSubmit();
+    
+        
+    fixture.detectChanges();
+   fixture.whenStable();
+    fixture.detectChanges();
+    expect(searchComponent.onSubmit).toHaveBeenCalled();
+    expect(searchComponent.addSelectedPlanet).toHaveBeenCalled();
+    expect(searchComponent.addSelectedVehicles).toHaveBeenCalled();
+    expect(searchComponent.SearchFalcon).toHaveBeenCalled();
+});
+
+
+
+
+
+  });
+
+}
+
+function testsForDisplay()
+{
+ describe('SearchComponent Tests for Fetching Data', () => {
+
+     // Trigger component so it gets data and binds to them
+    beforeEach(waitForAsync(() => {
+      router = fixture.debugElement.injector.get(Router);
+      fixture.detectChanges(); // runs ngOnInit 
+      fixture.whenStable() // No need for the `lastPromise` hack!
+        .then(() => fixture.detectChanges()); // bind data
     }));
 
 
@@ -2399,6 +2588,7 @@ function compileAndCreate() {
          .map(debugEl => debugEl.query(By.css('label'))!.nativeElement);
         radioInputElements = radioDebugElements
           .map(debugEl => debugEl.query(By.css('input'))!.nativeElement);
+            router = TestBed.get(Router);
     })();
         });
   }));

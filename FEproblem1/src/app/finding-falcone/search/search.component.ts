@@ -19,6 +19,7 @@ import {Vehicles} from '../vehicles';
 import {Planets} from '../planets';
 import {Token} from '../token';
 import {FindFalconRequest} from '../find-falcon-request';
+import {Result} from '../result';
 
 
 /**
@@ -91,6 +92,7 @@ export class SearchComponent implements OnInit{
   planet2: Planets={} as Planets;
   planet3: Planets={} as Planets;
   planet4: Planets={} as Planets;
+  result:Result={} as Result;
   timeTaken=0;
   Planets: Planets[]=[];
   Vehicles: Vehicles[]=[];
@@ -112,7 +114,7 @@ export class SearchComponent implements OnInit{
   filteredPlanetlist2:Planets[]=[];
   filteredPlanetlist3:Planets[]=[];
   filteredPlanetlist4:Planets[]=[];
-
+  
   PlanetList:Planets[]=[];
   stage=1;
 
@@ -786,7 +788,7 @@ switch (destinationNumber) {
     // code...
     break;
 }
-}
+}  
 
 
 /**
@@ -815,7 +817,10 @@ findFalcon(token:Token ):void{
 
  //Routing to result page once searching is done
  this.FindingfalconeService.findFalcon(FindFalconRequest,this.timeTaken)
-    .subscribe(data=>{this.router.navigateByUrl("result");});
+    .subscribe(data=>{
+      this.result=data;
+      this.router.navigateByUrl("result");
+    });
 }
    
 /**
